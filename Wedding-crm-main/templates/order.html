@@ -1,0 +1,358 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Order - WeddingCRM{% endblock %}
+{% block page_title %}Order Management{% endblock %}
+
+{% block content %}
+<!-- Header with Search and New Order Button -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">Order Management</h2>
+            <p class="text-gray-600 mt-1">Manage client orders and completion status</p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Search clients..." 
+                       class="w-full sm:w-64 px-4 py-2 pl-10 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <a href="/new-order" onclick="clearFormData()" class="gradient-bg text-white px-6 py-3 rounded-custom font-medium hover:opacity-90 transition-all transform hover:scale-105 inline-flex items-center">
+                <i class="fas fa-plus mr-2"></i>New Order
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Clients List -->
+<div class="bg-white rounded-custom shadow-sm mb-6">
+    <div class="p-6 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900">Order Booking Applications</h3>
+        <p class="text-gray-600 mt-1">Manage order booking forms and completion status</p>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Client</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Form Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200" id="orderTableBody">
+                <!-- Orders from localStorage will be loaded here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+// Calculate order completion percentage based on section completion
+function calculateOrderCompletion(order) {
+    let completedSections = 0;
+    const totalSections = 4; // personal, event, requirements, package
+    
+    // Check completion status from both old and new formats
+    const sectionCompletion = order.section_completion || {};
+    const completionStatus = order.completion_status || {};
+    
+    // Check each section
+    if (sectionCompletion.personal_completed || completionStatus.personal) completedSections++;
+    if (sectionCompletion.event_completed || completionStatus.event) completedSections++;
+    if (sectionCompletion.requirements_completed || completionStatus.requirements) completedSections++;
+    if (sectionCompletion.package_completed || completionStatus.package) completedSections++;
+    
+    const percentage = Math.round((completedSections / totalSections) * 100);
+    
+    // Determine status and colors based on percentage
+    let status, statusColor, progressColor;
+    
+    if (percentage === 100) {
+        status = 'COMPLETE';
+        statusColor = 'text-green-600';
+        progressColor = 'bg-gradient-to-r from-green-500 to-emerald-500';
+    } else if (percentage >= 75) {
+        status = 'ALMOST DONE';
+        statusColor = 'text-blue-600';
+        progressColor = 'bg-gradient-to-r from-blue-500 to-green-500';
+    } else if (percentage >= 50) {
+        status = 'IN PROGRESS';
+        statusColor = 'text-yellow-600';
+        progressColor = 'bg-gradient-to-r from-yellow-500 to-blue-500';
+    } else if (percentage >= 25) {
+        status = 'STARTED';
+        statusColor = 'text-orange-600';
+        progressColor = 'bg-gradient-to-r from-orange-500 to-yellow-500';
+    } else {
+        status = 'DRAFT';
+        statusColor = 'text-red-600';
+        progressColor = 'bg-gradient-to-r from-red-500 to-orange-500';
+    }
+    
+    return {
+        percentage,
+        status,
+        statusColor,
+        progressColor
+    };
+}
+
+// Load saved orders from localStorage
+async function loadSavedOrders() {
+    // Check multiple localStorage keys for orders
+    const weddingcrmOrders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+    const draftOrder = localStorage.getItem('draft_order');
+    const bookingOrders = JSON.parse(localStorage.getItem('weddingcrm_booking_orders') || '[]');
+    
+    console.log('Loading orders from localStorage:', {
+        weddingcrm_orders: weddingcrmOrders.length,
+        draft_order: draftOrder ? 'exists' : 'none',
+        booking_orders: bookingOrders.length
+    });
+    
+    let ordersArray = [];
+    const seenIds = new Set();
+    
+    // Add orders from weddingcrm_orders (avoid duplicates)
+    weddingcrmOrders.forEach(order => {
+        const orderId = order.id || order._id;
+        if (orderId && !seenIds.has(orderId)) {
+            seenIds.add(orderId);
+            ordersArray.push(order);
+        }
+    });
+    
+    // Add draft order if exists and not already in list
+    if (draftOrder) {
+        const draft = JSON.parse(draftOrder);
+        const draftId = draft.id || draft._id;
+        if (draftId && !seenIds.has(draftId)) {
+            draft.isDraft = true;
+            ordersArray.push(draft);
+        }
+    }
+    
+    // Sort orders by created_at or updated_at in descending order (latest first)
+    ordersArray.sort((a, b) => {
+        const dateA = new Date(a.updated_at || a.created_at || 0);
+        const dateB = new Date(b.updated_at || b.created_at || 0);
+        return dateB - dateA; // Latest first
+    });
+    
+    const tbody = document.getElementById('orderTableBody');
+    tbody.innerHTML = '';
+    
+    if (ordersArray.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="px-6 py-8 text-center text-gray-500">No orders found. Click "New Order" to create your first order.</td></tr>';
+        return;
+    }
+    
+    ordersArray.forEach((order, index) => {
+        // Handle both old and new data structures
+        const orderId = order.id || order.order_info?.id || 'unknown';
+        const brideName = order.client_details?.bride?.name || 'Unnamed';
+        const groomName = order.client_details?.groom?.name || 'Unnamed';
+        const brideContact = order.client_details?.bride?.contact || '';
+        const groomContact = order.client_details?.groom?.contact || '';
+        const coverageType = order.project_specs?.coverage_type || 'Not specified';
+        const makeupVenue = order.project_specs?.makeup_venue || 'Not specified';
+        
+        // Calculate completion percentage
+        const completionData = calculateOrderCompletion(order);
+        
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-50';
+        row.innerHTML = `
+            <td class="px-6 py-4">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                        ${brideName.charAt(0)}${groomName.charAt(0)}
+                    </div>
+                    <div>
+                        <div class="text-sm font-medium text-gray-900">${brideName} & ${groomName}</div>
+                        <div class="text-sm text-gray-500">${coverageType}</div>
+                        <div class="text-xs ${completionData.statusColor} font-medium">${completionData.status}</div>
+                    </div>
+                </div>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-900">${brideContact || groomContact || 'Not provided'}</td>
+            <td class="px-6 py-4 text-sm text-gray-900">${makeupVenue}</td>
+            <td class="px-6 py-4">
+                <div class="flex items-center">
+                    <div class="w-16 bg-gray-200 rounded-full h-2 mr-3">
+                        <div class="${completionData.progressColor} h-2 rounded-full" style="width: ${completionData.percentage}%"></div>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">${completionData.percentage}%</span>
+                </div>
+            </td>
+            <td class="px-6 py-4">
+                <div class="flex gap-2">
+                    <button onclick="viewOrder('${orderId}')" class="px-3 py-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-xs">
+                        <i class="fas fa-eye mr-1"></i>View
+                    </button>
+                    <button onclick="editOrder('${orderId}')" class="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-xs">
+                        <i class="fas fa-edit mr-1"></i>Complete form
+                    </button>
+                    <button onclick="deleteOrder('${orderId}')" class="px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-xs">
+                        <i class="fas fa-trash mr-1"></i>Delete
+                    </button>
+                </div>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// View order function
+function viewOrder(orderId) {
+    // Check multiple localStorage keys for the order
+    const weddingcrmOrders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+    const draftOrder = localStorage.getItem('draft_order');
+    
+    let order = weddingcrmOrders.find(o => o.id === orderId || o._id === orderId);
+    
+    // Check if it's the draft order
+    if (!order && draftOrder) {
+        const draft = JSON.parse(draftOrder);
+        if (draft.id === orderId || draft._id === orderId) {
+            order = draft;
+        }
+    }
+    
+    if (order) {
+        localStorage.setItem('viewOrder', JSON.stringify(order));
+        window.location.href = `/order/${orderId}`;
+    } else {
+        window.alertSystem.show('Order not found!', 'error');
+    }
+}
+
+// Edit order function - Complete form with saved data
+function editOrder(orderId) {
+    // Check multiple localStorage keys for the order
+    const weddingcrmOrders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+    const draftOrder = localStorage.getItem('draft_order');
+    
+    let order = weddingcrmOrders.find(o => o.id === orderId || o._id === orderId);
+    
+    // Check if it's the draft order
+    if (!order && draftOrder) {
+        const draft = JSON.parse(draftOrder);
+        if (draft.id === orderId || draft._id === orderId) {
+            order = draft;
+        }
+    }
+    
+    if (order) {
+        console.log('Loading draft form for completion:', order);
+        // Set as draft_order for form loading
+        localStorage.setItem('draft_order', JSON.stringify(order));
+        localStorage.setItem('editOrder', JSON.stringify(order));
+        window.location.href = '/new-order';
+    } else {
+        window.alertSystem.show('Order not found!', 'error');
+    }
+}
+
+// Delete order function
+function deleteOrder(orderId) {
+    window.alertSystem.show('Are you sure you want to delete this order?', 'warning', 'Confirm Delete', {
+        callback: (confirmed) => {
+            if (!confirmed) return;
+            
+            deleteOrderConfirmed(orderId);
+        },
+        showCancel: true,
+        confirmText: 'Delete',
+        cancelText: 'Cancel'
+    });
+}
+
+function deleteOrderConfirmed(orderId) {
+    try {
+        // Delete from weddingcrm_orders
+        const weddingcrmOrders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+        const filteredOrders = weddingcrmOrders.filter(o => o.id !== orderId && o._id !== orderId);
+        localStorage.setItem('weddingcrm_orders', JSON.stringify(filteredOrders));
+        
+        // Delete from booking orders
+        const bookingOrders = JSON.parse(localStorage.getItem('weddingcrm_booking_orders') || '[]');
+        const filteredBookings = bookingOrders.filter(o => o.id !== orderId);
+        localStorage.setItem('weddingcrm_booking_orders', JSON.stringify(filteredBookings));
+        
+        // Check if it's the draft order
+        const draftOrder = localStorage.getItem('draft_order');
+        if (draftOrder) {
+            const draft = JSON.parse(draftOrder);
+            if (draft.id === orderId || draft._id === orderId) {
+                localStorage.removeItem('draft_order');
+            }
+        }
+        
+        loadSavedOrders();
+        window.alertSystem.show('Order deleted successfully!', 'success');
+    } catch (error) {
+        window.alertSystem.show('Failed to delete order. Please try again.', 'error');
+    }
+}
+
+// Clear form data for new order
+function clearFormData() {
+    localStorage.removeItem('draft_order');
+    localStorage.removeItem('editOrder');
+}
+
+// Test function to check save/load
+function testSaveLoad() {
+    console.log('=== TESTING SAVE/LOAD ===');
+    
+    // Test save
+    const testData = {
+        id: 'TEST-123',
+        client_details: {
+            bride: { name: 'Test Bride' },
+            groom: { name: 'Test Groom' }
+        },
+        status: 'Draft'
+    };
+    
+    console.log('1. Saving test data:', testData);
+    const orders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+    orders.push(testData);
+    localStorage.setItem('weddingcrm_orders', JSON.stringify(orders));
+    
+    // Test load
+    console.log('2. Loading from localStorage:');
+    const loadedOrders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+    console.log('Loaded orders:', loadedOrders);
+    
+    // Test display
+    console.log('3. Refreshing order list...');
+    loadSavedOrders();
+    
+    return 'Test completed - check console';
+}
+
+// Search functionality
+document.addEventListener('DOMContentLoaded', async function() {
+    await loadSavedOrders();
+    
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#orderTableBody tr');
+        
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

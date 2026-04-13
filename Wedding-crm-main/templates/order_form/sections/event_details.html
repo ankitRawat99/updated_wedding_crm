@@ -1,0 +1,31 @@
+<!-- Event Details Tab -->
+<div id="event-content" class="tab-content hidden">
+    <div class="flex items-center gap-3 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900">Event Details</h3>
+        {% set tab_name = 'event' %}
+        {% include 'order_form/partials/completion_checkbox.html' %}
+    </div>
+    
+    <!-- Pre-Wedding Event Container (Hidden by default) -->
+    {% include 'order_form/components/pre_wedding_event.html' %}
+    
+    <!-- Normal Events Section -->
+    <div class="normal-events-section">
+        <div class="flex justify-between items-center mb-4">
+            <h4 class="text-md font-medium text-gray-800">Wedding Events</h4>
+            <button type="button" onclick="addEvent()" class="px-4 py-2 bg-green-600 text-white rounded-custom hover:bg-green-700 transition-colors text-sm">
+                <i class="fas fa-plus mr-2"></i>Add Event
+            </button>
+        </div>
+        
+        <!-- Events Container -->
+        <div id="events-container">
+            <!-- Event 1 (Default) -->
+            {% include 'order_form/components/event_card.html' %}
+        </div>
+    </div>
+    
+    <!-- Notes Section -->
+    {% set section_name = 'event' %}
+    {% include 'order_form/components/notes_section.html' %}
+</div>

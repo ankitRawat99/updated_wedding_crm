@@ -1,0 +1,326 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Payment Tracker - WeddingCRM{% endblock %}
+{% block page_title %}Payment Tracker{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-2xl font-bold gradient-text">Payment Tracker</h1>
+            <p class="text-gray-600 mt-1">Payment data from Order sheet - Edit in order sheet - Raise invoices</p>
+        </div>
+        <button onclick="raiseInvoice()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <i class="fas fa-file-invoice mr-2"></i>Raise Invoice
+        </button>
+    </div>
+
+    <!-- Payment Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-blue-100 rounded-lg">
+                    <i class="fas fa-rupee-sign text-2xl text-blue-600"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Total Payment</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ payment_summary.total_payment }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-green-100 rounded-lg">
+                    <i class="fas fa-check-circle text-2xl text-green-600"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Received Payment</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ payment_summary.received_payment }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 bg-yellow-100 rounded-lg">
+                    <i class="fas fa-clock text-2xl text-yellow-600"></i>
+                </div>
+                <div class="ml-4">
+                    <p class="text-sm font-medium text-gray-600">Pending Payment</p>
+                    <p class="text-2xl font-bold text-gray-900">{{ payment_summary.pending_payment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Management & Stage Breakdown -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Payment Categories -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold mb-4">Payment Management</h3>
+            <div class="space-y-3">
+                <button onclick="showClientPayments()" class="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-users text-blue-600 mr-3"></i>
+                            <span class="font-medium">Client wise Payment</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </button>
+                
+                <button onclick="showDatePayments()" class="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-calendar text-green-600 mr-3"></i>
+                            <span class="font-medium">Date wise Payment</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </button>
+                
+                <button onclick="showPaymentWaitlist()" class="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-hourglass-half text-yellow-600 mr-3"></i>
+                            <span class="font-medium">Payment Waitlist</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </button>
+                
+                <button onclick="showPaymentDefaulters()" class="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+                            <span class="font-medium">Payment Defaulter</span>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Stage Wise Payment Breakdown -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold mb-4">Stage Wise Payment Breakdown</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-gray-200">
+                            <th class="text-left py-3 font-semibold text-gray-700">Stage</th>
+                            <th class="text-center py-3 font-semibold text-green-700">Advance</th>
+                            <th class="text-center py-3 font-semibold text-blue-700">Event</th>
+                            <th class="text-center py-3 font-semibold text-purple-700">Delivery</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-3 font-medium text-gray-900">Stage 1</td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">3</span>
+                            </td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">1</span>
+                            </td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">1</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-3 font-medium text-gray-900">Stage 2</td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">2</span>
+                            </td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">2</span>
+                            </td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">2</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 font-medium text-gray-900">Stage 3</td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">1</span>
+                            </td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">3</span>
+                            </td>
+                            <td class="text-center py-3">
+                                <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">3</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Details Table -->
+    <div class="bg-white rounded-lg shadow-sm">
+        <div class="p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Payment Details</h3>
+                <div class="flex space-x-2">
+                    <button onclick="editInOrderSheet()" class="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm hover:bg-gray-200">
+                        <i class="fas fa-edit mr-1"></i>Edit in Order Sheet
+                    </button>
+                    <button onclick="refreshPaymentData()" class="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm hover:bg-blue-200">
+                        <i class="fas fa-sync mr-1"></i>Refresh Data
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search payments..." 
+                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <select class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="">All Status</option>
+                    <option value="advance">Advance</option>
+                    <option value="event">Event</option>
+                    <option value="delivery">Delivery</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Received</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pending</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stage</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200" id="paymentTableBody">
+                    {% for payment in payments_to_be_paid %}
+                    <tr class="hover:bg-gray-50 cursor-pointer" onclick="viewClientDetails({{ payment.client_id }})">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                    {{ payment.initials }}
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900">{{ payment.client_name }}</div>
+                                    <div class="text-sm text-gray-500">Wedding Package</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">₹{{ payment.total_amount }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">₹{{ payment.paid_amount }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-red-600">₹{{ payment.pending_amount }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-{{ payment.status_color }}-100 text-{{ payment.status_color }}-800">
+                                {{ payment.status }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ payment.due_date }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <div class="flex space-x-2">
+                                <button onclick="markAsPaid({{ payment.client_id }})" class="text-green-600 hover:text-green-800" title="Mark as Paid">
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                                <button onclick="sendReminder({{ payment.client_id }})" class="text-blue-600 hover:text-blue-800" title="Send Reminder">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                                <button onclick="generateInvoice({{ payment.client_id }})" class="text-purple-600 hover:text-purple-800" title="Generate Invoice">
+                                    <i class="fas fa-file-invoice"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                    {% if not payments_to_be_paid %}
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center">
+                            <i class="fas fa-check-circle text-green-400 text-4xl mb-4"></i>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">All Payments Complete</h3>
+                            <p class="text-gray-600">No pending payments found.</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+// Payment Management Functions
+function showClientPayments() {
+    console.log('Showing client wise payments');
+}
+
+function showDatePayments() {
+    console.log('Showing date wise payments');
+}
+
+function showPaymentWaitlist() {
+    console.log('Showing payment waitlist');
+}
+
+function showPaymentDefaulters() {
+    console.log('Showing payment defaulters');
+}
+
+function raiseInvoice() {
+    console.log('Raising invoice');
+}
+
+function editInOrderSheet() {
+    window.location.href = '/bookings';
+}
+
+function refreshPaymentData() {
+    window.location.reload();
+}
+
+function viewClientDetails(clientId) {
+    window.location.href = `/clients/${clientId}`;
+}
+
+function markAsPaid(clientId) {
+    showCustomAlert(
+        'Mark this payment as completed?',
+        'info',
+        'Confirm Payment',
+        () => {
+            // TODO: Implement mark as paid functionality
+            console.log('Marking payment as paid for client:', clientId);
+            showCustomAlert('Payment marked as completed successfully!', 'success', 'Success');
+        }
+    );
+}
+
+function sendReminder(clientId) {
+    showCustomAlert(
+        'Send payment reminder to client?',
+        'info',
+        'Send Reminder',
+        () => {
+            // TODO: Implement send reminder functionality
+            console.log('Sending reminder to client:', clientId);
+            showCustomAlert('Payment reminder sent successfully!', 'success', 'Reminder Sent');
+        }
+    );
+}
+
+function generateInvoice(clientId) {
+    // TODO: Implement invoice generation
+    console.log('Generating invoice for client:', clientId);
+    showCustomAlert('Invoice generation feature coming soon!', 'info', 'Feature Coming Soon');
+}
+</script>
+{% endblock %}

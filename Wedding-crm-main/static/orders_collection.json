@@ -1,0 +1,247 @@
+[
+  {
+    "order_info": {
+      "id": "ORD-1760705174549",
+      "status": "Draft",
+      "created_date": "2025-10-17T12:46:14.549Z",
+      "updated_date": "2025-10-17T12:46:14.549Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "bhumi",
+        "aadhar": "78963214963278",
+        "email": "bride@gmail.com",
+        "contact": "+91 9876541230"
+      },
+      "groom": {
+        "name": "rohit",
+        "aadhar": "32149632258778",
+        "email": "groom@gmail.com",
+        "contact": "+91 9876541230"
+      }
+    },
+    "pre_wedding": {
+      "enabled": true,
+      "type": "photo_video",
+      "location": "Delhi",
+      "start_date": "1852-07-04",
+      "end_date": "1852-07-04",
+      "team_composition": "1+1",
+      "drone": "Yes",
+      "requirements": "Additional Details\nSpecial Requirements\nfrom Project info",
+      "team_members": [
+        {
+          "position": 1,
+          "type": "tvideo",
+          "name": "pw_team_type_1"
+        },
+        {
+          "position": 2,
+          "type": "tphoto",
+          "name": "pw_team_type_2"
+        }
+      ],
+      "assistants": [
+        {
+          "position": 1,
+          "name": "852"
+        }
+      ],
+      "deliverables": [
+        {
+          "name": "Pre-Wedding Edited Photos",
+          "quantity": "50"
+        },
+        {
+          "name": "Pre-Wedding Video",
+          "quantity": "5"
+        }
+      ],
+      "photo_quantity": "50",
+      "video_duration": "5"
+    },
+    "cost_factors": {
+      "travel_cost": "tsv",
+      "accommodation_cost": "client",
+      "gear_rental": "yes",
+      "drone_rental": "no"
+    },
+    "project_specs": {
+      "inspiration_specification": "Inspiration/Specification",
+      "culture_specific": "Culture Specific",
+      "category": "Premium",
+      "makeup_venue": "gbbyh",
+      "coverage_type": "Bride"
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "Reception",
+        "date": "0852-08-05",
+        "location": "delhi",
+        "coverage": "Together",
+        "time": "Evening",
+        "gathering": "741",
+        "time_slab": "111",
+        "quick_note": "Quick Note Event",
+        "drone": "Yes",
+        "team_composition": "2+2",
+        "team_members": [
+          {
+            "position": 1,
+            "type": "tvideo",
+            "name": "team_type_1[]"
+          },
+          {
+            "position": 2,
+            "type": "tvideo",
+            "name": "team_type_2[]"
+          },
+          {
+            "position": 3,
+            "type": "tvideo",
+            "name": "team_type_3[]"
+          },
+          {
+            "position": 4,
+            "type": "tvideo",
+            "name": "team_type_4[]"
+          }
+        ],
+        "assistants": [
+          {
+            "position": 1,
+            "name": "123"
+          },
+          {
+            "position": 2,
+            "name": "123"
+          }
+        ]
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [
+        {
+          "name": "Coffee Table Book",
+          "checked": true
+        },
+        {
+          "name": "Photo Frame",
+          "checked": true
+        },
+        {
+          "name": "Ad-on Reels",
+          "checked": true
+        }
+      ],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "1.4L",
+      "advance_payments": [
+        {
+          "payment_number": 1,
+          "amount": "2345",
+          "percentage": "",
+          "date": "10852-07-04"
+        }
+      ],
+      "event_payments": [
+        {
+          "payment_number": 1,
+          "amount": "12345",
+          "percentage": "",
+          "date": "0020-08-05"
+        }
+      ],
+      "delivery_payments": [
+        {
+          "payment_number": 1,
+          "amount": "23456",
+          "percentage": "",
+          "date": "3210-09-06"
+        }
+      ]
+    },
+    "notes": {
+      "personal": [
+        {
+          "note_number": 1,
+          "content": "Notes from Client and project info",
+          "created_date": "2025-10-17T12:46:14.552Z"
+        }
+      ],
+      "event": [
+        {
+          "note_number": 1,
+          "content": "Notes 2 from Event Details",
+          "created_date": "2025-10-17T12:46:14.553Z"
+        }
+      ],
+      "package": [
+        {
+          "note_number": 1,
+          "content": "Note from Deliverables",
+          "created_date": "2025-10-17T12:46:14.553Z"
+        }
+      ]
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    }
+  }
+]

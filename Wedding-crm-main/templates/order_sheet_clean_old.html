@@ -1,0 +1,1059 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Order Sheet - WeddingCRM{% endblock %}
+{% block page_title %}Order Sheet{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        .a4-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0;
+            padding: 20mm;
+            box-shadow: none;
+        }
+        .no-print { display: none; }
+        .page-break { page-break-before: always; }
+        .avoid-break { page-break-inside: avoid; }
+        .section { page-break-inside: avoid; margin-bottom: 15px; }
+    }
+
+    .a4-container {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
+        background: white;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        padding: 20mm;
+        font-size: 12px;
+    }
+
+    .section-header {
+        border-bottom: 2px solid #E6B87D;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+        color: #1f2937;
+        font-weight: 600;
+        page-break-after: avoid;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid #f3f4f6;
+    }
+
+    .couple-section {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+
+    .bride-section {
+        border-left: 4px solid #F589A8;
+    }
+
+    .groom-section {
+        border-left: 4px solid #3b82f6;
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .sheet-tab {
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .sheet-tab:hover {
+        color: #374151 !important;
+        border-color: #d1d5db !important;
+    }
+    
+    .sheet-tab.active {
+        color: #2563eb !important;
+        border-color: #2563eb !important;
+    }
+    
+    .sheet-tab i {
+        font-size: 0.875rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Top Action Buttons -->
+<div class="flex justify-between items-center mb-6 no-print">
+    <div class="flex items-center space-x-4">
+        <span class="text-lg font-semibold text-gray-900">Order No: <span class="gradient-text" id="headerOrderId">Loading...</span></span>
+    </div>
+    <div class="flex items-center space-x-2">
+        <button onclick="lockOrder()" class="px-3 py-2 bg-green-500 text-white rounded-custom font-medium hover:bg-green-600 text-sm">
+            <i class="fas fa-lock mr-1"></i>Lock Order
+        </button>
+        <button onclick="raiseQuotation()" class="px-3 py-2 bg-blue-500 text-white rounded-custom font-medium hover:bg-blue-600 text-sm">
+            <i class="fas fa-file-invoice mr-1"></i>Raise Quotation
+        </button>
+        <button onclick="teamNote()" class="px-3 py-2 bg-purple-500 text-white rounded-custom font-medium hover:bg-purple-600 text-sm">
+            <i class="fas fa-sticky-note mr-1"></i>Team Note
+        </button>
+        <button onclick="closeOrder()" class="px-3 py-2 bg-orange-500 text-white rounded-custom font-medium hover:bg-orange-600 text-sm">
+            <i class="fas fa-check-circle mr-1"></i>Close Order
+        </button>
+        <button onclick="cancelOrder()" class="px-3 py-2 bg-red-500 text-white rounded-custom font-medium hover:bg-red-600 text-sm">
+            <i class="fas fa-times-circle mr-1"></i>Cancel Order
+        </button>
+    </div>
+</div>
+
+<!-- Sub Navigation Tabs -->
+<div class="bg-white rounded-custom shadow-sm mb-6 no-print">
+    <div class="border-b border-gray-200">
+        <nav class="flex space-x-8 px-6" aria-label="Sheet Tabs">
+            <button onclick="showSheet('order')" id="order-sheet-tab" class="sheet-tab active py-4 px-1 border-b-2 border-blue-500 font-medium text-sm text-blue-600">
+                <i class="fas fa-file-alt mr-2"></i>Order Sheet
+            </button>
+            <button onclick="showSheet('cost')" id="cost-sheet-tab" class="sheet-tab py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                <i class="fas fa-calculator mr-2"></i>Cost Sheet
+            </button>
+            <button onclick="showSheet('team')" id="team-sheet-tab" class="sheet-tab py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                <i class="fas fa-users mr-2"></i>Team Sheet
+            </button>
+            <button onclick="showSheet('production')" id="production-sheet-tab" class="sheet-tab py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                <i class="fas fa-cogs mr-2"></i>Production Sheet
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- Order Sheet Container -->
+<div class="a4-container" id="order-sheet-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Wedding Order Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="orderIdDisplay">Loading...</span> | Date: <span id="orderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Client Information -->
+    <div class="section-header">
+        <h3>Client Information</h3>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Bride Details -->
+        <div class="couple-section bride-section">
+            <h4 class="font-semibold text-gray-800 mb-3">Bride Details</h4>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Name:</span>
+                <span id="bride-name" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Contact:</span>
+                <span id="bride-contact" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Email:</span>
+                <span id="bride-email" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Aadhar:</span>
+                <span id="bride-aadhar" class="text-gray-900">Loading...</span>
+            </div>
+        </div>
+        
+        <!-- Groom Details -->
+        <div class="couple-section groom-section">
+            <h4 class="font-semibold text-gray-800 mb-3">Groom Details</h4>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Name:</span>
+                <span id="groom-name" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Contact:</span>
+                <span id="groom-contact" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Email:</span>
+                <span id="groom-email" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Aadhar:</span>
+                <span id="groom-aadhar" class="text-gray-900">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coverage Details -->
+    <div class="section-header">
+        <h3>Coverage Details</h3>
+    </div>
+    <div class="grid grid-cols-3 gap-4 mb-8">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Coverage Type:</span>
+            <span id="coverage-type" class="text-gray-900">Loading...</span>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Pre-Wedding:</span>
+            <span id="coverage-prewedding" class="text-gray-900">Loading...</span>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Category:</span>
+            <span id="coverage-category" class="text-gray-900">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Booking Advance -->
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <div class="flex justify-between items-center">
+            <span class="font-semibold text-gray-800">Booking Advance Amount and Date Fixed</span>
+            <span id="advance-info" class="font-bold text-gray-900">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Events Section -->
+    <div class="section-header">
+        <h3>Events</h3>
+    </div>
+    <div id="events-container" class="mb-8">
+        Loading...
+    </div>
+
+    <!-- Page break before delivery if needed -->
+    <div class="page-break"></div>
+    
+    <!-- Delivery Section -->
+    <div class="section-header">
+        <h3>Delivery</h3>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-8 section">
+        <div>
+            <h4 class="font-semibold text-gray-800 mb-3">Standard</h4>
+            <div id="standard-deliverables" class="space-y-1 text-sm">
+                Loading...
+            </div>
+        </div>
+        <div>
+            <h4 class="font-semibold text-gray-800 mb-3">Add On</h4>
+            <div id="addon-deliverables" class="space-y-1 text-sm">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Operation Section -->
+    <div class="section-header">
+        <h3>Operation</h3>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-8 section">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Travel:</span>
+            <span id="operation-travel" class="text-gray-900">Loading...</span>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Accommodation:</span>
+            <span id="operation-accommodation" class="text-gray-900">Loading...</span>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Gear Rent:</span>
+            <span id="operation-gear" class="text-gray-900">Loading...</span>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Drone Rent:</span>
+            <span id="operation-drone" class="text-gray-900">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Client's Note -->
+    <div class="section-header">
+        <h3>Client's Note</h3>
+    </div>
+    <div class="border border-gray-200 rounded p-4 mb-8 min-h-20 section">
+        <p id="client-notes" class="text-gray-700">Loading...</p>
+    </div>
+
+    <!-- Deal Section -->
+    <div class="section-header">
+        <h3>Deal</h3>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8 avoid-break">
+        <div class="flex justify-between items-center mb-4">
+            <span class="font-semibold text-gray-800">Total Amount:</span>
+            <span id="deal-total" class="text-xl font-bold text-gray-900">Loading...</span>
+        </div>
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-300">
+                    <th class="text-left py-2">Payment Type</th>
+                    <th class="text-center py-2">Percentage</th>
+                    <th class="text-center py-2">Amount</th>
+                    <th class="text-center py-2">Date</th>
+                </tr>
+            </thead>
+            <tbody id="payment-schedule">
+                <tr><td colspan="4" class="text-center py-4">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="generatedDateDisplay">Loading...</span></p>
+    </div>
+</div>
+
+<!-- Cost Sheet Container -->
+<div class="a4-container hidden" id="cost-sheet-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Cost Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="costOrderIdDisplay">Loading...</span> | Date: <span id="costOrderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Cost Sheet Content -->
+    <div class="section-header">
+        <h3>Cost Breakdown</h3>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <p class="text-gray-600">Cost sheet content will be added here...</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="costGeneratedDateDisplay">Loading...</span></p>
+    </div>
+</div>
+
+<!-- Team Sheet Container -->
+<div class="a4-container hidden" id="team-sheet-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Team Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="teamOrderIdDisplay">Loading...</span> | Date: <span id="teamOrderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Team Sheet Content -->
+    <div class="section-header">
+        <h3>Team Allocation</h3>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <p class="text-gray-600">Team sheet content will be added here...</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="teamGeneratedDateDisplay">Loading...</span></p>
+    </div>
+</div>
+
+<!-- Production Sheet Container -->
+<div class="a4-container hidden" id="production-sheet-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Production Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="productionOrderIdDisplay">Loading...</span> | Date: <span id="productionOrderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Production Sheet Content -->
+    <div class="section-header">
+        <h3>Production Timeline</h3>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <p class="text-gray-600">Production sheet content will be added here...</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="productionGeneratedDateDisplay">Loading...</span></p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadOrderData();
+});
+
+function loadOrderData() {
+    try {
+        // Get order ID from URL path
+        const pathParts = window.location.pathname.split('/');
+        const orderId = pathParts[pathParts.length - 1];
+        
+        console.log('🔍 Looking for order ID:', orderId);
+        console.log('🔍 URL pathname:', window.location.pathname);
+        
+        if (!orderId || orderId === 'order-sheet') {
+            console.log('❌ No order_id found in URL');
+            showError('No order ID found in URL');
+            return;
+        }
+        
+        let order = null;
+        
+        // Try multiple localStorage keys
+        const storageKeys = [
+            'weddingcrm_booking_orders',
+            'weddingcrm_orders', 
+            'weddingcrm_order_sheets',
+            'orderData',
+            'orders'
+        ];
+        
+        for (const key of storageKeys) {
+            try {
+                const dataRaw = localStorage.getItem(key);
+                console.log(`🔍 Checking ${key}:`, dataRaw ? 'Found data' : 'No data');
+                
+                if (dataRaw && dataRaw !== 'undefined' && dataRaw !== 'null') {
+                    const data = JSON.parse(dataRaw);
+                    console.log(`📦 Data from ${key}:`, data);
+                    
+                    if (Array.isArray(data)) {
+                        console.log(`🔍 Searching in array of ${data.length} items for ID: ${orderId}`);
+                        order = data.find(o => o.id === orderId || o.order_id === orderId || o._id === orderId);
+                        if (order) {
+                            console.log(`✅ Found order in ${key}:`, order);
+                            break;
+                        }
+                    } else if (data.id === orderId) {
+                        order = data;
+                        console.log(`✅ Found single order in ${key}:`, order);
+                        break;
+                    }
+                }
+            } catch (parseError) {
+                console.error(`❌ Error parsing ${key}:`, parseError);
+            }
+        }
+        
+        if (!order) {
+            console.log('❌ Order not found in localStorage for ID:', orderId);
+            console.log('📊 Available localStorage keys:', Object.keys(localStorage));
+            showError(`Order ${orderId} not found`);
+            return;
+        }
+        
+        console.log('✅ Final order data:', order);
+        updateOrderSheet(order);
+        
+    } catch (error) {
+        console.error('💥 Critical error loading order data:', error);
+        showError('Error loading order data');
+    }
+}
+
+function updateOrderSheet(order) {
+    console.log('📋 Updating order sheet with:', order);
+    
+    // Update header order IDs
+    const orderId = order.id || order.order_info?.id || 'ORD-001';
+    document.getElementById('orderIdDisplay').textContent = orderId;
+    document.getElementById('headerOrderId').textContent = orderId;
+    
+    // Extract client data from multiple possible sources
+    let clientData = {};
+    
+    if (order.client_details) {
+        // Data from order forms (new order system)
+        clientData = {
+            bride_name: order.client_details.bride?.name || '',
+            bride_contact: order.client_details.bride?.contact || order.client_details.bride?.phone || '',
+            bride_email: order.client_details.bride?.email || '',
+            bride_aadhar: order.client_details.bride?.aadhar || order.client_details.bride?.id_number || '',
+            groom_name: order.client_details.groom?.name || '',
+            groom_contact: order.client_details.groom?.contact || order.client_details.groom?.phone || '',
+            groom_email: order.client_details.groom?.email || '',
+            groom_aadhar: order.client_details.groom?.aadhar || order.client_details.groom?.id_number || '',
+            coverage_type: order.project_specs?.coverage_type || order.coverage_type || '',
+            category: order.project_specs?.category || order.category || '',
+            prewedding: order.project_specs?.pw_type || order.pw_type ? 'Yes' : 'No',
+            deal_amount: order.payment_schedule?.deal_amount || order.deal_amount || '',
+            advance_amount: order.payment_schedule?.advance_payments?.[0]?.amount || order.advance_paid || '',
+            advance_date: order.payment_schedule?.advance_payments?.[0]?.date || order.advance_date || order.booking_date || ''
+        };
+    } else if (order.couple_name) {
+        // Data from booking orders (existing system)
+        const names = order.couple_name.split(' & ');
+        clientData = {
+            bride_name: names[0]?.trim() || '',
+            groom_name: names[1]?.trim() || '',
+            bride_contact: order.contact_number || order.bride_contact || order.phone || '',
+            groom_contact: order.groom_contact || order.contact_number || order.phone || '',
+            bride_email: order.bride_email || order.email || '',
+            bride_aadhar: order.bride_aadhar || '',
+            groom_email: order.groom_email || order.email || '',
+            groom_aadhar: order.groom_aadhar || '',
+            coverage_type: order.coverage_type || order.project_type || '',
+            category: order.category || order.package_type || '',
+            prewedding: order.pw_type || order.has_pre_wedding || order.pre_wedding_enabled ? 'Yes' : 'No',
+            deal_amount: order.deal_amount || order.total_amount || order.package_amount || '',
+            advance_amount: order.advance_paid || order.advance_amount || '',
+            advance_date: order.advance_date || order.booking_date || order.created_date || ''
+        };
+    }
+    
+    console.log('📄 Extracted client data:', clientData);
+    
+    // Update client information
+    updateField('bride-name', clientData.bride_name);
+    updateField('bride-contact', clientData.bride_contact);
+    updateField('bride-email', clientData.bride_email);
+    updateField('bride-aadhar', clientData.bride_aadhar);
+    
+    updateField('groom-name', clientData.groom_name);
+    updateField('groom-contact', clientData.groom_contact);
+    updateField('groom-email', clientData.groom_email);
+    updateField('groom-aadhar', clientData.groom_aadhar);
+    
+    // Update coverage details
+    updateField('coverage-type', clientData.coverage_type);
+    updateField('coverage-category', clientData.category);
+    updateField('coverage-prewedding', clientData.prewedding);
+    
+    // Update deal amount
+    updateField('deal-total', clientData.deal_amount ? `₹${clientData.deal_amount}` : '');
+    
+    // Update advance info
+    const advanceText = clientData.advance_amount ? `₹${clientData.advance_amount}` : '';
+    const dateText = clientData.advance_date ? ` - ${clientData.advance_date}` : '';
+    updateField('advance-info', advanceText + dateText || 'No advance information');
+    
+    // Update events
+    updateEventsSection(order);
+    
+    // Update deliverables
+    updateDeliverables();
+    
+    // Update operation details
+    updateOperationDetails(order);
+    
+    // Update client notes
+    const notes = order.special_notes || order.client_notes || order.notes || 
+                 order.project_specs?.inspiration_specification || 
+                 order.requirements || order.description || 'No special notes provided.';
+    updateField('client-notes', notes);
+    
+    // Update payment schedule
+    updatePaymentSchedule(order);
+    
+    // Update dates
+    const currentDate = getCurrentDate();
+    updateField('orderDateDisplay', clientData.advance_date || currentDate);
+    updateField('generatedDateDisplay', currentDate);
+}
+
+function updateEventsSection(order) {
+    const container = document.getElementById('events-container');
+    
+    if (order.events && order.events.length > 0) {
+        const event = order.events[0];
+        container.innerHTML = `
+            <div class="border border-gray-200 rounded p-4 mb-8 section">
+                <h4 class="font-semibold text-gray-800 mb-3">Event 1</h4>
+                <div class="grid grid-cols-3 gap-4 mb-3">
+                    <div class="info-row">
+                        <span class="font-medium text-gray-600">Date:</span>
+                        <span class="text-gray-900">${event.date || event.event_date || 'Not specified'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="font-medium text-gray-600">Location:</span>
+                        <span class="text-gray-900">${event.location || event.venue || event.address || 'Not specified'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="font-medium text-gray-600">Coverage:</span>
+                        <span class="text-gray-900">${event.coverage || event.type || 'Not specified'}</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 mb-3">
+                    <div class="info-row">
+                        <span class="font-medium text-gray-600">Time:</span>
+                        <span class="text-gray-900">${event.time || event.time_slot || event.timing || 'Not specified'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="font-medium text-gray-600">Gathering:</span>
+                        <span class="text-gray-900">${event.gathering || event.guest_count || event.attendees || 'Not specified'}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="font-medium text-gray-600">Team:</span>
+                        <span class="text-gray-900">${event.team_composition || event.team_size || 'Not specified'}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        container.innerHTML = `
+            <div class="border border-gray-200 rounded p-4 mb-8 section">
+                <p class="text-gray-500">No events specified</p>
+            </div>
+        `;
+    }
+}
+
+function updateDeliverables() {
+    const standardDeliverables = [
+        'E-invite Standard',
+        'All Raw Photos',
+        'Face Detection Gallery',
+        'Quick Edit for SM (40-50 Photos)',
+        'Overall 800-1000 edited Photos',
+        'Teaser/Highlight upto 5 min',
+        'Wedding Short Film upto 30 min',
+        'Long Film upto 60 mins',
+        '4 Reels (Upto 30 secs)',
+        '2 Photo Album (12×36")',
+        '1 Photo Frame (16×24")',
+        'All Raw Videos'
+    ];
+    
+    const addonDeliverables = [
+        'Coffee Table Book',
+        'Same Day Cut',
+        'Additional Albums',
+        'Extra Reels',
+        'Drone Coverage',
+        '4K Shoot',
+        'Print Booth'
+    ];
+    
+    document.getElementById('standard-deliverables').innerHTML = standardDeliverables
+        .map(item => `<div>☑ ${item}</div>`).join('');
+    
+    document.getElementById('addon-deliverables').innerHTML = addonDeliverables
+        .map(item => `<div>☐ ${item}</div>`).join('');
+}
+
+function updateOperationDetails(order) {
+    const operationData = order.operation || order.logistics || {};
+    updateField('operation-travel', operationData.travel || order.travel_cost || order.travel || 'On Client');
+    updateField('operation-accommodation', operationData.accommodation || order.accommodation_cost || order.accommodation || 'On Client');
+    updateField('operation-gear', operationData.gear_rental || order.gear_rental || order.equipment || 'No');
+    updateField('operation-drone', operationData.drone_rental || order.drone_rental || order.drone || 'No');
+}
+
+function updatePaymentSchedule(order) {
+    const tbody = document.getElementById('payment-schedule');
+    const totalAmount = parseInt((order.deal_amount || '0').toString().replace(/,/g, '')) || 0;
+    const advancePaid = parseInt((order.advance_paid || '0').toString().replace(/,/g, '')) || 0;
+    const eventPaid = parseInt((order.event_paid || '0').toString().replace(/,/g, '')) || 0;
+    const deliveryPending = totalAmount - advancePaid - eventPaid;
+    
+    // Calculate percentages
+    const advancePercent = totalAmount > 0 ? Math.round((advancePaid / totalAmount) * 100) : 30;
+    const eventPercent = totalAmount > 0 ? Math.round((eventPaid / totalAmount) * 100) : 50;
+    const deliveryPercent = 100 - advancePercent - eventPercent;
+    
+    tbody.innerHTML = `
+        <tr class="border-b border-gray-200">
+            <td class="py-2">Advance Payment</td>
+            <td class="text-center py-2">${advancePercent}%</td>
+            <td class="text-center py-2">₹${advancePaid.toLocaleString()}</td>
+            <td class="text-center py-2">${order.advance_date || 'TBD'}</td>
+        </tr>
+        <tr class="border-b border-gray-200">
+            <td class="py-2">Event Payment</td>
+            <td class="text-center py-2">${eventPercent}%</td>
+            <td class="text-center py-2">₹${eventPaid.toLocaleString()}</td>
+            <td class="text-center py-2">Event Date</td>
+        </tr>
+        <tr>
+            <td class="py-2">Delivery Payment</td>
+            <td class="text-center py-2">${deliveryPercent}%</td>
+            <td class="text-center py-2">₹${deliveryPending.toLocaleString()}</td>
+            <td class="text-center py-2">Delivery Date</td>
+        </tr>
+    `;
+}
+
+function updateField(fieldId, value) {
+    const element = document.getElementById(fieldId);
+    if (element) {
+        const cleanValue = value ? String(value).trim() : '';
+        const displayValue = cleanValue || 'Not specified';
+        element.textContent = displayValue;
+        
+        // Add visual indicator for empty fields
+        if (!cleanValue) {
+            element.style.color = '#9CA3AF';
+            element.style.fontStyle = 'italic';
+        } else {
+            element.style.color = '';
+            element.style.fontStyle = '';
+        }
+    }
+}
+
+function getCurrentDate() {
+    return new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short', 
+        year: 'numeric'
+    });
+}
+
+function showError(message) {
+    document.body.innerHTML = `
+        <div class="container mx-auto p-6 text-center">
+            <h2 class="text-xl font-bold text-red-600 mb-4">Error</h2>
+            <p class="text-gray-700 mb-4">${message}</p>
+            <button onclick="window.location.href='/order-bookings'" class="bg-blue-500 text-white px-4 py-2 rounded">
+                Back to Bookings
+            </button>
+        </div>
+    `;
+}
+
+// Sheet Tab Functions
+function showSheet(sheetType) {
+    // Hide all sheet containers
+    document.querySelectorAll('.a4-container').forEach(container => {
+        container.classList.add('hidden');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.sheet-tab').forEach(tab => {
+        tab.classList.remove('active', 'border-blue-500', 'text-blue-600');
+        tab.classList.add('border-transparent', 'text-gray-500');
+    });
+    
+    // Show selected sheet and activate tab
+    let containerId, tabId;
+    
+    switch(sheetType) {
+        case 'order':
+            containerId = 'order-sheet-container';
+            tabId = 'order-sheet-tab';
+            break;
+        case 'cost':
+            containerId = 'cost-sheet-container';
+            tabId = 'cost-sheet-tab';
+            break;
+        case 'team':
+            containerId = 'team-sheet-container';
+            tabId = 'team-sheet-tab';
+            break;
+        case 'production':
+            containerId = 'production-sheet-container';
+            tabId = 'production-sheet-tab';
+            break;
+        default:
+            containerId = 'order-sheet-container';
+            tabId = 'order-sheet-tab';
+    }
+    
+    // Show selected container
+    document.getElementById(containerId).classList.remove('hidden');
+    
+    // Activate selected tab
+    const activeTab = document.getElementById(tabId);
+    activeTab.classList.add('active', 'border-blue-500', 'text-blue-600');
+    activeTab.classList.remove('border-transparent', 'text-gray-500');
+    
+    // Update order IDs in all sheets
+    updateAllSheetHeaders();
+}
+
+function updateAllSheetHeaders() {
+    const orderId = document.getElementById('orderIdDisplay').textContent;
+    const currentDate = getCurrentDate();
+    
+    // Update all sheet headers
+    const headerIds = [
+        'costOrderIdDisplay', 'teamOrderIdDisplay', 'productionOrderIdDisplay',
+        'costOrderDateDisplay', 'teamOrderDateDisplay', 'productionOrderDateDisplay',
+        'costGeneratedDateDisplay', 'teamGeneratedDateDisplay', 'productionGeneratedDateDisplay'
+    ];
+    
+    headerIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            if (id.includes('OrderId')) {
+                element.textContent = orderId;
+            } else {
+                element.textContent = currentDate;
+            }
+        }
+    });
+}
+
+// Action button functions
+function lockOrder() {
+    const orderId = document.getElementById('orderIdDisplay').textContent;
+    
+    window.alertSystem.show(
+        `Are you sure you want to lock order ${orderId}? Once locked, no modifications can be made to this order.`,
+        'warning',
+        'Lock Order Confirmation',
+        {
+            callback: (confirmed) => {
+                if (confirmed) {
+                    // Show progress
+                    window.alertSystem.showProgress('Locking Order', 'Processing order lock...');
+                    
+                    setTimeout(() => {
+                        window.alertSystem.hideProgress();
+                        
+                        // Log action
+                        console.log('Order locked:', orderId, 'at', new Date().toISOString());
+                        
+                        // Show success
+                        window.alertSystem.show(
+                            `Order ${orderId} has been locked successfully. No further modifications are allowed.`,
+                            'success',
+                            'Order Locked',
+                            {
+                                confirmText: 'Understood'
+                            }
+                        );
+                    }, 1500);
+                }
+            },
+            confirmText: 'Yes, Lock Order',
+            cancelText: 'Cancel',
+            showCancel: true
+        }
+    );
+}
+
+function raiseQuotation() {
+    const orderId = document.getElementById('orderIdDisplay').textContent;
+    
+    window.alertSystem.show(
+        `Generate quotation for order ${orderId}? This will create a formal quotation document for the client.`,
+        'info',
+        'Generate Quotation',
+        {
+            callback: (confirmed) => {
+                if (confirmed) {
+                    // Show progress
+                    window.alertSystem.showProgress('Generating Quotation', 'Creating quotation document...');
+                    
+                    setTimeout(() => {
+                        window.alertSystem.updateProgress(50, 'Calculating costs...');
+                    }, 500);
+                    
+                    setTimeout(() => {
+                        window.alertSystem.updateProgress(100, 'Quotation generated!');
+                    }, 1000);
+                    
+                    setTimeout(() => {
+                        window.alertSystem.hideProgress();
+                        
+                        // Log action
+                        console.log('Quotation raised for:', orderId, 'at', new Date().toISOString());
+                        
+                        // Show success
+                        window.alertSystem.show(
+                            `Quotation for order ${orderId} has been generated successfully. You can now send it to the client.`,
+                            'success',
+                            'Quotation Generated',
+                            {
+                                confirmText: 'View Quotation'
+                            }
+                        );
+                    }, 1500);
+                }
+            },
+            confirmText: 'Generate Quotation',
+            cancelText: 'Cancel',
+            showCancel: true
+        }
+    );
+}
+
+function teamNote() {
+    const orderId = document.getElementById('orderIdDisplay').textContent;
+    
+    // First show info about team note
+    window.alertSystem.show(
+        `Add a team note for order ${orderId}. This note will be visible to all team members working on this order.`,
+        'info',
+        'Add Team Note',
+        {
+            callback: (confirmed) => {
+                if (confirmed) {
+                    // Use a custom prompt-like dialog
+                    const noteInput = prompt(`Enter team note for order ${orderId}:`);
+                    if (noteInput && noteInput.trim()) {
+                        // Show progress
+                        window.alertSystem.showProgress('Saving Note', 'Adding team note...');
+                        
+                        setTimeout(() => {
+                            window.alertSystem.hideProgress();
+                            
+                            // Log action
+                            console.log('Team note added for', orderId, ':', noteInput, 'at', new Date().toISOString());
+                            
+                            // Show success
+                            window.alertSystem.show(
+                                `Team note has been added successfully for order ${orderId}.`,
+                                'success',
+                                'Note Added',
+                                {
+                                    details: `Note: "${noteInput}"`,
+                                    confirmText: 'Great!'
+                                }
+                            );
+                        }, 1000);
+                    } else if (noteInput !== null) {
+                        window.alertSystem.toast('Please enter a valid note', 'warning');
+                    }
+                }
+            },
+            confirmText: 'Add Note',
+            cancelText: 'Cancel',
+            showCancel: true
+        }
+    );
+}
+
+function closeOrder() {
+    const orderId = document.getElementById('orderIdDisplay').textContent;
+    
+    window.alertSystem.show(
+        `Are you sure you want to close order ${orderId}? This will mark the order as completed and finalize all deliverables.`,
+        'warning',
+        'Close Order Confirmation',
+        {
+            callback: (confirmed) => {
+                if (confirmed) {
+                    // Show progress
+                    window.alertSystem.showProgress('Closing Order', 'Finalizing order completion...');
+                    
+                    setTimeout(() => {
+                        window.alertSystem.updateProgress(33, 'Updating order status...');
+                    }, 500);
+                    
+                    setTimeout(() => {
+                        window.alertSystem.updateProgress(66, 'Finalizing deliverables...');
+                    }, 1000);
+                    
+                    setTimeout(() => {
+                        window.alertSystem.updateProgress(100, 'Order closed successfully!');
+                    }, 1500);
+                    
+                    setTimeout(() => {
+                        window.alertSystem.hideProgress();
+                        
+                        // Log action
+                        console.log('Order closed:', orderId, 'at', new Date().toISOString());
+                        
+                        // Show success
+                        window.alertSystem.show(
+                            `Order ${orderId} has been closed successfully. All deliverables have been finalized and the project is now complete.`,
+                            'success',
+                            'Order Completed',
+                            {
+                                confirmText: 'Excellent!'
+                            }
+                        );
+                    }, 2000);
+                }
+            },
+            confirmText: 'Yes, Close Order',
+            cancelText: 'Cancel',
+            showCancel: true
+        }
+    );
+}
+
+function cancelOrder() {
+    const orderId = document.getElementById('orderIdDisplay').textContent;
+    
+    // Use custom alert for confirmation
+    window.alertSystem.show(
+        `Are you sure you want to permanently delete order ${orderId}? This action cannot be undone and will remove the order from all systems.`,
+        'error',
+        'Delete Order Confirmation',
+        {
+            callback: (confirmed) => {
+                if (confirmed) {
+                    deleteOrderPermanently(orderId);
+                }
+            },
+            confirmText: 'Yes, Delete Order',
+            cancelText: 'Cancel',
+            showCancel: true
+        }
+    );
+}
+
+function deleteOrderPermanently(orderId) {
+    // Show progress
+    window.alertSystem.showProgress('Deleting Order', 'Removing order from all systems...');
+    
+    try {
+        let deletedFromSources = 0;
+        const totalSources = 3;
+        
+        // Delete from booking_orders
+        const bookingOrders = JSON.parse(localStorage.getItem('weddingcrm_booking_orders') || '[]');
+        const updatedBookingOrders = bookingOrders.filter(order => order.id !== orderId);
+        localStorage.setItem('weddingcrm_booking_orders', JSON.stringify(updatedBookingOrders));
+        deletedFromSources++;
+        window.alertSystem.updateProgress(33, 'Deleted from booking orders...');
+        
+        setTimeout(() => {
+            // Delete from order_sheets
+            const orderSheets = JSON.parse(localStorage.getItem('weddingcrm_order_sheets') || '[]');
+            const updatedOrderSheets = orderSheets.filter(order => order.id !== orderId);
+            localStorage.setItem('weddingcrm_order_sheets', JSON.stringify(updatedOrderSheets));
+            deletedFromSources++;
+            window.alertSystem.updateProgress(66, 'Deleted from order sheets...');
+            
+            setTimeout(() => {
+                // Delete from any other order storage
+                const orders = JSON.parse(localStorage.getItem('weddingcrm_orders') || '[]');
+                const updatedOrders = orders.filter(order => order.id !== orderId);
+                localStorage.setItem('weddingcrm_orders', JSON.stringify(updatedOrders));
+                deletedFromSources++;
+                window.alertSystem.updateProgress(100, 'Order deleted successfully!');
+                
+                setTimeout(() => {
+                    window.alertSystem.hideProgress();
+                    
+                    // Log deletion
+                    console.log('Order deleted permanently:', {
+                        orderId: orderId,
+                        timestamp: new Date().toISOString(),
+                        deletedFrom: ['booking_orders', 'order_sheets', 'orders']
+                    });
+                    
+                    // Show success message
+                    window.alertSystem.show(
+                        `Order ${orderId} has been permanently deleted from all systems.`,
+                        'success',
+                        'Order Deleted Successfully',
+                        {
+                            callback: () => {
+                                // Redirect to bookings page
+                                window.location.href = '/order-bookings';
+                            },
+                            confirmText: 'Back to Bookings'
+                        }
+                    );
+                }, 1000);
+            }, 500);
+        }, 500);
+        
+    } catch (error) {
+        window.alertSystem.hideProgress();
+        window.alertSystem.show(
+            'Failed to delete order. Please try again.',
+            'error',
+            'Deletion Failed'
+        );
+        console.error('Error deleting order:', error);
+    }
+}
+</script>
+{% endblock %}

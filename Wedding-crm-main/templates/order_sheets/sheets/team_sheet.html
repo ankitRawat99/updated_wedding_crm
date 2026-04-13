@@ -1,0 +1,93 @@
+<!-- Team Sheet Container -->
+<div class="a4-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Team Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="teamOrderIdDisplay">Loading...</span> | Date: <span id="teamOrderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Team Allocation -->
+    <div class="section-header">
+        <h3>Team Allocation</h3>
+    </div>
+    
+    <table class="w-full text-sm border-collapse mb-8">
+        <thead>
+            <tr class="border-b-2 border-gray-300">
+                <th class="text-left py-3 font-semibold">Team Member</th>
+                <th class="text-center py-3 font-semibold">Role</th>
+                <th class="text-center py-3 font-semibold">Cost (₹)</th>
+                <th class="text-center py-3 font-semibold">Status</th>
+            </tr>
+        </thead>
+        <tbody id="team-allocation-table">
+            <tr><td colspan="4" class="text-center py-4">Loading...</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Team Composition -->
+    <div class="section-header">
+        <h3>Team Composition</h3>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-6 mb-8">
+        <div class="bg-purple-50 border border-purple-200 rounded p-4">
+            <h4 class="font-semibold text-purple-800 mb-3">Photography Team</h4>
+            <div id="photography-team" class="space-y-2">
+                Loading...
+            </div>
+        </div>
+        
+        <div class="bg-orange-50 border border-orange-200 rounded p-4">
+            <h4 class="font-semibold text-orange-800 mb-3">Videography Team</h4>
+            <div id="videography-team" class="space-y-2">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Equipment Assignment -->
+    <div class="section-header">
+        <h3>Equipment Assignment</h3>
+    </div>
+    
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+                <h5 class="font-medium text-gray-700 mb-2">Cameras</h5>
+                <div id="equipment-cameras" class="text-sm text-gray-600">
+                    Loading...
+                </div>
+            </div>
+            <div>
+                <h5 class="font-medium text-gray-700 mb-2">Lenses</h5>
+                <div id="equipment-lenses" class="text-sm text-gray-600">
+                    Loading...
+                </div>
+            </div>
+            <div>
+                <h5 class="font-medium text-gray-700 mb-2">Accessories</h5>
+                <div id="equipment-accessories" class="text-sm text-gray-600">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Notes -->
+    <div class="section-header">
+        <h3>Team Notes</h3>
+    </div>
+    
+    <div class="border border-gray-200 rounded p-4 mb-8 min-h-20">
+        <div id="team-notes" class="text-gray-700">
+            Loading...
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="teamGeneratedDateDisplay">Loading...</span></p>
+    </div>
+</div>

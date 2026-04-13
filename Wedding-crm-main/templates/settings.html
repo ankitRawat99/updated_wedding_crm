@@ -1,0 +1,97 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Settings - WeddingCRM{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <p class="text-gray-600">Manage your account settings and preferences</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Settings Navigation -->
+    <div class="bg-white rounded-custom shadow-sm p-6">
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Settings</h3>
+        <nav class="space-y-2">
+            <a href="#profile" class="flex items-center px-3 py-2 text-gold bg-gold bg-opacity-10 rounded-custom">
+                <i class="fas fa-user w-5 mr-3"></i>
+                <span>Profile</span>
+            </a>
+            <a href="#account" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-custom transition-colors">
+                <i class="fas fa-cog w-5 mr-3"></i>
+                <span>Account</span>
+            </a>
+            <a href="#notifications" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-custom transition-colors">
+                <i class="fas fa-bell w-5 mr-3"></i>
+                <span>Notifications</span>
+            </a>
+            <a href="#security" class="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-custom transition-colors">
+                <i class="fas fa-shield-alt w-5 mr-3"></i>
+                <span>Security</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Settings Content -->
+    <div class="lg:col-span-2 space-y-6">
+        <!-- Profile Settings -->
+        <div class="bg-white rounded-custom shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Profile Information</h3>
+            <form class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                        <input type="text" value="Admin" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                        <input type="text" value="User" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" value="admin@weddingcrm.com" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                    <input type="tel" value="(555) 123-4567" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Company</label>
+                    <input type="text" value="Wedding Dreams LLC" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all">
+                </div>
+                <button type="submit" class="gradient-bg text-white px-6 py-2 rounded-custom font-medium hover:opacity-90 transition-opacity">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="bg-white rounded-custom shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Notification Preferences</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-900">Email Notifications</h4>
+                        <p class="text-sm text-gray-600">Receive email updates about your events</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gold peer-focus:ring-opacity-25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gold"></div>
+                    </label>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-medium text-gray-900">SMS Notifications</h4>
+                        <p class="text-sm text-gray-600">Receive text message alerts</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gold peer-focus:ring-opacity-25 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gold"></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

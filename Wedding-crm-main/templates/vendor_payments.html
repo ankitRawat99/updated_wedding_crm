@@ -1,0 +1,423 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Vendor Payments - WeddingCRM{% endblock %}
+{% block page_title %}Vendor Payments{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <p class="text-gray-600">Manage and track all vendor payments and dues</p>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button class="px-4 py-2 gradient-bg text-white rounded-custom hover:opacity-90 transition-opacity">
+                <i class="fas fa-plus mr-2"></i>Add Payment
+            </button>
+            <button class="px-4 py-2 bg-green-600 text-white rounded-custom hover:bg-green-700 transition-colors">
+                <i class="fas fa-download mr-2"></i>Export Report
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="bg-white rounded-custom shadow-sm p-6 mb-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="gradient-bg text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">₹2,45,000</div>
+            <div class="text-sm opacity-90">Total Pending</div>
+        </div>
+        <div class="bg-green-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">₹1,85,000</div>
+            <div class="text-sm opacity-90">Paid This Month</div>
+        </div>
+        <div class="bg-blue-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">15</div>
+            <div class="text-sm opacity-90">Active Vendors</div>
+        </div>
+        <div class="bg-orange-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">8</div>
+            <div class="text-sm opacity-90">Overdue Payments</div>
+        </div>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="bg-white rounded-custom shadow-sm p-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" placeholder="Search vendors..." 
+                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent" id="searchInput">
+        </div>
+        <select class="px-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="paid">Paid</option>
+            <option value="overdue">Overdue</option>
+            <option value="partial">Partial</option>
+        </select>
+        <select class="px-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent">
+            <option value="">All Vendors</option>
+            <option value="photographer">Photographers</option>
+            <option value="videographer">Videographers</option>
+            <option value="decorator">Decorators</option>
+            <option value="caterer">Caterers</option>
+        </select>
+        <select class="px-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent">
+            <option value="">All Projects</option>
+            <option value="current">Current Month</option>
+            <option value="last">Last Month</option>
+            <option value="quarter">This Quarter</option>
+        </select>
+    </div>
+</div>
+
+<!-- Vendor Payment Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    
+    <!-- Pending Payment Card -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 card-hover">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-blue-100 rounded-custom flex items-center justify-center">
+                    <i class="fas fa-camera text-blue-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Rahul Photography</h3>
+                    <p class="text-sm text-gray-600">Wedding Photographer</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">Pending</span>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Project:</span>
+                <span class="font-medium">Priya & Rohit Wedding</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Amount Due:</span>
+                <span class="font-medium text-red-600">₹25,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Due Date:</span>
+                <span class="font-medium">Dec 25, 2024</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Days Overdue:</span>
+                <span class="font-medium text-red-600">3 days</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Payment Progress:</span>
+                <span class="font-medium">60%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-yellow-500 h-2 rounded-full" style="width: 60%"></div>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <button class="px-4 py-2 gradient-bg text-white rounded-custom text-sm hover:opacity-90 transition-opacity">
+                <i class="fas fa-credit-card mr-1"></i>Pay Now
+            </button>
+            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm hover:bg-gray-200 transition-colors">
+                <i class="fas fa-eye mr-1"></i>View Details
+            </button>
+        </div>
+    </div>
+
+    <!-- Paid Card -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 card-hover">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-green-100 rounded-custom flex items-center justify-center">
+                    <i class="fas fa-video text-green-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Cinematic Films</h3>
+                    <p class="text-sm text-gray-600">Wedding Videographer</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">Paid</span>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Project:</span>
+                <span class="font-medium">Kavya & Arjun Reception</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Amount Paid:</span>
+                <span class="font-medium text-green-600">₹35,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Payment Date:</span>
+                <span class="font-medium">Dec 15, 2024</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Payment Method:</span>
+                <span class="font-medium">Bank Transfer</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Payment Progress:</span>
+                <span class="font-medium text-green-600">100%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <button class="px-4 py-2 bg-green-600 text-white rounded-custom text-sm hover:bg-green-700 transition-colors">
+                <i class="fas fa-check mr-1"></i>Completed
+            </button>
+            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm hover:bg-gray-200 transition-colors">
+                <i class="fas fa-download mr-1"></i>Receipt
+            </button>
+        </div>
+    </div>
+
+    <!-- Partial Payment Card -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 card-hover">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-purple-100 rounded-custom flex items-center justify-center">
+                    <i class="fas fa-utensils text-purple-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Royal Caterers</h3>
+                    <p class="text-sm text-gray-600">Wedding Catering</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">Partial</span>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Project:</span>
+                <span class="font-medium">Riya & Karan Sangam</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Total Amount:</span>
+                <span class="font-medium">₹50,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Paid:</span>
+                <span class="font-medium text-green-600">₹30,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Remaining:</span>
+                <span class="font-medium text-orange-600">₹20,000</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Payment Progress:</span>
+                <span class="font-medium">60%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <button class="px-4 py-2 bg-orange-600 text-white rounded-custom text-sm hover:bg-orange-700 transition-colors">
+                <i class="fas fa-plus mr-1"></i>Add Payment
+            </button>
+            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm hover:bg-gray-200 transition-colors">
+                <i class="fas fa-history mr-1"></i>History
+            </button>
+        </div>
+    </div>
+
+    <!-- Overdue Payment Card -->
+    <div class="bg-white rounded-custom shadow-sm border border-red-200 p-6 card-hover">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-red-100 rounded-custom flex items-center justify-center">
+                    <i class="fas fa-palette text-red-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Dream Decorators</h3>
+                    <p class="text-sm text-gray-600">Event Decoration</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full">Overdue</span>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Project:</span>
+                <span class="font-medium">Meera & Vikram Haldi</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Amount Due:</span>
+                <span class="font-medium text-red-600">₹40,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Due Date:</span>
+                <span class="font-medium text-red-600">Dec 10, 2024</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Days Overdue:</span>
+                <span class="font-medium text-red-600">8 days</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Payment Progress:</span>
+                <span class="font-medium text-red-600">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-red-500 h-2 rounded-full" style="width: 5%"></div>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <button class="px-4 py-2 bg-red-600 text-white rounded-custom text-sm hover:bg-red-700 transition-colors">
+                <i class="fas fa-exclamation-triangle mr-1"></i>Urgent Pay
+            </button>
+            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm hover:bg-gray-200 transition-colors">
+                <i class="fas fa-phone mr-1"></i>Contact
+            </button>
+        </div>
+    </div>
+
+    <!-- Upcoming Payment Card -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 card-hover">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-indigo-100 rounded-custom flex items-center justify-center">
+                    <i class="fas fa-music text-indigo-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Melody Musicians</h3>
+                    <p class="text-sm text-gray-600">Wedding Band</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full">Upcoming</span>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Project:</span>
+                <span class="font-medium">Anita & Suresh Wedding</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Amount Due:</span>
+                <span class="font-medium">₹15,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Due Date:</span>
+                <span class="font-medium">Dec 30, 2024</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Days Remaining:</span>
+                <span class="font-medium text-blue-600">12 days</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Payment Progress:</span>
+                <span class="font-medium">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-gray-400 h-2 rounded-full" style="width: 5%"></div>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-custom text-sm hover:bg-blue-700 transition-colors">
+                <i class="fas fa-calendar mr-1"></i>Schedule
+            </button>
+            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm hover:bg-gray-200 transition-colors">
+                <i class="fas fa-edit mr-1"></i>Edit
+            </button>
+        </div>
+    </div>
+
+    <!-- New Vendor Card -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 card-hover">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 bg-teal-100 rounded-custom flex items-center justify-center">
+                    <i class="fas fa-car text-teal-600 text-xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-gray-900">Luxury Transport</h3>
+                    <p class="text-sm text-gray-600">Wedding Cars</p>
+                </div>
+            </div>
+            <span class="px-3 py-1 bg-teal-100 text-teal-800 text-xs font-semibold rounded-full">New</span>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Project:</span>
+                <span class="font-medium">Divya & Rajesh Wedding</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Quoted Amount:</span>
+                <span class="font-medium">₹12,000</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Service Date:</span>
+                <span class="font-medium">Jan 5, 2025</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Contract Status:</span>
+                <span class="font-medium text-yellow-600">Pending</span>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Setup Progress:</span>
+                <span class="font-medium">25%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-teal-500 h-2 rounded-full" style="width: 25%"></div>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <button class="px-4 py-2 bg-teal-600 text-white rounded-custom text-sm hover:bg-teal-700 transition-colors">
+                <i class="fas fa-file-contract mr-1"></i>Finalize
+            </button>
+            <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm hover:bg-gray-200 transition-colors">
+                <i class="fas fa-comments mr-1"></i>Discuss
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.card-hover');
+    
+    cards.forEach(card => {
+        const vendorName = card.querySelector('h3').textContent.toLowerCase();
+        const vendorType = card.querySelector('p').textContent.toLowerCase();
+        if (vendorName.includes(searchTerm) || vendorType.includes(searchTerm)) {
+            card.parentElement.style.display = 'block';
+        } else {
+            card.parentElement.style.display = 'none';
+        }
+    });
+});
+</script>
+
+{% endblock %}

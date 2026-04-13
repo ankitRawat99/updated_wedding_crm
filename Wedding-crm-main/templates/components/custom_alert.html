@@ -1,0 +1,328 @@
+<!-- Enhanced Wedding CRM Alert Modal Component -->
+<div id="customAlert" class="fixed inset-0 bg-charcoal bg-opacity-60 z-50 flex items-center justify-center opacity-0 invisible transition-all duration-400 ease-out">
+    <div id="alertModal" class="bg-white rounded-custom shadow-2xl max-w-lg w-full mx-4 transform scale-90 transition-all duration-400 ease-out border border-gray-200">
+        <!-- Header -->
+        <div id="alertHeader" class="px-6 py-4 border-b border-gray-100 gradient-bg rounded-t-custom">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md" id="alertIconContainer">
+                        <i id="alertIcon" class="fas fa-exclamation-triangle text-gold text-lg"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 id="alertTitle" class="text-lg font-semibold text-charcoal">System Alert</h3>
+                        <p class="text-xs text-gray-600 mt-1">WeddingCRM Notification</p>
+                    </div>
+                </div>
+                <button onclick="closeCustomAlert()" class="text-white hover:text-gray-200 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Body -->
+        <div class="px-6 py-5 bg-light-bg">
+            <p id="alertMessage" class="text-charcoal leading-relaxed"></p>
+            <div id="alertDetails" class="hidden mt-3 p-3 bg-gray-50 rounded-lg text-sm text-gray-700"></div>
+        </div>
+        
+        <!-- Footer -->
+        <div id="alertFooter" class="px-6 py-4 bg-card-bg rounded-b-custom flex justify-end space-x-3">
+            <button onclick="closeCustomAlert()" class="px-6 py-2.5 gradient-bg text-white rounded-custom hover:shadow-lg transition-all duration-200 text-sm font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2">
+                <i class="fas fa-check mr-2"></i>Understood
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notifications Container -->
+<div id="toastContainer" class="fixed top-4 right-4 z-60 space-y-2"></div>
+
+<!-- Progress Alert Modal -->
+<div id="progressAlert" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-custom shadow-xl max-w-md w-full">
+        <div class="p-6">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center mr-4 bg-blue-100">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                </div>
+                <div class="flex-1">
+                    <h3 id="progressTitle" class="text-lg font-semibold text-gray-900">Processing...</h3>
+                </div>
+            </div>
+            <p id="progressMessage" class="text-gray-600 mb-4">Please wait while we process your request.</p>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div id="progressBar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="text-right mt-2">
+                <span id="progressPercent" class="text-sm text-gray-500">0%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.gradient-text {
+    background: linear-gradient(135deg, #E6B87D, #F589A8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.gradient-bg {
+    background: linear-gradient(135deg, #E6B87D, #F589A8);
+}
+#toastContainer {
+    pointer-events: none;
+}
+#toastContainer > * {
+    pointer-events: auto;
+}
+</style>
+
+<script>
+// Enhanced CRM Alert System
+class AlertSystem {
+    constructor() {
+        this.alertCallback = null;
+        this.maxToasts = 5;
+    }
+
+    show(message, type = 'warning', title = 'System Alert', options = {}) {
+        const {
+            callback = null,
+            details = null,
+            confirmText = 'Understood',
+            cancelText = 'Cancel',
+            showCancel = false,
+            autoClose = false,
+            duration = 5000
+        } = options;
+
+        const modal = document.getElementById('customAlert');
+        const alertModal = document.getElementById('alertModal');
+        const icon = document.getElementById('alertIcon');
+        const iconContainer = document.getElementById('alertIconContainer');
+        const titleEl = document.getElementById('alertTitle');
+        const messageEl = document.getElementById('alertMessage');
+        const detailsEl = document.getElementById('alertDetails');
+        const footer = document.getElementById('alertFooter');
+        
+        this.alertCallback = callback;
+        
+        // Set content
+        titleEl.textContent = title;
+        messageEl.innerHTML = message;
+        
+        // Show/hide details
+        if (details) {
+            detailsEl.textContent = details;
+            detailsEl.classList.remove('hidden');
+        } else {
+            detailsEl.classList.add('hidden');
+        }
+        
+        // Set icon and colors based on type
+        const configs = {
+            success: {
+                icon: 'fas fa-check-circle text-green-500 text-lg',
+                container: 'flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-green-50 border border-green-200',
+                btnClass: 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
+            },
+            error: {
+                icon: 'fas fa-times-circle text-red-500 text-lg',
+                container: 'flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-red-50 border border-red-200',
+                btnClass: 'bg-red-600 hover:bg-red-700 focus:ring-red-500'
+            },
+            warning: {
+                icon: 'fas fa-exclamation-triangle text-yellow-500 text-lg',
+                container: 'flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-yellow-50 border border-yellow-200',
+                btnClass: 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500'
+            },
+            info: {
+                icon: 'fas fa-info-circle text-blue-500 text-lg',
+                container: 'flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-blue-50 border border-blue-200',
+                btnClass: 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500'
+            }
+        };
+        
+        const config = configs[type] || {
+            icon: 'fas fa-exclamation-triangle text-gold text-lg',
+            container: 'flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-md',
+            btnClass: 'gradient-bg hover:shadow-lg focus:ring-gold'
+        };
+        
+        icon.className = config.icon;
+        iconContainer.className = config.container;
+        
+        // Update footer buttons
+        if (callback || showCancel) {
+            footer.innerHTML = `
+                <button onclick="window.alertSystem.confirm()" class="px-6 py-2.5 ${config.btnClass} text-white rounded-custom transition-all duration-200 text-sm font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2">
+                    <i class="fas fa-check mr-2"></i>${confirmText}
+                </button>
+                <button onclick="window.alertSystem.close()" class="px-4 py-2 bg-gray-500 text-white rounded-custom hover:bg-gray-600 transition-colors text-sm font-medium">
+                    <i class="fas fa-times mr-2"></i>${cancelText}
+                </button>
+            `;
+        } else {
+            footer.innerHTML = `
+                <button onclick="window.alertSystem.close()" class="px-6 py-2.5 ${config.btnClass} text-white rounded-custom transition-all duration-200 text-sm font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2">
+                    <i class="fas fa-check mr-2"></i>${confirmText}
+                </button>
+            `;
+        }
+        
+        // Show with animation
+        modal.classList.remove('invisible');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            alertModal.classList.remove('scale-90');
+            alertModal.classList.add('scale-100');
+        }, 50);
+        
+        // Auto close
+        if (autoClose) {
+            setTimeout(() => {
+                this.close();
+            }, duration);
+        }
+    }
+
+    confirm() {
+        if (this.alertCallback) {
+            const callback = this.alertCallback;
+            this.alertCallback = null;
+            this.close();
+            setTimeout(() => {
+                callback(true);
+            }, 500);
+        } else {
+            this.close();
+        }
+    }
+
+    close() {
+        const modal = document.getElementById('customAlert');
+        const alertModal = document.getElementById('alertModal');
+        
+        this.alertCallback = null;
+        
+        modal.classList.add('opacity-0');
+        alertModal.classList.remove('scale-100');
+        alertModal.classList.add('scale-90');
+        
+        setTimeout(() => {
+            modal.classList.add('invisible');
+        }, 400);
+    }
+
+    toast(message, type = 'info', duration = 4000) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        
+        const configs = {
+            success: { bg: 'bg-green-500', icon: 'fa-check' },
+            error: { bg: 'bg-red-500', icon: 'fa-times' },
+            warning: { bg: 'bg-yellow-500', icon: 'fa-exclamation-triangle' },
+            info: { bg: 'bg-blue-500', icon: 'fa-info' }
+        };
+        
+        const config = configs[type] || configs.info;
+        
+        toast.className = `${config.bg} text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 transform translate-x-full transition-transform duration-300 max-w-sm`;
+        toast.innerHTML = `
+            <i class="fas ${config.icon}"></i>
+            <span class="flex-1">${message}</span>
+            <button onclick="this.parentElement.remove()" class="text-white hover:text-gray-200">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        `;
+        
+        container.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.remove('translate-x-full');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.add('translate-x-full');
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.remove();
+                }
+            }, 300);
+        }, duration);
+        
+        // Limit toasts
+        const toasts = container.children;
+        if (toasts.length > this.maxToasts) {
+            toasts[0].remove();
+        }
+    }
+
+    showProgress(title = 'Processing...', message = 'Please wait...') {
+        const modal = document.getElementById('progressAlert');
+        const titleEl = document.getElementById('progressTitle');
+        const messageEl = document.getElementById('progressMessage');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+        progressBar.style.width = '0%';
+        progressPercent.textContent = '0%';
+        
+        modal.classList.remove('hidden');
+    }
+
+    updateProgress(percent, message = null) {
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const messageEl = document.getElementById('progressMessage');
+        
+        progressBar.style.width = `${percent}%`;
+        progressPercent.textContent = `${percent}%`;
+        
+        if (message) {
+            messageEl.textContent = message;
+        }
+    }
+
+    hideProgress() {
+        const modal = document.getElementById('progressAlert');
+        modal.classList.add('hidden');
+    }
+}
+
+// Create global instance
+window.alertSystem = new AlertSystem();
+
+// Backward compatibility
+function showCustomAlert(message, type = 'warning', title = 'System Alert', callback = null) {
+    window.alertSystem.show(message, type, title, { callback });
+}
+
+function confirmCustomAlert() {
+    window.alertSystem.confirm();
+}
+
+function closeCustomAlert() {
+    window.alertSystem.close();
+}
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Close on backdrop click
+    document.getElementById('customAlert').addEventListener('click', function(e) {
+        if (e.target === this) {
+            window.alertSystem.close();
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !document.getElementById('customAlert').classList.contains('invisible')) {
+            window.alertSystem.close();
+        }
+    });
+});
+</script>

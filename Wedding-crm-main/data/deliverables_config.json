@@ -1,0 +1,38 @@
+{
+  "standard_deliverables": [
+    {"value": "E-invite Standard", "label": "E-invite Standard", "description": "Digital wedding invitation", "checked": true},
+    {"value": "All Raw Photos", "label": "All Raw Photos", "description": "Unedited original photos", "checked": true},
+    {"value": "Face Detection Gallery", "label": "Face Detection Gallery", "description": "AI-powered photo sorting", "checked": true},
+    {"value": "Quick Edit for SM (40-50 Photos)", "label": "Quick Edit for SM", "description": "40-50 photos for social media", "checked": true},
+    {"value": "Overall 800-1000 edited Photos (200 SF + 800)", "label": "800-1000 Edited Photos", "description": "200 SF + 800 regular edits", "checked": true},
+    {"value": "Teaser/Highlight upto 5 min (including interview)", "label": "Teaser/Highlight", "description": "Up to 5 min with interview", "checked": true},
+    {"value": "Wedding Short Film upto 30 min", "label": "Wedding Short Film", "description": "Up to 30 minutes", "checked": true},
+    {"value": "Long Film upto 60 mins (all events cover)", "label": "Long Film", "description": "Up to 60 mins, all events", "checked": true},
+    {"value": "4 Reels (Upto 30 secs)", "label": "4 Reels", "description": "Up to 30 seconds each", "checked": true},
+    {"value": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)", "label": "2 Photo Albums", "description": "12\"×36\", premium quality", "checked": true},
+    {"value": "1 Photo Frame (16*24)", "label": "1 Photo Frame", "description": "16\"×24\" premium frame", "checked": true},
+    {"value": "All Raw Videos", "label": "All Raw Videos", "description": "Unedited video footage", "checked": true}
+  ],
+  "addon_deliverables": [
+    {"value": "Ad-on Album (Standard)", "label": "Add-on Album (Standard)", "description": "Additional photo album", "checked": false},
+    {"value": "Ad-on Album (Premium)", "label": "Add-on Album (Premium)", "description": "Luxury photo album", "checked": false},
+    {"value": "Coffee Table Book", "label": "Coffee Table Book", "description": "Premium display book", "checked": false},
+    {"value": "Wedding Invite (Customised)", "label": "Wedding Invite (Custom)", "description": "Personalized invitation", "checked": false},
+    {"value": "Photo Frame", "label": "Photo Frame", "description": "Additional frame", "checked": false},
+    {"value": "Ad-on Reels", "label": "Add-on Reels", "description": "Extra social media reels", "checked": false},
+    {"value": "Per Event Short Film", "label": "Per Event Short Film", "description": "Individual event films", "checked": false},
+    {"value": "Drone per day addition", "label": "Drone per Day", "description": "Aerial photography/videography", "checked": false},
+    {"value": "4K Shoot", "label": "4K Shoot", "description": "Ultra HD video recording", "checked": false},
+    {"value": "Same Day Cut", "label": "Same Day Cut", "description": "Quick edit delivery", "checked": false},
+    {"value": "Print Booth (Within Delhi)", "label": "Print Booth", "description": "Live photo printing (Delhi)", "checked": false}
+  ],
+  "pre_wedding_deliverables": {
+    "photo": [
+      {"value": "Pre-Wedding Edited Photos", "label": "Edited Photos", "description": "Pre-wedding photo editing", "default_quantity": 50}
+    ],
+    "photo_video": [
+      {"value": "Pre-Wedding Edited Photos", "label": "Edited Photos", "description": "Pre-wedding photo editing", "default_quantity": 50},
+      {"value": "Pre-Wedding Video", "label": "Pre-Wedding Video", "description": "Pre-wedding video editing", "default_quantity": 5}
+    ]
+  }
+}

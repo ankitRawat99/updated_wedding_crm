@@ -1,0 +1,76 @@
+{
+  "team_members": [
+    {
+      "id": 1,
+      "name": "Mayank Sharma",
+      "specialization": "Candid Photography",
+      "experience": "5 years",
+      "availability": "Available",
+      "contact": "+91 98765 43210",
+      "skills": ["Candid", "Portrait", "Event Photography"]
+    },
+    {
+      "id": 2,
+      "name": "Ayush Kumar",
+      "specialization": "Cinematography",
+      "experience": "4 years",
+      "availability": "Available",
+      "contact": "+91 98765 43211",
+      "skills": ["Cine", "Video Editing", "Drone Operation"]
+    },
+    {
+      "id": 3,
+      "name": "Sachin Gupta",
+      "specialization": "Traditional Photography",
+      "experience": "6 years",
+      "availability": "Available",
+      "contact": "+91 98765 43212",
+      "skills": ["TPhoto", "Studio Photography", "Portrait"]
+    },
+    {
+      "id": 4,
+      "name": "Piyush Singh",
+      "specialization": "Traditional Videography",
+      "experience": "3 years",
+      "availability": "Available",
+      "contact": "+91 98765 43213",
+      "skills": ["TVideo", "Event Coverage", "Live Streaming"]
+    },
+    {
+      "id": 5,
+      "name": "Suresh Kumar",
+      "specialization": "Candid Photography",
+      "experience": "7 years",
+      "availability": "Available",
+      "contact": "+91 98765 43214",
+      "skills": ["Candid", "Wedding Photography", "Pre-wedding"]
+    },
+    {
+      "id": 6,
+      "name": "Asif Khan",
+      "specialization": "Cinematography",
+      "experience": "5 years",
+      "availability": "Available",
+      "contact": "+91 98765 43215",
+      "skills": ["Cine", "Documentary", "Music Videos"]
+    },
+    {
+      "id": 7,
+      "name": "Shankar Yadav",
+      "specialization": "Traditional Photography",
+      "experience": "4 years",
+      "availability": "Available",
+      "contact": "+91 98765 43216",
+      "skills": ["TPhoto", "Family Photography", "Events"]
+    },
+    {
+      "id": 8,
+      "name": "Paras Jain",
+      "specialization": "Traditional Videography",
+      "experience": "3 years",
+      "availability": "Available",
+      "contact": "+91 98765 43217",
+      "skills": ["TVideo", "Highlight Reels", "Social Media Content"]
+    }
+  ]
+}

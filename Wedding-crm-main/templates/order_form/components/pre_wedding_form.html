@@ -1,0 +1,29 @@
+<!-- Pre-Wedding Toggle Section -->
+<div class="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-custom p-6 mb-8">
+    <div class="flex items-center mb-6">
+        <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-heart text-white text-xl"></i>
+        </div>
+        <div>
+            <h4 class="text-xl font-bold text-purple-800">Pre-Wedding Option</h4>
+            <p class="text-sm text-purple-600">Enable pre-wedding shoot for this order</p>
+        </div>
+    </div>
+    
+    <!-- Pre-Wedding Toggle -->
+    <div class="flex items-start gap-6 mb-6">
+        <div class="bg-white border border-purple-200 rounded-custom p-4">
+            <div class="flex items-center">
+                <label class="relative inline-flex items-center cursor-pointer mr-3">
+                    <input type="checkbox" id="preWeddingToggle" class="sr-only peer" onchange="togglePreWeddingForm()">
+                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                </label>
+                <div class="flex items-center">
+                    <i class="fas fa-heart text-purple-600 mr-2"></i>
+                    <span class="font-medium text-purple-800">Enable Pre-Wedding</span>
+                </div>
+            </div>
+            <p class="text-xs text-purple-600 mt-2 ml-14">Pre-wedding event will be added to Event Details section</p>
+        </div>
+    </div>
+</div>

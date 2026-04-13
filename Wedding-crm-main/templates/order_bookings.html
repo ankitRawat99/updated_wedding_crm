@@ -1,0 +1,545 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Order Booking - WeddingCRM{% endblock %}
+{% block page_title %}Order Booking{% endblock %}
+
+{% block content %}
+<!-- Header Actions -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <p class="text-gray-600">Manage your wedding order bookings and client information</p>
+        </div>
+    </div>
+</div>
+
+<!-- Status Divisions & Filters -->
+<div class="bg-white rounded-custom shadow-sm mb-6" style="position: relative; z-index: 10;">
+    <!-- Main Divisions -->
+    <div class="p-4 border-b border-gray-200">
+        <div class="flex flex-wrap gap-2 mb-4">
+            <button onclick="filterByDivision('active-events')" class="division-btn px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" data-division="active-events">
+                <i class="fas fa-calendar-plus mr-1"></i>Active Events
+            </button>
+            <button onclick="filterByDivision('previous-events')" class="division-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors" data-division="previous-events">
+                <i class="fas fa-calendar-check mr-1"></i>Previous Events
+            </button>
+        </div>
+        
+        <!-- Active Booking Count -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <span class="text-sm font-medium text-gray-600" id="bookingLabel">Active Booking:</span>
+                <span class="text-lg font-bold text-blue-600" id="activeBookingCount">6</span>
+            </div>
+            
+            <!-- Search -->
+            <div class="flex-1 max-w-md relative ml-4">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="Search order bookings..." 
+                       class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Status Filters -->
+    <div class="p-4" style="min-height: 80px;">
+        <h5 class="text-sm font-medium text-gray-700 mb-3">Filters:</h5>
+        <div class="flex flex-wrap gap-2" id="filterButtons">
+            <button onclick="filterByStatus('locked')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="locked">
+                <i class="fas fa-lock mr-1"></i>Locked
+            </button>
+            <button onclick="filterByStatus('not-locked')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="not-locked">
+                <i class="fas fa-unlock mr-1"></i>Not Locked
+            </button>
+            <button onclick="filterByStatus('lock-waitlist')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="lock-waitlist">
+                <i class="fas fa-clock mr-1"></i>Lock Waitlist
+            </button>
+            <button onclick="filterByStatus('pre-event')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="pre-event">
+                <i class="fas fa-calendar-alt mr-1"></i>Pre Event
+            </button>
+            <button onclick="filterByStatus('ongoing-events')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="ongoing-events">
+                <i class="fas fa-video mr-1"></i>Ongoing Events
+            </button>
+            <button onclick="filterByStatus('post-events')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="post-events">
+                <i class="fas fa-database mr-1"></i>Post Events
+            </button>
+            <button onclick="filterByStatus('in-production-waitlist')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="in-production-waitlist">
+                <i class="fas fa-hourglass-half mr-1"></i>In Production Waitlist
+            </button>
+            <button onclick="filterByStatus('in-production')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="in-production">
+                <i class="fas fa-cogs mr-1"></i>In Production
+            </button>
+            <button onclick="filterByStatus('out-production')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="out-production">
+                <i class="fas fa-check-circle mr-1"></i>Out Production
+            </button>
+            <button onclick="filterByStatus('client-approval')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="client-approval">
+                <i class="fas fa-user-check mr-1"></i>Client Approval/Revision
+            </button>
+            <button onclick="filterByStatus('completion-waitlist')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="completion-waitlist">
+                <i class="fas fa-flag-checkered mr-1"></i>Completion Waitlist
+            </button>
+            <button onclick="filterByStatus('payment-waitlist')" class="status-btn px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors" data-status="payment-waitlist">
+                <i class="fas fa-credit-card mr-1"></i>Payment Waitlist
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Order Booking Cards -->
+<div id="clientsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Dynamic Booking Cards from JSON -->
+    {% if booking_orders %}
+    {% for order in booking_orders %}
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 overflow-hidden relative flex flex-col cursor-pointer" data-status="{{ order.status }}" data-stage="{{ order.stage }}" onclick="window.location.href='/order-sheet?order_id={{ order.id }}'">
+        <!-- Stage Toast Notification -->
+        <div class="absolute top-2 right-2 z-10">
+            <div class="stage-toast toast-{{ order.stage }} px-3 py-1 rounded-r-md text-xs font-medium shadow-sm">
+                <i class="fas fa-calendar-check mr-1"></i>{{ order.stage|title|replace('-', ' ') }} Stage
+            </div>
+        </div>
+        
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-3 border-b border-gray-100">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm font-bold text-gray-800">#{{ order.id }}</span>
+                    {% if order.live_status %}
+                    <div class="animate-pulse">
+                        <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                            <i class="fas fa-circle mr-1"></i>LIVE
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="flex items-center space-x-1">
+                    <!-- Stage Icons -->
+                    <div class="bg-green-500 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center shadow-md" title="Lock Stage - Completed">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="bg-blue-500 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center shadow-md" title="Event Stage - Active">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="bg-gray-200 text-gray-400 w-6 h-6 rounded-full text-xs flex items-center justify-center" title="Production Stage">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-4 flex-1">
+            <!-- Couple Names -->
+            <div class="mb-3">
+                <h3 class="font-semibold text-gray-900 text-lg">{{ order.couple_name }}</h3>
+            </div>
+            
+            <div class="mb-4">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="font-medium text-gray-700">₹{{ order.deal_amount }}</span>
+                    {% if order.payment_status == 'completed' %}
+                        <span class="text-green-600 font-medium">Paid: ₹{{ order.deal_amount }} (100%)</span>
+                    {% else %}
+                        <span class="text-orange-600 font-medium">Pending: ₹{{ order.delivery_pending }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="flex space-x-0 mb-1">
+                    <div class="flex-1 {% if order.advance_paid != '0' %}bg-green-500{% else %}bg-gray-300{% endif %} h-2 rounded-l-full" title="Advance"></div>
+                    <div class="flex-1 {% if order.event_paid != '0' %}bg-green-500{% else %}bg-gray-300{% endif %} h-2" title="Event"></div>
+                    <div class="flex-1 {% if order.payment_status == 'completed' %}bg-green-500{% else %}bg-gray-300{% endif %} h-2 rounded-r-full" title="Delivery"></div>
+                </div>
+                
+                <div class="flex justify-between text-xs text-gray-600">
+                    <span>Advance</span>
+                    <span>Event</span>
+                    <span>Delivery</span>
+                </div>
+                
+                {% if order.next_payment_due %}
+                <div class="text-xs text-orange-600 font-medium mt-1">
+                    <i class="fas fa-clock mr-1"></i>{{ order.next_payment_due }}
+                </div>
+                {% endif %}
+            </div>
+            
+            {% if order.events %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Event Schedule Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-emerald-700 mb-2">
+                    <i class="fas fa-calendar-alt mr-1"></i>{% if order.live_status %}Live Event Schedule{% else %}Event Schedule{% endif %}
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for event in order.events %}
+                    <span class="px-2 py-1 {% if event.status == 'live' %}chip-live border-2 border-red-300{% elif event.status == 'done' %}chip-events chip-completed{% else %}chip-events{% endif %} rounded-full text-xs font-medium">
+                        <i class="{% if event.status == 'live' %}fas fa-circle{% elif event.status == 'done' %}fas fa-check{% elif event.status == 'pending' %}fas fa-clock{% else %}fas fa-heart{% endif %} mr-1{% if event.status == 'live' %} text-red-500{% endif %}"></i>{{ event.name }} • {{ event.status|upper }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if order.team_members %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Team Allocation Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-purple-700 mb-2">
+                    <i class="fas fa-users mr-1"></i>{% if order.stage == 'post-event' %}Team Data Collection{% else %}Allocated Team{% endif %}
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for member in order.team_members %}
+                    <span class="px-2 py-1 {% if order.stage == 'post-event' %}chip-data{% else %}chip-team{% endif %} {% if member.status == 'completed' or member.status == 'done' %}chip-completed{% endif %} rounded-full text-xs font-medium">
+                        <i class="{% if member.status == 'completed' or member.status == 'done' %}fas fa-check{% elif member.status == 'pending' %}fas fa-clock{% elif member.type == 'Candid' or member.type == 'TPhoto' %}fas fa-camera{% elif member.type == 'Cine' %}fas fa-video{% else %}fas fa-user{% endif %} mr-1"></i>{% if member.name %}{{ member.name }}{% else %}{{ member.type|title }}{% endif %} {% if member.status %}• {{ member.status|upper }}{% endif %}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+
+            
+            {% if order.production_team %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Production Team Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-indigo-800 mb-2">
+                    <i class="fas fa-users mr-1"></i>Production Team
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for member in order.production_team %}
+                    <span class="px-2 py-1 chip-production {% if member.status == 'completed' %}chip-completed{% endif %} rounded-full text-xs font-medium">
+                        <i class="{% if member.status == 'completed' %}fas fa-check-double{% elif 'Photo' in member.type %}fas fa-image{% elif 'Video' in member.type %}fas fa-video{% elif 'Designer' in member.type %}fas fa-palette{% else %}fas fa-user{% endif %} mr-1"></i>{{ member.name }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if order.client_dependencies %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Client Dependencies Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-teal-700 mb-2">
+                    <i class="fas fa-list-check mr-1"></i>Client Dependencies
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for dependency in order.client_dependencies %}
+                    <span class="px-2 py-1 chip-dependencies {% if dependency.status == 'done' %}chip-completed{% endif %} rounded-full text-xs font-medium">
+                        <i class="{% if dependency.status == 'done' %}fas fa-check{% elif dependency.status == 'pending' %}fas fa-clock{% else %}fas fa-list{% endif %} mr-1"></i>{{ dependency.name }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if order.prelock_status %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Pre-Lock Status Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-gray-800 mb-2">
+                    <i class="fas fa-tasks mr-1"></i>Pre-Lock Status
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for status in order.prelock_status %}
+                    <span class="px-2 py-1 chip-prelock {% if status.status == 'done' %}chip-completed{% endif %} rounded-full text-xs font-medium">
+                        <i class="{% if status.status == 'done' %}fas fa-check{% elif status.status == 'pending' %}fas fa-clock{% else %}fas fa-tasks{% endif %} mr-1"></i>{{ status.name }} • {{ status.status|upper }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if order.completion_status %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Completion Status Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-green-800 mb-2">
+                    <i class="fas fa-flag-checkered mr-1"></i>Completion Status
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for status in order.completion_status %}
+                    <span class="px-2 py-1 chip-deliveries chip-completed rounded-full text-xs font-medium">
+                        <i class="{% if 'Project' in status.name %}fas fa-check-circle{% elif 'Deliveries' in status.name %}fas fa-trophy{% elif 'Client' in status.name %}fas fa-handshake{% else %}fas fa-check{% endif %} mr-1"></i>{{ status.name }} • {{ status.status|upper }}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if order.waitlist_status %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Waitlist Status Chips -->
+            <div class="mb-4">
+                <h4 class="text-sm font-medium text-red-700 mb-2">
+                    <i class="fas fa-clock mr-1"></i>Waitlist Completion
+                </h4>
+                <div class="flex flex-wrap gap-1 mb-2">
+                    {% for status in order.waitlist_status %}
+                    <span class="px-2 py-1 chip-waitlist rounded-full text-xs font-medium">
+                        <i class="{% if 'Payment' in status.name %}fas fa-credit-card{% elif 'Production' in status.name %}fas fa-hourglass-half{% elif 'days' in status.name %}fas fa-clock{% else %}fas fa-clock{% endif %} mr-1"></i>{{ status.name }}
+                    </span>
+                    {% endfor %}
+                    <button class="px-2 py-1 bg-red-500 text-white rounded-full text-xs hover:bg-red-600 transition-all">
+                        <i class="fas fa-bolt mr-1"></i>Take Action
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if order.deliverables %}
+            <!-- Divider -->
+            <div class="border-t border-gray-100 my-3"></div>
+            
+            <!-- Deliverables Chips -->
+            <div class="mb-3">
+                <h4 class="text-sm font-medium text-purple-800 mb-2">
+                    <i class="fas fa-box mr-1"></i>{% if order.stage == 'in-production' %}Deliveries Status{% elif order.stage == 'out-production' %}Approved Deliveries{% else %}Deliverables{% endif %}
+                </h4>
+                <div class="flex flex-wrap gap-1">
+                    {% for deliverable in order.deliverables %}
+                    <span class="px-2 py-1 chip-deliveries {% if deliverable.status == 'done' %}chip-completed{% endif %} rounded-full text-xs font-medium">
+                        <i class="{% if deliverable.status == 'done' %}fas fa-check{% elif deliverable.status == 'pending' %}fas fa-clock{% elif 'Gallery' in deliverable.name or 'Photos' in deliverable.name %}fas fa-images{% elif 'Film' in deliverable.name %}fas fa-film{% elif 'Highlight' in deliverable.name or 'Reels' in deliverable.name %}fas fa-video{% elif 'Album' in deliverable.name %}fas fa-book{% elif 'Social' in deliverable.name %}fas fa-share-alt{% else %}fas fa-envelope{% endif %} mr-1"></i>{{ deliverable.name }} {% if deliverable.status %}• {{ deliverable.status|upper }}{% endif %}
+                    </span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- CS Footer -->
+        <div class="px-4 py-2 bg-gray-50 border-t border-gray-200">
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-gray-600">
+                    <i class="fas fa-headset mr-1"></i>Customer Support
+                </span>
+                <span class="text-green-600 font-medium">
+                    <i class="fas fa-circle text-green-500 mr-1"></i>Active
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+</div>
+<style>
+/* Stage Toast Styles */
+.stage-toast {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Different stage colors */
+.toast-pre-lock {
+    background-color: #fef3c7;
+    border-left-color: #f59e0b;
+    color: #92400e;
+}
+
+.toast-pre-event {
+    background-color: #dbeafe;
+    border-left-color: #3b82f6;
+    color: #1e40af;
+}
+
+.toast-in-event {
+    background-color: #fed7d7;
+    border-left-color: #ef4444;
+    color: #dc2626;
+}
+
+.toast-post-event {
+    background-color: #d1fae5;
+    border-left-color: #10b981;
+    color: #047857;
+}
+
+.toast-in-production {
+    background-color: #e9d5ff;
+    border-left-color: #8b5cf6;
+    color: #7c3aed;
+}
+
+.toast-out-production {
+    background-color: #ecfdf5;
+    border-left-color: #22c55e;
+    color: #16a34a;
+}
+
+/* Section-wise Chip Colors - Match Heading Colors */
+/* E-Invite Section - Purple */
+.chip-einvite {
+    background-color: #f3e5f5 !important;
+    color: #7b1fa2 !important;
+}
+
+/* Event Schedule Section - Emerald */
+.chip-events {
+    background-color: #ecfdf5 !important;
+    color: #047857 !important;
+}
+
+/* Team Section - Purple */
+.chip-team {
+    background-color: #f3e5f5 !important;
+    color: #7c3aed !important;
+}
+
+/* Data Collection Section - Blue */
+.chip-data {
+    background-color: #eff6ff !important;
+    color: #1e40af !important;
+}
+
+/* Waitlist Section - Red */
+.chip-waitlist {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+}
+
+/* Production Section - Indigo */
+.chip-production {
+    background-color: #eef2ff !important;
+    color: #3730a3 !important;
+}
+
+/* Dependencies Section - Teal */
+.chip-dependencies {
+    background-color: #f0fdfa !important;
+    color: #0f766e !important;
+}
+
+/* Deliveries Section - Green */
+.chip-deliveries {
+    background-color: #f0fdf4 !important;
+    color: #15803d !important;
+}
+
+/* Pre-Lock Section - Gray */
+.chip-prelock {
+    background-color: #f9fafb !important;
+    color: #374151 !important;
+}
+
+/* Section Headers - Happy & Cool Colors */
+.text-emerald-700 { color: #047857 !important; }
+.text-purple-700 { color: #7c3aed !important; }
+.text-sky-700 { color: #0369a1 !important; }
+.text-teal-700 { color: #0f766e !important; }
+.text-cyan-700 { color: #0e7490 !important; }
+
+/* Live Status */
+.chip-live {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+    animation: pulse 2s infinite;
+}
+
+/* Completed/Done items - fade out */
+.chip-completed {
+    opacity: 0.5 !important;
+    filter: grayscale(30%) !important;
+}
+
+/* Force filters to always be visible */
+#filterButtons {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    position: relative !important;
+    z-index: 999 !important;
+}
+
+#filterButtons * {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.status-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    white-space: nowrap !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+/* Override any hiding attempts */
+.status-btn[style*="display: none"] {
+    display: inline-flex !important;
+}
+
+.status-btn[style*="visibility: hidden"] {
+    visibility: visible !important;
+}
+
+.status-btn[style*="opacity: 0"] {
+    opacity: 1 !important;
+}
+
+/* Prevent any animation or transition issues */
+.status-btn, .division-btn {
+    animation: none !important;
+}
+
+/* Force consistent card layout */
+[data-status]:not([style*="display: none"]) {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+}
+
+[data-status][style*="display: none"] {
+    display: none !important;
+}
+
+[data-status] .p-4 {
+    flex: 1 !important;
+}
+
+/* Ensure CS footer stays at bottom */
+[data-status] .bg-gray-50.border-t {
+    margin-top: auto !important;
+}
+
+/* Make divider lines darker */
+.border-gray-100 {
+    border-color: #d1d5db !important;
+}
+</style>
+
+<!-- JavaScript -->
+<script src="/static/js/storageManager.js"></script>
+<script src="/static/js/order_bookings.js"></script>
+{% endblock %}

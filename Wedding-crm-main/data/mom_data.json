@@ -1,0 +1,2453 @@
+{
+  "1": [
+    {
+      "title": "client new req",
+      "date": "10 Oct 2025",
+      "time": "11:41 AM",
+      "attendees": [
+        "Priyansha Nakul"
+      ],
+      "mom_fields": {
+        "client new req": {
+          "value": "daru party",
+          "checked": true
+        }
+      },
+      "id": 3
+    },
+    {
+      "title": "test",
+      "date": "10 Oct 2025",
+      "time": "11:42 AM",
+      "attendees": [
+        "Priyansha Nakul"
+      ],
+      "mom_fields": {
+        "test": {
+          "value": "hello",
+          "checked": true
+        }
+      },
+      "id": 4
+    }
+  ],
+  "2": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Anna & Avin",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Anna",
+        "Avin"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Indo British",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Manesar",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Manesar. Total events: 3.",
+          "checked": true
+        }
+      }
+    }
+  ],
+  "3": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Kiran Aman",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Kiran Aman"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Standard",
+          "checked": false
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Jaipur",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Jaipur. Total events: 2.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "4": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Mehak Anant",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Mehak Anant"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Standard",
+          "checked": false
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Delhi",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": false
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": false
+        },
+        "Comments": {
+          "value": "Client from Delhi. Total events: 1.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "5": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Priya Sagar",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Priya Sagar"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Manali",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Manali. Total events: 5.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "6": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Ankita Sanjay",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Ankita Sanjay"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Varanasi",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Varanasi. Total events: 6.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "7": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Manju Vikas",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Manju Vikas"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Standard",
+          "checked": false
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Delhi",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": false
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": false
+        },
+        "Comments": {
+          "value": "Client from Delhi. Total events: 1.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "8": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Gagan Sayali",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Gagan Sayali"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Rohtak",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Rohtak. Total events: 4.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "9": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Manju",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Manju"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Shahdara",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Shahdara. Total events: 3.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "10": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Rishabh Mudita",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Rishabh Mudita"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Delhi",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Delhi. Total events: 3.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "11": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Simran",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Simran"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Delhi",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Delhi. Total events: 3.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "12": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Pratishtha Sagar",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Pratishtha Sagar"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Jim Corbett",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Jim Corbett. Total events: 4.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "13": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Bhavya Shivani",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Bhavya Shivani"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Delhi",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Delhi. Total events: 4.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "14": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Priya",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Priya"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Saharanpur",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Saharanpur. Total events: 3.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "15": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Sagar",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Sagar"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Rohtak",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Rohtak. Total events: 2.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "16": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Simran Neerav",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Simran Neerav"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Standard",
+          "checked": false
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Noida",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Noida. Total events: 2.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "17": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Aditi Parinay",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Aditi Parinay"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "No",
+          "checked": false
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Orchha",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Orchha. Total events: 3.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "18": [
+    {
+      "id": 1,
+      "title": "Client Meeting - Rishi Lipika",
+      "date": "15 Dec 2024",
+      "time": "2:00 PM",
+      "attendees": [
+        "Rishi Lipika"
+      ],
+      "mom_fields": {
+        "Culture": {
+          "value": "Traditional Indian",
+          "checked": true
+        },
+        "Pre- Wedding": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Premium": {
+          "value": "Yes",
+          "checked": true
+        },
+        "Taste/ Inspiration": {
+          "value": "Client prefers Both (Single) style",
+          "checked": true
+        },
+        "Makeup Venue": {
+          "value": "At Chail",
+          "checked": true
+        },
+        "Shot/ Video Specification": {
+          "value": "Standard package with photo/video",
+          "checked": true
+        },
+        "Add On Req": {
+          "value": "Albums and digital delivery",
+          "checked": true
+        },
+        "In b/w Events": {
+          "value": "Coverage between ceremonies",
+          "checked": true
+        },
+        "Comments": {
+          "value": "Client from Chail. Total events: 7.",
+          "checked": true
+        }
+      },
+      "deliverables_data": {
+        "400-500 High Resolution Edited Images": {
+          "name": "400-500 High Resolution Edited Images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "150-200 Superfine Couple & Candid images": {
+          "name": "150-200 Superfine Couple & Candid images",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Face detection gallery": {
+          "name": "Face detection gallery",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Teaser upto 5 mins": {
+          "name": "Teaser upto 5 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "SF upto 30 mins": {
+          "name": "SF upto 30 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "LV upto 60 mins": {
+          "name": "LV upto 60 mins",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "4 Reels": {
+          "name": "4 Reels",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "2 Album (12*36)": {
+          "name": "2 Album (12*36)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        },
+        "Wedding E-invite (Standard)": {
+          "name": "Wedding E-invite (Standard)",
+          "quantity": "1",
+          "status": "Pending",
+          "status_color": "blue",
+          "checked": true
+        }
+      },
+      "team_data": [
+        {
+          "name": "Mayank Sharma",
+          "type": "Candid",
+          "shift": "Full Day",
+          "price": "12,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Ayush Kumar",
+          "type": "Cine",
+          "shift": "Full Day",
+          "price": "15,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Sachin Gupta",
+          "type": "TPhoto",
+          "shift": "Half Day",
+          "price": "8,000",
+          "booking_status": "Confirmed",
+          "booking_status_color": "green"
+        },
+        {
+          "name": "Piyush Singh",
+          "type": "TVideo",
+          "shift": "Half Day",
+          "price": "6,000",
+          "booking_status": "Pending",
+          "booking_status_color": "yellow"
+        }
+      ]
+    }
+  ],
+  "19": []
+}

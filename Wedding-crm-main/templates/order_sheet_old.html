@@ -1,0 +1,1246 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Order Sheet - WeddingCRM{% endblock %}
+{% block page_title %}Order Sheet{% endblock %}
+
+{% block extra_css %}
+<style>
+@media print {
+    .a4-container {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        padding: 20mm;
+        box-shadow: none;
+    }
+    .no-print { display: none; }
+    .page-break { page-break-before: always; }
+    .avoid-break { page-break-inside: avoid; }
+    .section { page-break-inside: avoid; margin-bottom: 15px; }
+}
+
+.a4-container {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    padding: 20mm;
+    font-size: 12px;
+}
+
+.section-header {
+    border-bottom: 2px solid #E6B87D;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    color: #1f2937;
+    font-weight: 600;
+    page-break-after: avoid;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.couple-section {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.bride-section {
+    border-left: 4px solid #F589A8;
+}
+
+.groom-section {
+    border-left: 4px solid #3b82f6;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Top Action Buttons -->
+<div class="flex justify-between items-center mb-6 no-print">
+    <div class="flex items-center space-x-4">
+        <span class="text-lg font-semibold text-gray-900">Order No: <span class="gradient-text" id="headerOrderId">ORD-001</span></span>
+    </div>
+    <div class="flex items-center space-x-3">
+        <button disabled class="px-4 py-2 bg-gray-400 text-gray-600 rounded-custom font-medium cursor-not-allowed">
+            <i class="fas fa-file-invoice mr-2"></i>Raise Quotation
+        </button>
+        <button disabled class="px-4 py-2 bg-gray-400 text-gray-600 rounded-custom font-medium cursor-not-allowed">
+            <i class="fas fa-lock mr-2"></i>Lock Order
+        </button>
+    </div>
+</div>
+
+<!-- Sub Navigation -->
+<div class="bg-white rounded-custom shadow-sm mb-6 no-print">
+    <div class="border-b border-gray-200">
+        <nav class="flex space-x-8 px-6" aria-label="Tabs">
+            <button onclick="showSheet('order')" id="order-sheet-tab" class="sheet-tab active py-4 px-1 border-b-2 border-blue-500 font-medium text-sm text-blue-600">
+                Order Sheet
+            </button>
+            <button onclick="showSheet('cost')" id="cost-sheet-tab" class="sheet-tab py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                Cost Sheet
+            </button>
+            <button onclick="showSheet('team')" id="team-sheet-tab" class="sheet-tab py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                Team Sheet
+            </button>
+            <button onclick="showSheet('delivery')" id="delivery-sheet-tab" class="sheet-tab py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">
+                Production Sheet
+            </button>
+        </nav>
+    </div>
+</div>
+
+<!-- A4 Container -->
+<div class="a4-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Wedding Order Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="orderIdDisplay">ORD-001</span> | Date: <span id="orderDateDisplay">15 Jan 2024</span></p>
+    </div>
+
+    <!-- Client Information -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Client Information</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-client" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('client')">✏️ Edit</button>
+            <button id="ok-client" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('client')">OK</button>
+            <div id="check-client" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('client')" title="Section verified">
+                <span id="check-client-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4 mb-8">
+        <!-- Bride Details -->
+        <div class="couple-section bride-section">
+            <h4 class="font-semibold text-gray-800 mb-3">Bride Details</h4>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Name:</span>
+                <span id="client-bride-name-display" class="text-gray-900">Priya Sharma</span>
+                <input id="client-bride-name-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Priya Sharma">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Contact:</span>
+                <span id="client-bride-contact-display" class="text-gray-900">+91 98765 43210</span>
+                <input id="client-bride-contact-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="+91 98765 43210">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Email:</span>
+                <span id="client-bride-email-display" class="text-gray-900">priya@example.com</span>
+                <input id="client-bride-email-edit" type="email" class="text-gray-900 border rounded px-2 py-1 hidden" value="priya@example.com">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Aadhar:</span>
+                <span id="client-bride-aadhar-display" class="text-gray-900">1234 5678 9012</span>
+                <input id="client-bride-aadhar-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="1234 5678 9012">
+            </div>
+        </div>
+        
+        <!-- Groom Details -->
+        <div class="couple-section groom-section">
+            <h4 class="font-semibold text-gray-800 mb-3">Groom Details</h4>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Name:</span>
+                <span id="client-groom-name-display" class="text-gray-900">Rahul Gupta</span>
+                <input id="client-groom-name-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Rahul Gupta">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Contact:</span>
+                <span id="client-groom-contact-display" class="text-gray-900">+91 98765 43211</span>
+                <input id="client-groom-contact-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="+91 98765 43211">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Email:</span>
+                <span id="client-groom-email-display" class="text-gray-900">rahul@example.com</span>
+                <input id="client-groom-email-edit" type="email" class="text-gray-900 border rounded px-2 py-1 hidden" value="rahul@example.com">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Aadhar:</span>
+                <span id="client-groom-aadhar-display" class="text-gray-900">9876 5432 1098</span>
+                <input id="client-groom-aadhar-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="9876 5432 1098">
+            </div>
+        </div>
+    </div>
+
+    <!-- Coverage Details -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Coverage Details</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-coverage" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('coverage')">✏️ Edit</button>
+            <button id="ok-coverage" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('coverage')">OK</button>
+            <div id="check-coverage" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('coverage')" title="Section verified">
+                <span id="check-coverage-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4 mb-8">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Coverage Type:</span>
+            <span id="coverage-type-display" class="text-gray-900">Bride and Groom</span>
+            <input id="coverage-type-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Bride and Groom">
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Pre-Wedding:</span>
+            <span id="coverage-prewedding-display" class="text-gray-900">No</span>
+            <select id="coverage-prewedding-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="Yes">Yes</option>
+                <option value="No" selected>No</option>
+            </select>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Category:</span>
+            <span id="coverage-category-display" class="text-gray-900">Premium</span>
+            <input id="coverage-category-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Premium">
+        </div>
+    </div>
+
+    <!-- Booking Advance -->
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <div class="flex justify-between items-center">
+            <span class="font-semibold text-gray-800">Booking Advance Amount and Date Fixed</span>
+            <span class="font-bold text-gray-900">₹50,000 - 15 Jan 2024</span>
+        </div>
+    </div>
+    <!-- Events Section -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Events</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-events" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('events')">✏️ Edit</button>
+            <button id="ok-events" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('events')">OK</button>
+            <div id="check-events" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('events')" title="Section verified">
+                <span id="check-events-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="border border-gray-200 rounded p-4 mb-8 section">
+        <h4 class="font-semibold text-gray-800 mb-3">Event 1</h4>
+        <div class="grid grid-cols-3 gap-4 mb-3">
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Date:</span>
+                <span id="events-date-display" class="text-gray-900">15 Feb 2024</span>
+                <input id="events-date-edit" type="date" class="text-gray-900 border rounded px-2 py-1 hidden" value="2024-02-15">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Location:</span>
+                <span id="events-location-display" class="text-gray-900">Wedding Venue</span>
+                <input id="events-location-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Wedding Venue">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Coverage:</span>
+                <span id="events-coverage-display" class="text-gray-900">Together</span>
+                <input id="events-coverage-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Together">
+            </div>
+        </div>
+        <div class="grid grid-cols-3 gap-4 mb-3">
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Time:</span>
+                <span id="events-time-display" class="text-gray-900">Evening</span>
+                <input id="events-time-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="Evening">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Gathering:</span>
+                <span id="events-gathering-display" class="text-gray-900">200 people</span>
+                <input id="events-gathering-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="200 people">
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Team:</span>
+                <span id="events-team-display" class="text-gray-900">2+2</span>
+                <select id="events-team-edit" class="text-gray-900 border rounded px-2 py-1 hidden" onchange="updateTeamFields(this.value)">
+                    <option value="1+1">1+1</option>
+                    <option value="2+2" selected>2+2</option>
+                    <option value="3+3">3+3</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Team Members -->
+        <div class="bg-gray-50 border border-gray-200 rounded p-3 mt-4">
+            <div class="flex justify-between items-center mb-2">
+                <h5 class="font-medium text-gray-700">Team Members</h5>
+                <button onclick="window.location.href='/calendar'" class="px-3 py-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs rounded font-medium hover:from-blue-600 hover:to-blue-700 transition-all">
+                    Allocate Resource
+                </button>
+            </div>
+            <div id="team-members-container" class="grid grid-cols-2 gap-4">
+                <!-- Dynamic team member fields will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Page break before delivery if needed -->
+    <div class="page-break"></div>
+    
+    <!-- Delivery Section -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Delivery</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-delivery" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('delivery')">✏️ Edit</button>
+            <button id="ok-delivery" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('delivery')">OK</button>
+            <div id="check-delivery" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('delivery')" title="Section verified">
+                <span id="check-delivery-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-8 section">
+        <div>
+            <h4 class="font-semibold text-gray-800 mb-3">Standard</h4>
+            <div class="space-y-1 text-sm">
+                <div><span id="delivery-einvite-display">☑ E-invite Standard</span><label class="flex items-center hidden" id="delivery-einvite-edit"><input type="checkbox" checked class="mr-2">E-invite Standard</label></div>
+                <div><span id="delivery-rawphotos-display">☑ All Raw Photos</span><label class="flex items-center hidden" id="delivery-rawphotos-edit"><input type="checkbox" checked class="mr-2">All Raw Photos</label></div>
+                <div><span id="delivery-facedetection-display">☑ Face Detection Gallery</span><label class="flex items-center hidden" id="delivery-facedetection-edit"><input type="checkbox" checked class="mr-2">Face Detection Gallery</label></div>
+                <div><span id="delivery-quickedit-display">☑ Quick Edit for SM (40-50 Photos)</span><label class="flex items-center hidden" id="delivery-quickedit-edit"><input type="checkbox" checked class="mr-2">Quick Edit for SM (40-50 Photos)</label></div>
+                <div><span id="delivery-editedphotos-display">☑ Overall 800-1000 edited Photos</span><label class="flex items-center hidden" id="delivery-editedphotos-edit"><input type="checkbox" checked class="mr-2">Overall 800-1000 edited Photos</label></div>
+                <div><span id="delivery-teaser-display">☑ Teaser/Highlight upto 5 min</span><label class="flex items-center hidden" id="delivery-teaser-edit"><input type="checkbox" checked class="mr-2">Teaser/Highlight upto 5 min</label></div>
+                <div><span id="delivery-shortfilm-display">☑ Wedding Short Film upto 30 min</span><label class="flex items-center hidden" id="delivery-shortfilm-edit"><input type="checkbox" checked class="mr-2">Wedding Short Film upto 30 min</label></div>
+                <div><span id="delivery-longfilm-display">☑ Long Film upto 60 mins</span><label class="flex items-center hidden" id="delivery-longfilm-edit"><input type="checkbox" checked class="mr-2">Long Film upto 60 mins</label></div>
+                <div><span id="delivery-reels-display">☑ 4 Reels (Upto 30 secs)</span><label class="flex items-center hidden" id="delivery-reels-edit"><input type="checkbox" checked class="mr-2">4 Reels (Upto 30 secs)</label></div>
+                <div><span id="delivery-album-display">☑ 2 Photo Album (12×36")</span><label class="flex items-center hidden" id="delivery-album-edit"><input type="checkbox" checked class="mr-2">2 Photo Album (12×36")</label></div>
+                <div><span id="delivery-frame-display">☑ 1 Photo Frame (16×24")</span><label class="flex items-center hidden" id="delivery-frame-edit"><input type="checkbox" checked class="mr-2">1 Photo Frame (16×24")</label></div>
+                <div><span id="delivery-rawvideos-display">☑ All Raw Videos</span><label class="flex items-center hidden" id="delivery-rawvideos-edit"><input type="checkbox" checked class="mr-2">All Raw Videos</label></div>
+            </div>
+        </div>
+        <div>
+            <h4 class="font-semibold text-gray-800 mb-3">Add On</h4>
+            <div class="space-y-1 text-sm">
+                <div><span id="delivery-coffeetable-display">☐ Coffee Table Book</span><label class="flex items-center hidden" id="delivery-coffeetable-edit"><input type="checkbox" class="mr-2">Coffee Table Book</label></div>
+                <div><span id="delivery-samedaycut-display">☐ Same Day Cut</span><label class="flex items-center hidden" id="delivery-samedaycut-edit"><input type="checkbox" class="mr-2">Same Day Cut</label></div>
+                <div><span id="delivery-additionalalbums-display">☐ Additional Albums</span><label class="flex items-center hidden" id="delivery-additionalalbums-edit"><input type="checkbox" class="mr-2">Additional Albums</label></div>
+                <div><span id="delivery-extrareels-display">☐ Extra Reels</span><label class="flex items-center hidden" id="delivery-extrareels-edit"><input type="checkbox" class="mr-2">Extra Reels</label></div>
+                <div><span id="delivery-drone-display">☐ Drone Coverage</span><label class="flex items-center hidden" id="delivery-drone-edit"><input type="checkbox" class="mr-2">Drone Coverage</label></div>
+                <div><span id="delivery-4k-display">☐ 4K Shoot</span><label class="flex items-center hidden" id="delivery-4k-edit"><input type="checkbox" class="mr-2">4K Shoot</label></div>
+                <div><span id="delivery-printbooth-display">☐ Print Booth</span><label class="flex items-center hidden" id="delivery-printbooth-edit"><input type="checkbox" class="mr-2">Print Booth</label></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Operation Section -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Operation</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-operation" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('operation')">✏️ Edit</button>
+            <button id="ok-operation" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('operation')">OK</button>
+            <div id="check-operation" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('operation')" title="Section verified">
+                <span id="check-operation-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-8 section">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Travel:</span>
+            <span id="operation-travel-display" class="text-gray-900">On Client</span>
+            <input id="operation-travel-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="On Client">
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Accommodation:</span>
+            <span id="operation-accommodation-display" class="text-gray-900">On Client</span>
+            <input id="operation-accommodation-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden" value="On Client">
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Gear Rent:</span>
+            <span id="operation-gear-display" class="text-gray-900">No</span>
+            <select id="operation-gear-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Drone Rent:</span>
+            <span id="operation-drone-display" class="text-gray-900">No</span>
+            <select id="operation-drone-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Project Specifications -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Project Specifications</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-specs" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('specs')">✏️ Edit</button>
+            <button id="ok-specs" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('specs')">OK</button>
+            <div id="check-specs" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('specs')" title="Section verified">
+                <span id="check-specs-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-8 section">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Inspiration:</span>
+            <span id="specs-inspiration-display" class="text-gray-900">-</span>
+            <textarea id="specs-inspiration-edit" class="text-gray-900 border rounded px-2 py-1 hidden" rows="2"></textarea>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Culture Specific:</span>
+            <span id="specs-culture-display" class="text-gray-900">-</span>
+            <textarea id="specs-culture-edit" class="text-gray-900 border rounded px-2 py-1 hidden" rows="2"></textarea>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Makeup Venue:</span>
+            <span id="specs-makeup-display" class="text-gray-900">-</span>
+            <input id="specs-makeup-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden">
+        </div>
+    </div>
+
+    <!-- Cost Factors -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Cost Factors</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-factors" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('factors')">✏️ Edit</button>
+            <button id="ok-factors" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('factors')">OK</button>
+            <div id="check-factors" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('factors')" title="Section verified">
+                <span id="check-factors-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mb-8 section">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Travel Cost:</span>
+            <span id="factors-travel-display" class="text-gray-900">-</span>
+            <select id="factors-travel-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="tsv">On TSV</option>
+                <option value="client">On Client</option>
+            </select>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Accommodation:</span>
+            <span id="factors-accommodation-display" class="text-gray-900">-</span>
+            <select id="factors-accommodation-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="tsv">On TSV</option>
+                <option value="client">On Client</option>
+            </select>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Gear Rental:</span>
+            <span id="factors-gear-display" class="text-gray-900">-</span>
+            <select id="factors-gear-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Drone Rental:</span>
+            <span id="factors-drone-display" class="text-gray-900">-</span>
+            <select id="factors-drone-edit" class="text-gray-900 border rounded px-2 py-1 hidden">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Pre-Wedding Details -->
+    <div class="section-header flex justify-between items-center" id="prewedding-section" style="display: none;">
+        <h3>Pre-Wedding Details</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-prewedding" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('prewedding')">✏️ Edit</button>
+            <button id="ok-prewedding" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('prewedding')">OK</button>
+            <div id="check-prewedding" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('prewedding')" title="Section verified">
+                <span id="check-prewedding-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4 mb-8 section" id="prewedding-content" style="display: none;">
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Type:</span>
+            <span id="prewedding-type-display" class="text-gray-900">-</span>
+            <input id="prewedding-type-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden">
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Location:</span>
+            <span id="prewedding-location-display" class="text-gray-900">-</span>
+            <input id="prewedding-location-edit" type="text" class="text-gray-900 border rounded px-2 py-1 hidden">
+        </div>
+        <div class="info-row">
+            <span class="font-medium text-gray-600">Date:</span>
+            <span id="prewedding-date-display" class="text-gray-900">-</span>
+            <input id="prewedding-date-edit" type="date" class="text-gray-900 border rounded px-2 py-1 hidden">
+        </div>
+    </div>
+
+    <!-- Client's Note -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Client's Note</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-notes" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('notes')">✏️ Edit</button>
+            <button id="ok-notes" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('notes')">OK</button>
+            <div id="check-notes" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('notes')" title="Section verified">
+                <span id="check-notes-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="border border-gray-200 rounded p-4 mb-8 min-h-20 section">
+        <p id="notes-display" class="text-gray-700">No special notes provided.</p>
+        <textarea id="notes-edit" class="w-full text-gray-700 border-0 bg-transparent resize-none hidden" rows="3">No special notes provided.</textarea>
+    </div>
+
+    <!-- Deal Section -->
+    <div class="section-header flex justify-between items-center">
+        <h3>Deal</h3>
+        <div class="flex items-center space-x-2 no-print">
+            <button id="edit-deal" class="text-blue-600 text-xs px-2 py-1 border border-blue-600 rounded" onclick="enableEdit('deal')">✏️ Edit</button>
+            <button id="ok-deal" class="text-green-600 text-xs px-2 py-1 border border-green-600 rounded hidden" onclick="saveSection('deal')">OK</button>
+            <div id="check-deal" class="w-6 h-6 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer hover:border-green-500 transition-colors" onclick="toggleCheck('deal')" title="Section verified">
+                <span id="check-deal-icon" class="text-green-500 text-sm hidden">✓</span>
+            </div>
+        </div>
+    </div>
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8 avoid-break">
+        <div class="flex justify-between items-center mb-4">
+            <span class="font-semibold text-gray-800">Total Amount:</span>
+            <span id="deal-total-display" class="text-xl font-bold text-gray-900">₹1,40,000</span>
+            <input id="deal-total-edit" type="text" class="text-xl font-bold text-gray-900 border rounded px-2 py-1 hidden" value="1,40,000">
+        </div>
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="border-b border-gray-300">
+                    <th class="text-left py-2">Payment Type</th>
+                    <th class="text-center py-2">Percentage</th>
+                    <th class="text-center py-2">Amount</th>
+                    <th class="text-center py-2">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2">Advance 1</td>
+                    <td class="text-center py-2">
+                        <span id="deal-advance1-percent-display">30%</span>
+                        <input id="deal-advance1-percent-edit" type="text" class="border rounded px-1 py-1 text-xs hidden" value="30%">
+                    </td>
+                    <td class="text-center py-2">₹42,000</td>
+                    <td class="text-center py-2">15 Jan 2024</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                    <td class="py-2">Event Payment</td>
+                    <td class="text-center py-2">
+                        <span id="deal-event-percent-display">50%</span>
+                        <input id="deal-event-percent-edit" type="text" class="border rounded px-1 py-1 text-xs hidden" value="50%">
+                    </td>
+                    <td class="text-center py-2">₹70,000</td>
+                    <td class="text-center py-2">15 Feb 2024</td>
+                </tr>
+                <tr>
+                    <td class="py-2">Delivery Payment</td>
+                    <td class="text-center py-2">
+                        <span id="deal-delivery-percent-display">20%</span>
+                        <input id="deal-delivery-percent-edit" type="text" class="border rounded px-1 py-1 text-xs hidden" value="20%">
+                    </td>
+                    <td class="text-center py-2">₹28,000</td>
+                    <td class="text-center py-2">15 Mar 2024</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="generatedDateDisplay">15 Jan 2024</span></p>
+    </div>
+</div>
+
+<!-- Cost Sheet Container -->
+<div class="a4-container hidden" id="cost-sheet">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Cost Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="costOrderIdDisplay">ORD-001</span> | Date: <span id="costOrderDateDisplay">15 Jan 2024</span></p>
+    </div>
+
+    <table class="w-full text-sm border-collapse">
+        <thead>
+            <tr class="border-b-2 border-gray-300">
+                <th class="text-left py-3 font-semibold">Costing</th>
+                <th class="text-right py-3 font-semibold">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Team (Mayank not at event)</td>
+                <td class="text-right py-2">-</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Team (Mayank at event)</td>
+                <td class="text-right py-2">22000</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Videos (Teaser, SF, LV, Reels)</td>
+                <td class="text-right py-2">8000</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">2 Album (12*36) (Design) ( 100 Sheets )</td>
+                <td class="text-right py-2">4000</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">2 Album (12*36) (Print) + Cover ( 1800 )</td>
+                <td class="text-right py-2">4700</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Album Courier</td>
+                <td class="text-right py-2">500</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Wedding E-invite (Standard)</td>
+                <td class="text-right py-2">-</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Ad-on</td>
+                <td class="text-right py-2">-</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2"></td>
+                <td class="text-right py-2"></td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Internal Transportation</td>
+                <td class="text-right py-2">3500</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2"></td>
+                <td class="text-right py-2"></td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Gear Rental</td>
+                <td class="text-right py-2">-</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Drone</td>
+                <td class="text-right py-2">-</td>
+            </tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr><td class="py-2"></td><td class="text-right py-2"></td></tr>
+            <tr class="border-t-2 border-gray-400">
+                <td class="py-3 font-semibold">Total Cost</td>
+                <td class="text-right py-3 font-semibold">42700</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2 font-medium">Quote Price</td>
+                <td class="text-right py-2 font-medium">140000</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2 font-medium">Gross Margin</td>
+                <td class="text-right py-2 font-medium">97300</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2 font-medium">Operation</td>
+                <td class="text-right py-2 font-medium">50000</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2 font-medium">Profit</td>
+                <td class="text-right py-2 font-medium">47300</td>
+            </tr>
+            <tr>
+                <td class="py-2 font-medium">Profit%</td>
+                <td class="text-right py-2 font-medium">33.8</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Team Sheet Container -->
+<div class="a4-container hidden" id="team-sheet">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Team Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="teamOrderIdDisplay">ORD-001</span> | Date: <span id="teamOrderDateDisplay">15 Jan 2024</span></p>
+    </div>
+
+    <table class="w-full text-sm border-collapse">
+        <thead>
+            <tr class="border-b-2 border-gray-300">
+                <th class="text-left py-3 font-semibold">Team List</th>
+                <th class="text-center py-3 font-semibold">Cost</th>
+                <th class="text-center py-3 font-semibold">Booking Status</th>
+                <th class="text-center py-3 font-semibold">Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Mayank/Cand/Hal/San/W+R</td>
+                <td class="text-center py-2">-</td>
+                <td class="text-center py-2"></td>
+                <td class="text-center py-2"></td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Ayush/Cine/Hal/San/W+R</td>
+                <td class="text-center py-2">16000</td>
+                <td class="text-center py-2"></td>
+                <td class="text-center py-2"></td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Sachin/TP/Hal/San/W+R</td>
+                <td class="text-center py-2">-</td>
+                <td class="text-center py-2"></td>
+                <td class="text-center py-2"></td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Piyush/TV/Hal/San/W+R</td>
+                <td class="text-center py-2">6000</td>
+                <td class="text-center py-2"></td>
+                <td class="text-center py-2"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+function enableEdit(section) {
+    const editButton = document.getElementById(`edit-${section}`);
+    const okButton = document.getElementById(`ok-${section}`);
+    
+    editButton.classList.add('hidden');
+    okButton.classList.remove('hidden');
+    showEditFields(section);
+}
+
+function showEditFields(section) {
+    const displays = document.querySelectorAll(`[id^="${section}-"][id$="-display"]`);
+    const edits = document.querySelectorAll(`[id^="${section}-"][id$="-edit"]`);
+    
+    displays.forEach(display => display.classList.add('hidden'));
+    edits.forEach(edit => edit.classList.remove('hidden'));
+}
+
+function hideEditFields(section) {
+    const displays = document.querySelectorAll(`[id^="${section}-"][id$="-display"]`);
+    const edits = document.querySelectorAll(`[id^="${section}-"][id$="-edit"]`);
+    
+    displays.forEach(display => display.classList.remove('hidden'));
+    edits.forEach(edit => edit.classList.add('hidden'));
+}
+
+function saveSection(section) {
+    if (section === 'delivery') {
+        const edits = document.querySelectorAll(`[id^="${section}-"][id$="-edit"]`);
+        
+        edits.forEach(edit => {
+            const displayId = edit.id.replace('-edit', '-display');
+            const display = document.getElementById(displayId);
+            const checkbox = edit.querySelector('input[type="checkbox"]');
+            if (display && checkbox) {
+                const labelText = edit.textContent.trim();
+                // Remove any existing checkbox symbols
+                const cleanText = labelText.replace(/^[☑☐]\s*/, '');
+                display.textContent = checkbox.checked ? `☑ ${cleanText}` : `☐ ${cleanText}`;
+            }
+        });
+    } else {
+        const edits = document.querySelectorAll(`[id^="${section}-"][id$="-edit"]`);
+        
+        edits.forEach(edit => {
+            const displayId = edit.id.replace('-edit', '-display');
+            const display = document.getElementById(displayId);
+            if (display) {
+                display.textContent = edit.value;
+            }
+        });
+    }
+    
+    const editButton = document.getElementById(`edit-${section}`);
+    const okButton = document.getElementById(`ok-${section}`);
+    
+    editButton.classList.remove('hidden');
+    okButton.classList.add('hidden');
+    hideEditFields(section);
+}
+
+function toggleCheck(section) {
+    const checkBox = document.getElementById(`check-${section}`);
+    const checkIcon = document.getElementById(`check-${section}-icon`);
+    
+    if (checkIcon.classList.contains('hidden')) {
+        checkIcon.classList.remove('hidden');
+        checkBox.classList.remove('border-gray-300');
+        checkBox.classList.add('border-green-500', 'bg-green-50');
+    } else {
+        checkIcon.classList.add('hidden');
+        checkBox.classList.add('border-gray-300');
+        checkBox.classList.remove('border-green-500', 'bg-green-50');
+    }
+}
+
+function showSheet(sheetType) {
+    // Hide all sheets
+    document.querySelectorAll('.a4-container').forEach(container => {
+        container.classList.add('hidden');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.sheet-tab').forEach(tab => {
+        tab.classList.remove('active', 'border-blue-500', 'text-blue-600');
+        tab.classList.add('border-transparent', 'text-gray-500');
+    });
+    
+    // Show selected sheet and activate tab
+    if (sheetType === 'order') {
+        document.querySelector('.a4-container:not(#cost-sheet):not(#team-sheet)').classList.remove('hidden');
+        document.getElementById('order-sheet-tab').classList.add('active', 'border-blue-500', 'text-blue-600');
+        document.getElementById('order-sheet-tab').classList.remove('border-transparent', 'text-gray-500');
+    } else if (sheetType === 'cost') {
+        document.getElementById('cost-sheet').classList.remove('hidden');
+        document.getElementById('cost-sheet-tab').classList.add('active', 'border-blue-500', 'text-blue-600');
+        document.getElementById('cost-sheet-tab').classList.remove('border-transparent', 'text-gray-500');
+    } else if (sheetType === 'team') {
+        document.getElementById('team-sheet').classList.remove('hidden');
+        document.getElementById('team-sheet-tab').classList.add('active', 'border-blue-500', 'text-blue-600');
+        document.getElementById('team-sheet-tab').classList.remove('border-transparent', 'text-gray-500');
+    }
+}
+
+function updateTeamFields(teamComposition) {
+    const container = document.getElementById('team-members-container');
+    const fieldCount = teamComposition === '1+1' ? 2 : teamComposition === '2+2' ? 4 : 6;
+    
+    container.innerHTML = '';
+    
+    for (let i = 1; i <= fieldCount; i++) {
+        const fieldDiv = document.createElement('div');
+        fieldDiv.className = 'space-y-2';
+        fieldDiv.innerHTML = `
+            <div class="flex justify-between">
+                <span class="text-sm text-gray-600">Member ${i}:</span>
+                <span id="events-member${i}-display" class="text-sm text-gray-900">_________________</span>
+                <input id="events-member${i}-edit" type="text" class="text-sm border rounded px-2 py-1 hidden" placeholder="Enter name">
+            </div>
+        `;
+        container.appendChild(fieldDiv);
+    }
+}
+
+// Initialize team fields on page load
+document.addEventListener('DOMContentLoaded', async function() {
+    updateTeamFields('2+2'); // Default team composition
+    
+    // Always load from localStorage
+    await loadOrderData();
+});
+
+// FIXED Load order data from localStorage with better error handling
+async function loadOrderData() {
+    try {
+        // Get order ID from URL path
+        const pathParts = window.location.pathname.split('/');
+        const orderId = pathParts[pathParts.length - 1];
+        
+        console.log('🔍 Looking for order ID:', orderId);
+        console.log('🔍 URL pathname:', window.location.pathname);
+        console.log('🔍 Path parts:', pathParts);
+        
+        if (!orderId || orderId === 'order-sheet') {
+            console.log('❌ No order_id found in URL');
+            return;
+        }
+        
+        let order = null;
+        
+        // Try multiple localStorage keys
+        const storageKeys = [
+            'weddingcrm_booking_orders',
+            'weddingcrm_orders', 
+            'weddingcrm_order_sheets',
+            'orderData',
+            'orders'
+        ];
+        
+        for (const key of storageKeys) {
+            try {
+                const dataRaw = localStorage.getItem(key);
+                console.log(`🔍 Checking ${key}:`, dataRaw ? 'Found data' : 'No data');
+                
+                if (dataRaw && dataRaw !== 'undefined' && dataRaw !== 'null') {
+                    const data = JSON.parse(dataRaw);
+                    console.log(`📦 Data from ${key}:`, data);
+                    
+                    if (Array.isArray(data)) {
+                        console.log(`🔍 Searching in array of ${data.length} items for ID: ${orderId}`);
+                        data.forEach((item, index) => {
+                            console.log(`Item ${index}:`, {id: item.id, order_id: item.order_id, _id: item._id});
+                        });
+                        order = data.find(o => o.id === orderId || o.order_id === orderId || o._id === orderId);
+                        if (order) {
+                            console.log(`✅ Found order in ${key}:`, order);
+                            break;
+                        }
+                    } else if (data.id === orderId) {
+                        order = data;
+                        console.log(`✅ Found single order in ${key}:`, order);
+                        break;
+                    }
+                }
+            } catch (parseError) {
+                console.error(`❌ Error parsing ${key}:`, parseError);
+            }
+        }
+        
+        // If still not found, show debug info
+        if (!order) {
+            console.log('❌ Order not found in localStorage for ID:', orderId);
+            console.log('📊 Available localStorage keys:', Object.keys(localStorage));
+            
+            // Show all available orders for debugging
+            const bookingOrders = localStorage.getItem('weddingcrm_booking_orders');
+            if (bookingOrders) {
+                const orders = JSON.parse(bookingOrders);
+                console.log('📋 Available booking orders:', orders.map(o => ({id: o.id, name: o.couple_name})));
+            }
+            
+            alert(`Order ${orderId} not found. Check console for debug info.`);
+            return;
+        }
+        
+        console.log('✅ Final order data:', order);
+        updateOrderSheet(order);
+        
+    } catch (error) {
+        console.error('💥 Critical error loading order data:', error);
+        // Show error message to user
+        document.body.innerHTML = '<div style="padding: 20px; text-align: center;"><h2>Error Loading Order</h2><p>Unable to load order data. Please try again.</p></div>';
+    }
+}
+
+// ENHANCED DATA MAPPING - Update order sheet with actual order data
+function updateOrderSheet(order) {
+    console.log('📋 RAW ORDER DATA:', JSON.stringify(order, null, 2));
+    console.log('🔍 ORDER PROPERTIES:', Object.keys(order));
+    
+    // Update header order IDs
+    const orderId = order.id || order.order_info?.id || 'ORD-001';
+    document.getElementById('headerOrderId').textContent = orderId;
+    document.getElementById('orderIdDisplay').textContent = orderId;
+    document.getElementById('costOrderIdDisplay').textContent = orderId;
+    document.getElementById('teamOrderIdDisplay').textContent = orderId;
+    
+    // COMPREHENSIVE DATA EXTRACTION from multiple possible sources
+    let clientData = {};
+    
+    if (order.client_details) {
+        // Data from order forms (new order system)
+        clientData = {
+            bride_name: order.client_details.bride?.name || '',
+            bride_contact: order.client_details.bride?.contact || order.client_details.bride?.phone || '',
+            bride_email: order.client_details.bride?.email || '',
+            bride_aadhar: order.client_details.bride?.aadhar || order.client_details.bride?.id_number || '',
+            groom_name: order.client_details.groom?.name || '',
+            groom_contact: order.client_details.groom?.contact || order.client_details.groom?.phone || '',
+            groom_email: order.client_details.groom?.email || '',
+            groom_aadhar: order.client_details.groom?.aadhar || order.client_details.groom?.id_number || '',
+            coverage_type: order.project_specs?.coverage_type || order.coverage_type || '',
+            category: order.project_specs?.category || order.category || '',
+            prewedding: order.project_specs?.pw_type || order.pw_type ? 'Yes' : 'No',
+            deal_amount: order.payment_schedule?.deal_amount || order.deal_amount || '',
+            advance_amount: order.payment_schedule?.advance_payments?.[0]?.amount || order.advance_paid || '',
+            advance_date: order.payment_schedule?.advance_payments?.[0]?.date || order.advance_date || order.booking_date || ''
+        };
+    } else if (order.couple_name) {
+        // Data from booking orders (existing system)
+        const names = order.couple_name.split(' & ');
+        clientData = {
+            bride_name: names[0]?.trim() || '',
+            groom_name: names[1]?.trim() || '',
+            bride_contact: order.contact_number || order.bride_contact || order.phone || '',
+            groom_contact: order.groom_contact || order.contact_number || order.phone || '',
+            bride_email: order.bride_email || order.email || '',
+            bride_aadhar: order.bride_aadhar || '',
+            groom_email: order.groom_email || order.email || '',
+            groom_aadhar: order.groom_aadhar || '',
+            coverage_type: order.coverage_type || order.project_type || '',
+            category: order.category || order.package_type || '',
+            prewedding: order.pw_type || order.has_pre_wedding || order.pre_wedding_enabled ? 'Yes' : 'No',
+            deal_amount: order.deal_amount || order.total_amount || order.package_amount || '',
+            advance_amount: order.advance_paid || order.advance_amount || '',
+            advance_date: order.advance_date || order.booking_date || order.created_date || ''
+        };
+    } else {
+        // Fallback for any other data structure
+        clientData = {
+            bride_name: order.bride_name || '',
+            bride_contact: order.bride_contact || order.bride_phone || '',
+            bride_email: order.bride_email || '',
+            bride_aadhar: order.bride_aadhar || '',
+            groom_name: order.groom_name || '',
+            groom_contact: order.groom_contact || order.groom_phone || '',
+            groom_email: order.groom_email || '',
+            groom_aadhar: order.groom_aadhar || '',
+            coverage_type: order.coverage_type || '',
+            category: order.category || '',
+            prewedding: order.pw_type || order.pre_wedding ? 'Yes' : 'No',
+            deal_amount: order.deal_amount || order.amount || '',
+            advance_amount: order.advance_paid || order.advance || '',
+            advance_date: order.advance_date || order.date || ''
+        };
+    }
+    
+    // DEBUG: Show extracted client data
+    console.log('📄 EXTRACTED CLIENT DATA:', JSON.stringify(clientData, null, 2));
+    console.log('📄 CLIENT DATA KEYS:', Object.keys(clientData));
+    console.log('📄 BRIDE NAME:', clientData.bride_name);
+    console.log('📄 GROOM NAME:', clientData.groom_name);
+    
+    // Update client information with comprehensive mapping
+    updateField('client-bride-name', clientData.bride_name);
+    updateField('client-bride-contact', clientData.bride_contact);
+    updateField('client-bride-email', clientData.bride_email);
+    updateField('client-bride-aadhar', clientData.bride_aadhar);
+    
+    updateField('client-groom-name', clientData.groom_name);
+    updateField('client-groom-contact', clientData.groom_contact);
+    updateField('client-groom-email', clientData.groom_email);
+    updateField('client-groom-aadhar', clientData.groom_aadhar);
+    
+    // Update coverage details
+    updateField('coverage-type', clientData.coverage_type);
+    updateField('coverage-category', clientData.category);
+    updateField('coverage-prewedding', clientData.prewedding);
+    
+    // Update deal amount
+    updateField('deal-total', clientData.deal_amount ? `₹${clientData.deal_amount}` : '');
+    
+    // Update advance amount in the booking section
+    const advanceElement = document.querySelector('.bg-gray-50.border.border-gray-200.rounded.p-4.mb-8 .font-bold');
+    if (advanceElement) {
+        const advanceText = clientData.advance_amount ? `₹${clientData.advance_amount}` : '';
+        const dateText = clientData.advance_date ? ` - ${clientData.advance_date}` : '';
+        advanceElement.textContent = advanceText + dateText || 'No advance information';
+    }
+    
+    // ENHANCED EVENT MAPPING - Multiple sources
+    if (order.events && order.events.length > 0) {
+        const event = order.events[0];
+        updateField('events-date', event.date || event.event_date || '');
+        updateField('events-location', event.location || event.venue || event.address || '');
+        updateField('events-coverage', event.coverage || event.type || '');
+        updateField('events-time', event.time || event.time_slot || event.timing || '');
+        updateField('events-gathering', event.gathering || event.guest_count || event.attendees || '');
+        updateField('events-team', event.team_composition || event.team_size || '');
+    } else if (order.event_details) {
+        // Alternative event structure
+        updateField('events-date', order.event_details.date || order.event_date || '');
+        updateField('events-location', order.event_details.location || order.venue || '');
+        updateField('events-coverage', order.event_details.coverage || '');
+        updateField('events-time', order.event_details.time || order.time_slot || '');
+        updateField('events-gathering', order.event_details.gathering || '');
+        updateField('events-team', order.event_details.team || '');
+    } else {
+        // Clear event fields if no events
+        updateField('events-date', '');
+        updateField('events-location', '');
+        updateField('events-coverage', '');
+        updateField('events-time', '');
+        updateField('events-gathering', '');
+        updateField('events-team', '');
+    }
+    
+    // ENHANCED TEAM MAPPING
+    if (order.team_members && order.team_members.length > 0) {
+        order.team_members.forEach((member, index) => {
+            if (index < 4) {
+                const memberName = member.name || member.member_name || member.type || `Member ${index + 1}`;
+                updateField(`events-member${index + 1}`, memberName);
+            }
+        });
+    } else if (order.team && Array.isArray(order.team)) {
+        // Alternative team structure
+        order.team.forEach((member, index) => {
+            if (index < 4) {
+                updateField(`events-member${index + 1}`, member.name || member);
+            }
+        });
+    }
+    
+    // PROJECT SPECIFICATIONS MAPPING
+    if (order.project_specs) {
+        updateField('specs-inspiration', order.project_specs.inspiration_specification || '');
+        updateField('specs-culture', order.project_specs.culture_specific || '');
+        updateField('specs-makeup', order.project_specs.makeup_venue || '');
+    }
+    
+    // COST FACTORS MAPPING
+    if (order.cost_factors) {
+        updateField('factors-travel', order.cost_factors.travel_cost || '');
+        updateField('factors-accommodation', order.cost_factors.accommodation_cost || '');
+        updateField('factors-gear', order.cost_factors.gear_rental || '');
+        updateField('factors-drone', order.cost_factors.drone_rental || '');
+    }
+    
+    // PRE-WEDDING MAPPING
+    if (order.pre_wedding && order.pre_wedding.enabled) {
+        document.getElementById('prewedding-section').style.display = 'flex';
+        document.getElementById('prewedding-content').style.display = 'grid';
+        updateField('prewedding-type', order.pre_wedding.type || '');
+        updateField('prewedding-location', order.pre_wedding.location || '');
+        updateField('prewedding-date', order.pre_wedding.start_date || '');
+    }
+    
+    // DELIVERABLES MAPPING
+    if (order.deliverables) {
+        // Standard deliverables
+        if (order.deliverables.standard) {
+            order.deliverables.standard.forEach(item => {
+                const checkbox = getDeliverableCheckbox(item.name);
+                if (checkbox) updateDeliverableDisplay(checkbox, item.checked);
+            });
+        }
+        // Addon deliverables
+        if (order.deliverables.addons) {
+            order.deliverables.addons.forEach(item => {
+                const checkbox = getDeliverableCheckbox(item.name);
+                if (checkbox) updateDeliverableDisplay(checkbox, item.checked);
+            });
+        }
+    }
+    
+    // ENHANCED OPERATION MAPPING
+    const operationData = order.operation || order.logistics || {};
+    updateField('operation-travel', operationData.travel || order.travel_cost || order.travel || '');
+    updateField('operation-accommodation', operationData.accommodation || order.accommodation_cost || order.accommodation || '');
+    updateField('operation-gear', operationData.gear_rental || order.gear_rental || order.equipment || '');
+    updateField('operation-drone', operationData.drone_rental || order.drone_rental || order.drone || '');
+    
+    // ENHANCED NOTES MAPPING
+    let allNotes = [];
+    if (order.notes) {
+        if (order.notes.personal) allNotes.push(...order.notes.personal.map(n => n.content));
+        if (order.notes.event) allNotes.push(...order.notes.event.map(n => n.content));
+        if (order.notes.package) allNotes.push(...order.notes.package.map(n => n.content));
+    }
+    const notes = allNotes.join('; ') || order.special_notes || order.client_notes || 
+                 order.project_specs?.inspiration_specification || order.requirements || '';
+    updateField('notes', notes);
+    
+    // UPDATE DATE DISPLAYS
+    const currentDate = new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short', 
+        year: 'numeric'
+    });
+    
+    document.getElementById('orderDateDisplay').textContent = clientData.advance_date || currentDate;
+    document.getElementById('costOrderDateDisplay').textContent = clientData.advance_date || currentDate;
+    document.getElementById('teamOrderDateDisplay').textContent = clientData.advance_date || currentDate;
+    document.getElementById('generatedDateDisplay').textContent = currentDate;
+    
+    // Update payment schedule if booking order data
+    if (order.couple_name) {
+        updatePaymentSchedule(clientData);
+    }
+}
+
+// Update payment schedule table with actual amounts
+function updatePaymentSchedule(clientData) {
+    const totalAmount = parseInt(clientData.deal_amount) || 0;
+    const advanceAmount = parseInt(clientData.advance_amount) || 0;
+    const eventAmount = parseInt(clientData.event_amount) || 0;
+    
+    // Calculate delivery amount
+    const deliveryAmount = totalAmount - advanceAmount - eventAmount;
+    
+    // Calculate percentages
+    const advancePercent = totalAmount > 0 ? Math.round((advanceAmount / totalAmount) * 100) : 30;
+    const eventPercent = totalAmount > 0 ? Math.round((eventAmount / totalAmount) * 100) : 50;
+    const deliveryPercent = 100 - advancePercent - eventPercent;
+    
+    // Update payment table
+    const paymentTable = document.querySelector('table tbody');
+    if (paymentTable) {
+        paymentTable.innerHTML = `
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Advance Payment</td>
+                <td class="text-center py-2">${advancePercent}%</td>
+                <td class="text-center py-2">₹${advanceAmount.toLocaleString()}</td>
+                <td class="text-center py-2">${clientData.advance_date || 'TBD'}</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Event Payment</td>
+                <td class="text-center py-2">${eventPercent}%</td>
+                <td class="text-center py-2">₹${eventAmount.toLocaleString()}</td>
+                <td class="text-center py-2">Event Date</td>
+            </tr>
+            <tr>
+                <td class="py-2">Delivery Payment</td>
+                <td class="text-center py-2">${deliveryPercent}%</td>
+                <td class="text-center py-2">₹${deliveryAmount.toLocaleString()}</td>
+                <td class="text-center py-2">Delivery Date</td>
+            </tr>
+        `;
+    }
+}
+
+// Helper function to get current date
+function getCurrentDate() {
+    return new Date().toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short', 
+        year: 'numeric'
+    });
+
+// Helper functions for deliverables
+function getDeliverableCheckbox(deliverableName) {
+    const deliverableMap = {
+        'E-invite Standard': 'delivery-einvite',
+        'All Raw Photos': 'delivery-rawphotos',
+        'Face Detection Gallery': 'delivery-facedetection',
+        'Quick Edit for SM (40-50 Photos)': 'delivery-quickedit',
+        'Overall 800-1000 edited Photos (200 SF + 800)': 'delivery-editedphotos',
+        'Teaser/Highlight upto 5 min (including interview)': 'delivery-teaser',
+        'Wedding Short Film upto 30 min': 'delivery-shortfilm',
+        'Long Film upto 60 mins (all events cover)': 'delivery-longfilm',
+        '4 Reels (Upto 30 secs)': 'delivery-reels',
+        '2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)': 'delivery-album',
+        '1 Photo Frame (16*24)': 'delivery-frame',
+        'All Raw Videos': 'delivery-rawvideos',
+        'Coffee Table Book': 'delivery-coffeetable',
+        'Same Day Cut': 'delivery-samedaycut'
+    };
+    return deliverableMap[deliverableName];
+}
+
+function updateDeliverableDisplay(fieldId, isChecked) {
+    const displayElement = document.getElementById(`${fieldId}-display`);
+    if (displayElement) {
+        const text = displayElement.textContent.replace(/^[☑☐]\s*/, '');
+        displayElement.textContent = isChecked ? `☑ ${text}` : `☐ ${text}`;
+    }
+}
+
+// ENHANCED Helper function to update field values with better empty handling
+function updateField(fieldPrefix, value) {
+    const displayElement = document.getElementById(`${fieldPrefix}-display`);
+    const editElement = document.getElementById(`${fieldPrefix}-edit`);
+    
+    // Clean and validate value
+    const cleanValue = value ? String(value).trim() : '';
+    const displayValue = cleanValue || '-';
+    
+    if (displayElement) {
+        displayElement.textContent = displayValue;
+        // Add visual indicator for empty fields
+        if (!cleanValue) {
+            displayElement.style.color = '#9CA3AF';
+            displayElement.style.fontStyle = 'italic';
+        } else {
+            displayElement.style.color = '';
+            displayElement.style.fontStyle = '';
+        }
+    }
+    if (editElement) {
+        editElement.value = cleanValue;
+        editElement.placeholder = cleanValue ? '' : 'Enter value...';
+    }
+}
+</script>
+{% endblock %}

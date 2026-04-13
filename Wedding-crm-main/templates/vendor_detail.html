@@ -1,0 +1,191 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Vendor Details - WeddingCRM{% endblock %}
+{% block page_title %}Vendor Details{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Back Button -->
+    <div class="mb-6">
+        <button onclick="history.back()" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i>Back to Vendors
+        </button>
+    </div>
+
+    <!-- Vendor Info Card -->
+    <div class="bg-white rounded-custom shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 bg-gradient-to-br from-gold to-rose rounded-full flex items-center justify-center">
+                    <span id="vendorInitials" class="text-2xl font-bold text-white">VN</span>
+                </div>
+                <div>
+                    <h1 id="vendorName" class="text-2xl font-bold text-gray-800">Vendor Name</h1>
+                    <p id="vendorCategory" class="text-gray-600">Category</p>
+                </div>
+            </div>
+            <button onclick="editVendorDetails()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                <i class="fas fa-edit mr-2"></i>Edit Details
+            </button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fas fa-phone text-blue-500"></i>
+                    <span class="font-medium text-gray-700">Phone</span>
+                </div>
+                <p id="vendorPhone" class="text-gray-800">+91 1234567890</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fas fa-map-marker-alt text-green-500"></i>
+                    <span class="font-medium text-gray-700">Location</span>
+                </div>
+                <p id="vendorLocation" class="text-gray-800">Location</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Assigned -->
+    <div class="bg-white rounded-custom shadow-sm">
+        <div class="p-6 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold text-gray-800">Events Assigned</h2>
+                <span id="eventsCount" class="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full">0 Events</span>
+            </div>
+        </div>
+        <div class="p-6">
+            <div id="eventsContainer">
+                <!-- Events will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentVendor = null;
+
+// Get vendor ID from URL
+function getVendorIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return parseInt(urlParams.get('id'));
+}
+
+// Load vendor details
+function loadVendorDetails() {
+    const vendorId = getVendorIdFromUrl();
+    const vendors = JSON.parse(localStorage.getItem('weddingCRM_vendors') || '[]');
+    currentVendor = vendors.find(v => v.id === vendorId);
+    
+    if (!currentVendor) {
+        window.location.href = '/vendors';
+        return;
+    }
+    
+    // Update vendor info
+    const initials = currentVendor.name.split(' ').map(n => n[0]).join('').toUpperCase();
+    document.getElementById('vendorInitials').textContent = initials;
+    document.getElementById('vendorName').textContent = currentVendor.name;
+    document.getElementById('vendorCategory').textContent = currentVendor.category;
+    document.getElementById('vendorPhone').textContent = currentVendor.phone;
+    document.getElementById('vendorLocation').textContent = currentVendor.location;
+
+    
+    loadVendorEvents();
+}
+
+// Load events assigned to vendor
+function loadVendorEvents() {
+    // Create dummy events for demo
+    let vendorEvents = [];
+    if (currentVendor.name === 'Rahul Photographer') {
+        vendorEvents = [
+            {
+                client: 'Sharma Wedding',
+                event: 'Engagement Ceremony',
+                date: '25 Dec 2024',
+                location: 'Hotel Taj, Delhi',
+                shift: 'Full Day',
+                team: { candid: 'Rahul Photographer' }
+            },
+            {
+                client: 'Gupta Wedding',
+                event: 'Mehendi Function',
+                date: '30 Dec 2024',
+                location: 'Banquet Hall, Gurgaon',
+                shift: 'Half Day',
+                team: { candid: 'Rahul Photographer' }
+            }
+        ];
+    } else if (currentVendor.name === 'Priya Videographer') {
+        vendorEvents = [
+            {
+                client: 'Kumar Wedding',
+                event: 'Wedding Ceremony',
+                date: '28 Dec 2024',
+                location: 'Marriage Garden, Mumbai',
+                shift: 'Full Day',
+                team: { cine: 'Priya Videographer' }
+            }
+        ];
+    }
+    
+    const container = document.getElementById('eventsContainer');
+    document.getElementById('eventsCount').textContent = `${vendorEvents.length} Events`;
+    
+    if (vendorEvents.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-12">
+                <i class="fas fa-calendar-times text-4xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">No events assigned yet</p>
+                <p class="text-gray-400 text-sm">This vendor hasn't been assigned to any events</p>
+            </div>
+        `;
+        return;
+    }
+    
+    container.innerHTML = vendorEvents.map(event => `
+        <div class="bg-gray-50 rounded-lg p-4 mb-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-semibold text-gray-800">${event.client || 'Event'}</h3>
+                    <p class="text-gray-600 text-sm">${event.event || 'Wedding Event'}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-500">${event.date || 'Date TBD'}</p>
+                    <p class="text-sm text-gray-500">${event.location || 'Location TBD'}</p>
+                </div>
+            </div>
+            <div class="mt-3 flex items-center space-x-4">
+                <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                    ${event.shift || 'Full Day'}
+                </span>
+                <span class="text-sm text-gray-600">
+                    Role: ${getRoleFromTeam(event.team, currentVendor.name)}
+                </span>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Get vendor role from team data
+function getRoleFromTeam(team, vendorName) {
+    for (const [role, name] of Object.entries(team)) {
+        if (name === vendorName) {
+            return role.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+        }
+    }
+    return 'Team Member';
+}
+
+// Edit vendor details
+function editVendorDetails() {
+    window.location.href = `/vendors?edit=${currentVendor.id}`;
+}
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', loadVendorDetails);
+</script>
+{% endblock %}

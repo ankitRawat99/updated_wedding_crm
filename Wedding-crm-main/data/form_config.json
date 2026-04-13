@@ -1,0 +1,55 @@
+{
+  "event_types": [
+    "Wedding",
+    "Reception", 
+    "Engagement",
+    "Mehendi",
+    "Haldi",
+    "Sangam",
+    "Ring Ceremony",
+    "Custom"
+  ],
+  "coverage_options": [
+    "Together",
+    "Bride", 
+    "Groom"
+  ],
+  "time_slots": [
+    "Morning",
+    "Day",
+    "Evening"
+  ],
+  "team_compositions": [
+    "1+1",
+    "2+2", 
+    "3+3"
+  ],
+  "team_member_types": [
+    "candid",
+    "cine",
+    "tvideo",
+    "tphoto"
+  ],
+  "pre_wedding_types": [
+    {"value": "photo", "label": "Photo Only"},
+    {"value": "photo_video", "label": "Photo + Video"}
+  ],
+  "categories": [
+    "Premium",
+    "Mid",
+    "Low"
+  ],
+  "coverage_types": [
+    {"value": "Bride", "label": "Single(Bride)"},
+    {"value": "Groom", "label": "Single(Groom)"},
+    {"value": "Bride and Groom", "label": "Both"}
+  ],
+  "yes_no_options": [
+    "Yes",
+    "No"
+  ],
+  "cost_responsibility": [
+    {"value": "tsv", "label": "On TSV"},
+    {"value": "client", "label": "On Client"}
+  ]
+}

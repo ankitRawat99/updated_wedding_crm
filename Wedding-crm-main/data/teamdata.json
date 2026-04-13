@@ -1,0 +1,84 @@
+{
+  "team_members": {
+    "Mayank Sharma": {
+      "type": "Candid",
+      "base_price": {
+        "full_day": 12000,
+        "half_day": 6000
+      },
+      "today_events": ["Haldi", "Mehendi"],
+      "availability": "Available",
+      "specialization": "Wedding Photography"
+    },
+    "Ayush Kumar": {
+      "type": "Cine",
+      "base_price": {
+        "full_day": 15000,
+        "half_day": 7500
+      },
+      "today_events": ["Sangam", "Reception"],
+      "availability": "Busy",
+      "specialization": "Cinematic Videos"
+    },
+    "Sachin Gupta": {
+      "type": "TPhoto",
+      "base_price": {
+        "full_day": 8000,
+        "half_day": 4000
+      },
+      "today_events": ["Haldi"],
+      "availability": "Available",
+      "specialization": "Traditional Photography"
+    },
+    "Piyush Singh": {
+      "type": "TVideo",
+      "base_price": {
+        "full_day": 6000,
+        "half_day": 3000
+      },
+      "today_events": ["Mehendi", "Sangam"],
+      "availability": "Available",
+      "specialization": "Traditional Videos"
+    },
+    "Suresh Kumar": {
+      "type": "Candid",
+      "base_price": {
+        "full_day": 10000,
+        "half_day": 5000
+      },
+      "today_events": ["Reception"],
+      "availability": "Available",
+      "specialization": "Candid Photography"
+    },
+    "Asif Khan": {
+      "type": "Cine",
+      "base_price": {
+        "full_day": 13000,
+        "half_day": 6500
+      },
+      "today_events": ["Haldi", "Reception"],
+      "availability": "Busy",
+      "specialization": "Drone & Cinematic"
+    },
+    "Shankar Yadav": {
+      "type": "TPhoto",
+      "base_price": {
+        "full_day": 7000,
+        "half_day": 3500
+      },
+      "today_events": ["Mehendi"],
+      "availability": "Available",
+      "specialization": "Portrait Photography"
+    },
+    "Paras Jain": {
+      "type": "TVideo",
+      "base_price": {
+        "full_day": 5500,
+        "half_day": 2750
+      },
+      "today_events": ["Sangam", "Haldi"],
+      "availability": "Available",
+      "specialization": "Event Videography"
+    }
+  }
+}

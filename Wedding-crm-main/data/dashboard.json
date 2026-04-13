@@ -1,0 +1,67 @@
+{
+  "bookings": {
+    "this_month": {"count": 12, "value": "15.4L"},
+    "previous_month": {"count": 9, "value": "10.5L"},
+    "this_quarter": {"count": 26, "value": "28.3L"},
+    "lifetime": {"count": 64, "value": "75.8L"}
+  },
+  "active_bookings": {
+    "total": 35,
+    "value": "37.5L",
+    "inward": "22L",
+    "pending": "15.5L"
+  },
+  "upcoming_payments": [
+    {"date": "13 Oct", "amount": "22,000", "client": "Amit Jaya"},
+    {"date": "14 Oct", "amount": "18,000", "client": "Rahul Surbhi"},
+    {"date": "14 Oct", "amount": "36,000", "client": "Parinay Mehak"}
+  ],
+  "payment_summary": {
+    "next_7_days": {"count": 5, "value": "1.57L"},
+    "next_30_days": {"count": 11, "value": "4.4L"},
+    "waitlist": {"count": 2, "value": "55K"}
+  },
+  "orders": {
+    "locked": {"total": 27, "out_of": 35},
+    "pending_lock": 13,
+    "lock_waitlist": 5
+  },
+  "events": {
+    "total": 122,
+    "completed": 22,
+    "active": 100,
+    "upcoming": [
+      {"date": "22 Oct", "type": "Prewedding", "client": "Manju Vikas"},
+      {"date": "24 Oct", "type": "Engagement", "client": "Priya Sagar"},
+      {"date": "24 Oct", "type": "Haldi", "client": "Jasmeen Nirav"}
+    ]
+  },
+  "production": {
+    "waitlist": 5,
+    "in_production": 17,
+    "delivery_waitlist": 3,
+    "completed": 2
+  },
+  "vendors": {
+    "active": 25,
+    "event_team": 8,
+    "e_invite": 1,
+    "editors": 6,
+    "album_designer": 2,
+    "album_printer": 1,
+    "photo_frame": 1
+  },
+  "payouts": {
+    "total": "4L",
+    "completed": "2.2L",
+    "pending": "1.8L",
+    "breakdown": {
+      "event_team": "1.1L",
+      "e_invite": "5K",
+      "editors": "85K",
+      "album_designer": "18K",
+      "album_printer": "30K",
+      "photo_frame": "12K"
+    }
+  }
+}

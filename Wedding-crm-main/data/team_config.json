@@ -1,0 +1,16 @@
+{
+  "team_types": [
+    {"key": "Candid", "label": "Candid", "default_cost": 3000},
+    {"key": "Cine", "label": "Cine", "default_cost": 4000},
+    {"key": "TPhoto", "label": "T Photo", "default_cost": 2500},
+    {"key": "TVideo", "label": "T Video", "default_cost": 3500}
+  ],
+  "shift_types": [
+    {"key": "Full Day", "label": "Full Day", "duration": "8-10 hours"},
+    {"key": "Half Day", "label": "Half Day", "duration": "4-5 hours"}
+  ],
+  "status_types": [
+    {"key": "unlocked", "label": "Unlocked"},
+    {"key": "locked", "label": "Locked"}
+  ]
+}

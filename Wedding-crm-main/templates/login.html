@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WeddingCRM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#E6B87D',
+                        rose: '#F589A8'
+                    },
+                    borderRadius: {
+                        'custom': '0.75rem'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #E6B87D, #F589A8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #E6B87D, #F589A8);
+        }
+        .bg-gradient {
+            background: linear-gradient(135deg, hsl(0, 0%, 98%), hsl(220, 14%, 98%));
+        }
+    </style>
+</head>
+<body class="bg-gradient min-h-screen">
+    <div class="min-h-screen flex">
+        <!-- Left Side - Branding -->
+        <div class="hidden lg:flex lg:w-1/2 gradient-bg items-center justify-center">
+            <div class="text-center text-white">
+                
+                <h1 class="text-4xl font-bold mb-4">VowManager</h1>
+                <p class="text-xl opacity-90 mb-8">Professional Wedding Event Management</p>
+                <div class="space-y-4 text-left max-w-md">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-check-circle text-2xl"></i>
+                        <span>Manage clients and events seamlessly</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-check-circle text-2xl"></i>
+                        <span>Track payments and bookings</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-check-circle text-2xl"></i>
+                        <span>Generate detailed reports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
+            <div class="max-w-md w-full space-y-8">
+                <div class="text-center lg:hidden">
+                    <h1 class="text-3xl font-bold gradient-text mb-2">WeddingCRM</h1>
+                    <p class="text-gray-600">Professional Wedding Event Management</p>
+                </div>
+                
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-gray-900">Welcome Back</h2>
+                    <p class="mt-2 text-gray-600">Sign in to your account</p>
+                </div>
+                
+                {% if error %}
+                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-custom">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        {{ error }}
+                    </div>
+                </div>
+                {% endif %}
+                
+                <form method="POST" action="/login" class="space-y-6">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                        <div class="relative">
+                            <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" name="username" id="username" required 
+                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all"
+                                   placeholder="Enter your username">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <div class="relative">
+                            <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="password" name="password" id="password" required 
+                                   class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent transition-all"
+                                   placeholder="Enter your password">
+                            <button type="button" id="togglePassword" 
+                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
+                                <i class="fas fa-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" class="h-4 w-4 text-gold focus:ring-gold border-gray-300 rounded">
+                            <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        <a href="#" class="text-sm text-gold hover:text-rose transition-colors">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" 
+                            class="w-full gradient-bg text-white py-3 px-4 rounded-custom font-medium hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Sign In
+                    </button>
+                </form>
+                
+                <div class="text-center">
+                    <p class="text-sm text-gray-600 mb-2">
+                        <strong>Super Admin:</strong> <span class="font-medium">superadmin</span> / <span class="font-medium">super123</span>
+                    </p>
+                    <p class="text-sm text-gray-600 mb-2">
+                        <strong>Admin:</strong> <span class="font-medium">admin</span> / <span class="font-medium">admin123</span>
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        <strong>Manager:</strong> <span class="font-medium">manager</span> / <span class="font-medium">manager123</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Cross-browser compatible password toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (togglePassword && passwordInput && eyeIcon) {
+                togglePassword.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Toggle password visibility
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.className = 'fas fa-eye-slash';
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.className = 'fas fa-eye';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

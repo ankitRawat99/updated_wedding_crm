@@ -1,0 +1,108 @@
+{
+    "client_details": {
+        "client_1": {
+            "client_name": "Avin",
+            "phone_number": "-",
+            "coverage": "Both",
+            "destination": "Manesar"
+        },
+        "client_2": {
+            "client_name": "Anna",
+            "phone_number": "-",
+            "coverage": "N/A",
+            "destination": "N/A"
+        }
+    },
+    "events": [
+        {
+            "event_name": "Haldi (Day)",
+            "event_date": "1 Oct",
+            "coverage": "Together",
+            "location_1": "Manesar",
+            "location_2": "N/A",
+            "gathering_1": "50",
+            "gathering_2": "N/A",
+            "team_size_1": "Can + Cine",
+            "team_size_2": "N/A",
+            "drone": "No"
+        },
+        {
+            "event_name": "Wedding (Eve)",
+            "event_date": "1 Oct",
+            "coverage": "Together",
+            "location_1": "Manesar",
+            "location_2": "N/A",
+            "gathering_1": "50",
+            "gathering_2": "N/A",
+            "team_size_1": "Can + Cine",
+            "team_size_2": "N/A",
+            "drone": "No"
+        },
+        {
+            "event_name": "Makeup Venue",
+            "event_date": "Shot/ Video Specification",
+            "coverage": "Add On Req",
+            "location_1": "In b/w Events",
+            "location_2": "Comments",
+            "gathering_1": "N/A",
+            "gathering_2": "N/A",
+            "team_size_1": "N/A",
+            "team_size_2": "N/A",
+            "drone": "Mail Pointers"
+        },
+        {
+            "event_name": "Teaser upto 5 mins",
+            "event_date": "SF upto 30 mins",
+            "coverage": "LV upto 60 mins",
+            "location_1": "4 Reels",
+            "location_2": "N/A",
+            "gathering_1": "2 Album (12*36)",
+            "gathering_2": "Wedding E-invite (Standard)",
+            "team_size_1": "N/A",
+            "team_size_2": "Ad-on Deliverables (if any)",
+            "drone": "N/A"
+        }
+    ],
+    "payment_info": [],
+    "travel_info": {
+        "travel": "Paid By client on actuals",
+        "accomodation": "N/A"
+    },
+    "team_info": {
+        "total_team_count": "N/A",
+        "team_manager": "N/A"
+    },
+    "client_mom_comments": [
+        "Culture- Indo British",
+        "Pre- Wedding- No",
+        "Premium- Yes",
+        "Taste/ Inspiration",
+        "Makeup Venue",
+        "Shot/ Video Specification",
+        "Add On Req",
+        "In b/w Events",
+        "Comments"
+    ],
+    "Mail_Pointers": [
+        "Couple name, both side coverage, event dates and name",
+        "Location",
+        "Team allocation event wise",
+        "Drone- subject to flying as indoor location",
+        "Deal Amount",
+        "Payment Trenches- Agreed upon",
+        "Travel & Accomodation- NA, still if accomodation req will let you know on event",
+        "List of deliverables"
+    ],
+    "deliverables": [
+        "400-500 High Resolution Edited Images",
+        "150-200 Superfine Couple & Candid images",
+        "Face detection gallery",
+        "Teaser upto 5 mins",
+        "SF upto 30 mins",
+        "LV upto 60 mins",
+        "4 Reels",
+        "2 Album (12*36)",
+        "Wedding E-invite (Standard)"
+    ],
+    "Ad_on_Deliverables": []
+}

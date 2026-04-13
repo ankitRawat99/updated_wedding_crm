@@ -1,0 +1,205 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Event Calendar - WeddingCRM{% endblock %}
+{% block page_title %}Event Calendar{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <p class="text-gray-600">Manage all your wedding events and celebrations</p>
+        <div class="flex bg-gray-100 rounded-lg p-1">
+            <button id="calendarViewBtn" onclick="switchView('calendar')" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium transition-all duration-200 flex items-center space-x-2">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="hidden sm:inline">Calendar</span>
+            </button>
+            <button id="gridViewBtn" onclick="switchView('grid')" class="px-4 py-2 text-gray-600 rounded-md text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:bg-gray-200">
+                <i class="fas fa-th-large"></i>
+                <span class="hidden sm:inline">Grid</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Grid View -->
+<div id="gridView" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Events will be loaded here dynamically -->
+</div>
+
+<!-- Calendar View -->
+<div id="calendarView" class="bg-white rounded-custom shadow-sm">
+    <div class="p-4 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900" id="currentMonth"></h3>
+    </div>
+    <div class="p-4">
+        <div class="grid grid-cols-7 gap-1 mb-4">
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Sun</div>
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Mon</div>
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Tue</div>
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Wed</div>
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Thu</div>
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Fri</div>
+            <div class="text-center text-xs font-medium text-gray-500 py-2">Sat</div>
+        </div>
+        <div id="calendarGrid" class="grid grid-cols-7 gap-1">
+            <!-- Calendar days will be generated here -->
+        </div>
+    </div>
+</div>
+
+<script>
+let currentDate = new Date(2024, 0, 1);
+let eventsData = [
+    { date: '2024-01-10', name: 'Anjali & Vikram', event: 'Mehendi', location: 'Jaipur', time_slot: '4:00 PM - 9:00 PM', status: 'Confirmed' },
+    { date: '2024-01-15', name: 'Priya & Rahul', event: 'Wedding', location: 'Delhi', time_slot: '10:00 AM - 8:00 PM', status: 'Confirmed' },
+    { date: '2024-01-15', name: 'Sanya & Karan', event: 'Reception', location: 'Delhi', time_slot: '7:00 PM - 11:00 PM', status: 'Confirmed' },
+    { date: '2024-01-15', name: 'Meera & Arjun', event: 'Mehendi', location: 'Gurgaon', time_slot: '4:00 PM - 8:00 PM', status: 'Live' },
+    { date: '2024-01-20', name: 'Kavya & Rohit', event: 'Reception', location: 'Mumbai', time_slot: '6:00 PM - 11:00 PM', status: 'Upcoming' },
+    { date: '2024-01-20', name: 'Anjali & Vikram', event: 'Sangam', location: 'Mumbai', time_slot: '5:00 PM - 9:00 PM', status: 'Confirmed' },
+    { date: '2024-01-25', name: 'Riya & Karan', event: 'Engagement', location: 'Pune', time_slot: '5:00 PM - 10:00 PM', status: 'Live' },
+    { date: '2024-01-28', name: 'Neha & Arjun', event: 'Sangam', location: 'Goa', time_slot: '7:00 PM - 12:00 AM', status: 'Upcoming' },
+    { date: '2024-01-28', name: 'Pooja & Raj', event: 'Wedding', location: 'Goa', time_slot: '11:00 AM - 6:00 PM', status: 'Upcoming' }
+];
+
+function switchView(view) {
+    const gridView = document.getElementById('gridView');
+    const calendarView = document.getElementById('calendarView');
+    const gridBtn = document.getElementById('gridViewBtn');
+    const calendarBtn = document.getElementById('calendarViewBtn');
+    
+    if (view === 'calendar') {
+        gridView.classList.add('hidden');
+        calendarView.classList.remove('hidden');
+        calendarBtn.className = 'px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium transition-all duration-200 flex items-center space-x-2';
+        gridBtn.className = 'px-4 py-2 text-gray-600 rounded-md text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:bg-gray-200';
+        generateCalendar();
+    } else {
+        gridView.classList.remove('hidden');
+        calendarView.classList.add('hidden');
+        gridBtn.className = 'px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium transition-all duration-200 flex items-center space-x-2';
+        calendarBtn.className = 'px-4 py-2 text-gray-600 rounded-md text-sm font-medium transition-all duration-200 flex items-center space-x-2 hover:bg-gray-200';
+        loadGridView();
+    }
+}
+
+function loadGridView() {
+    const gridView = document.getElementById('gridView');
+    gridView.innerHTML = '';
+    
+    eventsData.forEach(event => {
+        const eventCard = document.createElement('div');
+        eventCard.className = 'bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow cursor-pointer';
+        
+        const statusColors = {
+            'Live': 'bg-red-100 text-red-800',
+            'Confirmed': 'bg-blue-100 text-blue-800', 
+            'Upcoming': 'bg-green-100 text-green-800'
+        };
+        
+        eventCard.innerHTML = `
+            <div class="flex items-center justify-between mb-4">
+                <div class="p-2 bg-blue-100 rounded-lg">
+                    <i class="fas fa-calendar-alt text-blue-600"></i>
+                </div>
+                <span class="px-3 py-1 ${statusColors[event.status] || 'bg-gray-100 text-gray-800'} text-sm font-medium rounded-full">${event.status}</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">${event.name}</h3>
+            <p class="text-sm text-gray-600 mb-3">${event.event}</p>
+            <div class="space-y-2 text-sm text-gray-600 mb-4">
+                <div class="flex items-center">
+                    <i class="fas fa-calendar w-4 mr-2"></i>
+                    <span>${formatDateDDMMYYYY(event.date)}</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-map-marker-alt w-4 mr-2"></i>
+                    <span>${event.location}</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-clock w-4 mr-2"></i>
+                    <span>${event.time_slot}</span>
+                </div>
+            </div>
+            <button class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                View Details
+            </button>
+        `;
+        
+        gridView.appendChild(eventCard);
+    });
+}
+
+function formatDateDDMMYYYY(dateStr) {
+    const date = new Date(dateStr);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+function generateCalendar() {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    document.getElementById('currentMonth').textContent = 
+        `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+    
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+    const startDate = new Date(firstDay);
+    startDate.setDate(startDate.getDate() - firstDay.getDay());
+    
+    const calendarGrid = document.getElementById('calendarGrid');
+    calendarGrid.innerHTML = '';
+    
+    for (let i = 0; i < 42; i++) {
+        const cellDate = new Date(startDate);
+        cellDate.setDate(startDate.getDate() + i);
+        
+        const dayEvents = getEventsForDate(cellDate);
+        const isCurrentMonth = cellDate.getMonth() === currentDate.getMonth();
+        
+        const dayCell = document.createElement('div');
+        dayCell.className = `min-h-24 p-1 border border-gray-200 ${
+            isCurrentMonth ? 'bg-white' : 'bg-gray-50'
+        }`;
+        
+        const eventsHtml = dayEvents.map(event => `
+            <div class="text-xs p-1 mb-1 ${getEventColor(event.status)} rounded cursor-pointer" 
+                 title="${event.name} - ${event.event}">
+                <div class="font-semibold truncate">${event.name}</div>
+            </div>
+        `).join('');
+        
+        dayCell.innerHTML = `
+            <div class="text-xs font-medium ${isCurrentMonth ? 'text-gray-900' : 'text-gray-400'} mb-1">
+                ${cellDate.getDate()}
+            </div>
+            ${eventsHtml}
+        `;
+        
+        calendarGrid.appendChild(dayCell);
+    }
+}
+
+function getEventsForDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+    
+    return eventsData.filter(event => event.date === dateStr);
+}
+
+function getEventColor(status) {
+    switch(status) {
+        case 'Live': return 'bg-red-100 text-red-800';
+        case 'Confirmed': return 'bg-blue-100 text-blue-800';
+        case 'Upcoming': return 'bg-green-100 text-green-800';
+        default: return 'bg-gray-100 text-gray-800';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    generateCalendar();
+});
+</script>
+
+{% endblock %}

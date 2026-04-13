@@ -1,0 +1,660 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Global Cost Management{% endblock %}
+
+{% block page_title %}Global Cost Management{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="bg-white rounded-custom shadow-sm p-6 mb-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold gradient-text mb-2">Global Cost Management</h1>
+                <p class="text-gray-600">Define all expenditure costs for accurate order calculations</p>
+            </div>
+            <div class="flex space-x-3">
+                <button onclick="saveAllCosts()" class="px-4 py-2 gradient-bg text-white rounded-lg hover:opacity-90 transition-opacity">
+                    <i class="fas fa-save mr-2"></i>Save All Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Client Pricing Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+        <div class="bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fas fa-tags text-green-600 mr-3"></i>
+                        Client Pricing
+                    </h2>
+                    <p class="text-gray-600 text-sm mt-1">Services offered to clients</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium" id="clientCount">0 Services</div>
+                    <button onclick="toggleEditMode('clientPricing')" class="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm" id="clientEditBtn">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                    <button onclick="addNewItem('clientPricing')" class="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm hidden" id="clientAddBtn">
+                        <i class="fas fa-plus mr-1"></i>Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-50">
+            <div id="clientPricingContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <!-- Client pricing items will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Costs Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fas fa-users text-blue-600 mr-3"></i>
+                        Team Costs
+                    </h2>
+                    <p class="text-gray-600 text-sm mt-1">Per event team member costs</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium" id="teamCount">0 Types</div>
+                    <button onclick="toggleEditMode('teamCosts')" class="px-3 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm" id="teamEditBtn">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                    <button onclick="addNewItem('teamCosts')" class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm hidden" id="teamAddBtn">
+                        <i class="fas fa-plus mr-1"></i>Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-50">
+            <div id="teamCostsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Team costs will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Standard Deliverables Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fas fa-box text-purple-600 mr-3"></i>
+                        Standard Deliverables
+                    </h2>
+                    <p class="text-gray-600 text-sm mt-1">Basic production and delivery costs</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium" id="standardCount">0 Items</div>
+                    <button onclick="toggleEditMode('standardDeliverables')" class="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm" id="standardEditBtn">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                    <button onclick="addNewItem('standardDeliverables')" class="px-3 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors text-sm hidden" id="standardAddBtn">
+                        <i class="fas fa-plus mr-1"></i>Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-50">
+            <div id="standardDeliverablesContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <!-- Standard deliverables will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Premium Deliverables Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+        <div class="bg-gradient-to-r from-pink-50 to-rose-50 px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fas fa-crown text-pink-600 mr-3"></i>
+                        Premium Deliverables
+                    </h2>
+                    <p class="text-gray-600 text-sm mt-1">High-end production and premium services</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-medium" id="premiumCount">0 Items</div>
+                    <button onclick="toggleEditMode('premiumDeliverables')" class="px-3 py-1 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors text-sm" id="premiumEditBtn">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                    <button onclick="addNewItem('premiumDeliverables')" class="px-3 py-1 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors text-sm hidden" id="premiumAddBtn">
+                        <i class="fas fa-plus mr-1"></i>Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-50">
+            <div id="premiumDeliverablesContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <!-- Premium deliverables will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Costs Section -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-8 overflow-hidden">
+        <div class="bg-gradient-to-r from-orange-50 to-red-50 px-6 py-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <i class="fas fa-cogs text-orange-600 mr-3"></i>
+                        Additional Costs
+                    </h2>
+                    <p class="text-gray-600 text-sm mt-1">Equipment, travel, and other expenses</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium" id="additionalCount">0 Items</div>
+                    <button onclick="toggleEditMode('additionalCosts')" class="px-3 py-1 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors text-sm" id="additionalEditBtn">
+                        <i class="fas fa-edit mr-1"></i>Edit
+                    </button>
+                    <button onclick="addNewItem('additionalCosts')" class="px-3 py-1 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm hidden" id="additionalAddBtn">
+                        <i class="fas fa-plus mr-1"></i>Add
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="p-6 bg-gray-50">
+            <div id="additionalCostsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <!-- Additional costs will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Complete cost data with Standard and Premium deliverables
+const costData = {
+    clientPricing: {
+        'Pre-Wedding (Edited Photos 50, Save the date)': 20000,
+        'Pre-Wedding (Edited Photos 50, video 5 min)': 50000,
+        'Wedding Photography (Full Day)': 80000,
+        'Wedding Videography (Full Day)': 60000,
+        'Ad-on Album (Standard)': 10000,
+        'Ad-on Album (Premium)': 15000,
+        'Wedding Invite (Customised)': 10000,
+        'Photo Frame': 2000,
+        'Ad-on Reels': 2000,
+        'Per Event Short Film': 5000,
+        'Drone per day addition': 5000,
+        '4K Shoot': 15000,
+        'Print Booth (Within Delhi)': 30000
+    },
+    
+    teamCosts: {
+        'Candid Full Day': 3000,
+        'Candid Half Day': 1800,
+        'Cine Full Day': 4000,
+        'Cine Half Day': 2400,
+        'TVideo Full Day': 2500,
+        'TVideo Half Day': 1500,
+        'TPhoto Full Day': 2000,
+        'TPhoto Half Day': 1200
+    },
+    
+    standardDeliverables: {
+        'Teaser Video (1-2 min)': 3000,
+        'Short Film (5-8 min)': 8000,
+        'Reels (Per Reel)': 500,
+        'Album Design (12x36)': 4000,
+        'Album Printing (100 sheets)': 4700,
+        'Photo Editing (Per 100 photos)': 2000,
+        'Basic Color Grading': 3000,
+        'Highlight Reel': 3000,
+        'Digital Gallery': 1000,
+        'USB Drive': 500
+    },
+    
+    premiumDeliverables: {
+        'Cinematic Long Video (15-20 min)': 15000,
+        'Same Day Edit': 8000,
+        'Premium Color Grading': 8000,
+        'Album Cover Design': 1800,
+        'Coffee Table Book': 12000,
+        'Premium Photo Frame': 3000,
+        'Wedding Trailer': 5000,
+        'Drone Footage Edit': 4000,
+        '4K Video Production': 10000,
+        'Custom Animation': 6000,
+        'Premium USB Box': 1500,
+        'Online Gallery Premium': 2000
+    },
+    
+    additionalCosts: {
+        'Drone Rental (Per Day)': 3000,
+        'Equipment Rental': 6000,
+        'Travel (Local)': 2000,
+        'Travel (Outstation Per Day)': 5000,
+        'Accommodation (Per Night)': 3000,
+        'Food & Refreshments': 1500,
+        'Assistant Photographer': 1500,
+        'Backup Equipment': 2000,
+        'Memory Cards & Storage': 1000,
+        'Courier & Delivery': 500,
+        'Wedding E-invite Design': 1000,
+        'Print Booth Setup': 8000
+    }
+};
+
+let editModes = {
+    clientPricing: false,
+    teamCosts: false,
+    standardDeliverables: false,
+    premiumDeliverables: false,
+    additionalCosts: false
+};
+
+function createCostItem(name, amount, section, key, isEditable = false) {
+    const formattedAmount = amount ? new Intl.NumberFormat('en-IN').format(amount) : '0';
+    const editableClass = isEditable ? 'editable' : 'readonly';
+    const inputDisabled = isEditable ? '' : 'readonly';
+    const deleteButton = isEditable ? `
+        <button onclick="deleteCostItem('${section}', '${key}')" class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all duration-200 p-1 rounded hover:bg-red-50">
+            <i class="fas fa-times text-xs"></i>
+        </button>
+    ` : '';
+    
+    // Highlight new empty items
+    const isNewItem = name === '' && amount === '';
+    const highlightClass = isNewItem ? 'border-blue-400 shadow-lg' : '';
+    
+    return `
+        <div class="bg-white rounded-lg border border-gray-200 hover:border-blue-400 hover:shadow-md transition-all duration-200 group ${editableClass} ${highlightClass}" data-section="${section}" data-key="${key}">
+            <div class="p-4">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="flex-1 mr-3">
+                        <input type="text" value="${name}" class="font-medium text-gray-900 bg-transparent border-none focus:outline-none focus:ring-0 w-full text-sm leading-tight ${isEditable ? 'hover:bg-gray-50 cursor-text' : 'cursor-default'} rounded px-1 py-1" onchange="updateCostItem('${section}', '${key}', 'name', this.value)" placeholder="Enter service name" ${inputDisabled}>
+                    </div>
+                    ${deleteButton}
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center bg-gray-50 rounded-lg px-3 py-2 border border-gray-200 ${isEditable ? 'focus-within:border-blue-400 focus-within:bg-white' : ''} transition-colors">
+                        <span class="text-gray-600 text-sm font-medium mr-2">₹</span>
+                        <input type="number" value="${amount}" class="bg-transparent border-none focus:outline-none text-right font-semibold text-gray-900 w-20 text-sm ${isEditable ? 'cursor-text' : 'cursor-default'}" onchange="updateCostItem('${section}', '${key}', 'amount', this.value)" placeholder="0" ${inputDisabled}>
+                    </div>
+                    <div class="text-xs text-gray-500 ml-2">₹${formattedAmount}</div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function loadCostData() {
+    const savedData = JSON.parse(localStorage.getItem('globalCostManagement') || '{}');
+    const currentData = {
+        clientPricing: savedData.clientPricing || costData.clientPricing,
+        teamCosts: savedData.teamCosts || costData.teamCosts,
+        standardDeliverables: savedData.standardDeliverables || costData.standardDeliverables,
+        premiumDeliverables: savedData.premiumDeliverables || costData.premiumDeliverables,
+        additionalCosts: savedData.additionalCosts || costData.additionalCosts
+    };
+    
+    // Load Client Pricing
+    const clientContainer = document.getElementById('clientPricingContainer');
+    clientContainer.innerHTML = '';
+    Object.entries(currentData.clientPricing).forEach(([name, amount]) => {
+        clientContainer.innerHTML += createCostItem(name, amount, 'clientPricing', name, editModes.clientPricing);
+    });
+    
+    // Load Team Costs
+    const teamContainer = document.getElementById('teamCostsContainer');
+    teamContainer.innerHTML = '';
+    Object.entries(currentData.teamCosts).forEach(([name, amount]) => {
+        teamContainer.innerHTML += createCostItem(name, amount, 'teamCosts', name, editModes.teamCosts);
+    });
+    
+    // Load Standard Deliverables
+    const standardContainer = document.getElementById('standardDeliverablesContainer');
+    standardContainer.innerHTML = '';
+    Object.entries(currentData.standardDeliverables).forEach(([name, amount]) => {
+        standardContainer.innerHTML += createCostItem(name, amount, 'standardDeliverables', name, editModes.standardDeliverables);
+    });
+    
+    // Load Premium Deliverables
+    const premiumContainer = document.getElementById('premiumDeliverablesContainer');
+    premiumContainer.innerHTML = '';
+    Object.entries(currentData.premiumDeliverables).forEach(([name, amount]) => {
+        premiumContainer.innerHTML += createCostItem(name, amount, 'premiumDeliverables', name, editModes.premiumDeliverables);
+    });
+    
+    // Load Additional Costs
+    const additionalContainer = document.getElementById('additionalCostsContainer');
+    additionalContainer.innerHTML = '';
+    Object.entries(currentData.additionalCosts).forEach(([name, amount]) => {
+        additionalContainer.innerHTML += createCostItem(name, amount, 'additionalCosts', name, editModes.additionalCosts);
+    });
+    
+    // Update counts
+    updateCounts();
+}
+
+function updateCounts() {
+    const savedData = JSON.parse(localStorage.getItem('globalCostManagement') || '{}');
+    document.getElementById('clientCount').textContent = `${Object.keys(savedData.clientPricing || costData.clientPricing).length} Services`;
+    document.getElementById('teamCount').textContent = `${Object.keys(savedData.teamCosts || costData.teamCosts).length} Types`;
+    document.getElementById('standardCount').textContent = `${Object.keys(savedData.standardDeliverables || costData.standardDeliverables).length} Items`;
+    document.getElementById('premiumCount').textContent = `${Object.keys(savedData.premiumDeliverables || costData.premiumDeliverables).length} Items`;
+    document.getElementById('additionalCount').textContent = `${Object.keys(savedData.additionalCosts || costData.additionalCosts).length} Items`;
+}
+
+function toggleEditMode(section) {
+    editModes[section] = !editModes[section];
+    
+    // Fix button ID mapping for all sections
+    let btnId, addBtnId;
+    if (section === 'clientPricing') {
+        btnId = 'clientEditBtn';
+        addBtnId = 'clientAddBtn';
+    } else if (section === 'teamCosts') {
+        btnId = 'teamEditBtn';
+        addBtnId = 'teamAddBtn';
+    } else if (section === 'standardDeliverables') {
+        btnId = 'standardEditBtn';
+        addBtnId = 'standardAddBtn';
+    } else if (section === 'premiumDeliverables') {
+        btnId = 'premiumEditBtn';
+        addBtnId = 'premiumAddBtn';
+    } else if (section === 'additionalCosts') {
+        btnId = 'additionalEditBtn';
+        addBtnId = 'additionalAddBtn';
+    }
+    
+    const editBtn = document.getElementById(btnId);
+    const addBtn = document.getElementById(addBtnId);
+    
+    if (editModes[section]) {
+        editBtn.innerHTML = '<i class="fas fa-save mr-1"></i>Save';
+        editBtn.classList.remove('bg-green-600', 'hover:bg-green-700', 'bg-blue-600', 'hover:bg-blue-700', 'bg-purple-600', 'hover:bg-purple-700', 'bg-pink-600', 'hover:bg-pink-700', 'bg-orange-600', 'hover:bg-orange-700');
+        editBtn.classList.add('bg-gray-600', 'hover:bg-gray-700');
+        addBtn.classList.remove('hidden');
+    } else {
+        editBtn.innerHTML = '<i class="fas fa-edit mr-1"></i>Edit';
+        editBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+        addBtn.classList.add('hidden');
+        
+        // Restore original colors based on section
+        if (section === 'clientPricing') {
+            editBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        } else if (section === 'teamCosts') {
+            editBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        } else if (section === 'standardDeliverables') {
+            editBtn.classList.add('bg-purple-600', 'hover:bg-purple-700');
+        } else if (section === 'premiumDeliverables') {
+            editBtn.classList.add('bg-pink-600', 'hover:bg-pink-700');
+        } else if (section === 'additionalCosts') {
+            editBtn.classList.add('bg-orange-600', 'hover:bg-orange-700');
+        }
+        
+        // Save data when exiting edit mode
+        saveSectionData(section);
+    }
+    
+    // Reload the section with new edit mode
+    loadCostData();
+}
+
+function saveSectionData(section) {
+    const savedData = JSON.parse(localStorage.getItem('globalCostManagement') || '{}');
+    if (!savedData[section]) savedData[section] = {};
+    
+    // Fix container ID mapping for all sections
+    let containerId;
+    if (section === 'clientPricing') {
+        containerId = 'clientPricingContainer';
+    } else if (section === 'teamCosts') {
+        containerId = 'teamCostsContainer';
+    } else if (section === 'standardDeliverables') {
+        containerId = 'standardDeliverablesContainer';
+    } else if (section === 'premiumDeliverables') {
+        containerId = 'premiumDeliverablesContainer';
+    } else if (section === 'additionalCosts') {
+        containerId = 'additionalCostsContainer';
+    }
+    
+    const container = document.getElementById(containerId);
+    const sectionData = {};
+    
+    container.querySelectorAll('div[data-section]').forEach(item => {
+        const nameInput = item.querySelector('input[type="text"]');
+        const amountInput = item.querySelector('input[type="number"]');
+        if (nameInput && amountInput) {
+            sectionData[nameInput.value] = parseInt(amountInput.value) || 0;
+        }
+    });
+    
+    savedData[section] = sectionData;
+    savedData.lastUpdated = new Date().toISOString();
+    localStorage.setItem('globalCostManagement', JSON.stringify(savedData));
+}
+
+function addNewItem(section) {
+    // Fix container ID mapping for all sections
+    let containerId;
+    if (section === 'clientPricing') {
+        containerId = 'clientPricingContainer';
+    } else if (section === 'teamCosts') {
+        containerId = 'teamCostsContainer';
+    } else if (section === 'standardDeliverables') {
+        containerId = 'standardDeliverablesContainer';
+    } else if (section === 'premiumDeliverables') {
+        containerId = 'premiumDeliverablesContainer';
+    } else if (section === 'additionalCosts') {
+        containerId = 'additionalCostsContainer';
+    }
+    
+    const container = document.getElementById(containerId);
+    const newKey = `new_item_${Date.now()}`;
+    
+    // Create empty item with no default data
+    const newItemHTML = createCostItem('', '', section, newKey, true);
+    container.innerHTML += newItemHTML;
+    
+    // Focus on the new item's name field and scroll to it
+    setTimeout(() => {
+        const newItem = container.querySelector(`[data-key="${newKey}"]`);
+        if (newItem) {
+            const nameInput = newItem.querySelector('input[type="text"]');
+            if (nameInput) {
+                nameInput.focus();
+                nameInput.select();
+                // Scroll to the new item
+                newItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }, 100);
+    
+    updateCounts();
+}
+
+function updateCostItem(section, oldKey, field, newValue) {
+    if (!editModes[section]) return; // Only allow updates in edit mode
+    
+    const savedData = JSON.parse(localStorage.getItem('globalCostManagement') || '{}');
+    
+    if (!savedData[section]) savedData[section] = {};
+    
+    if (field === 'name') {
+        // Update key name
+        const amount = savedData[section][oldKey] || costData[section][oldKey];
+        delete savedData[section][oldKey];
+        savedData[section][newValue] = amount;
+    } else if (field === 'amount') {
+        savedData[section][oldKey] = parseInt(newValue) || 0;
+    }
+    
+    localStorage.setItem('globalCostManagement', JSON.stringify(savedData));
+}
+
+function deleteCostItem(section, key) {
+    if (!editModes[section]) return; // Only allow deletion in edit mode
+    
+    showCustomAlert('warning', 'Delete Item', `Are you sure you want to delete "${key}"?`, () => {
+        const savedData = JSON.parse(localStorage.getItem('globalCostManagement') || '{}');
+        if (savedData[section]) {
+            delete savedData[section][key];
+            localStorage.setItem('globalCostManagement', JSON.stringify(savedData));
+        }
+        loadCostData();
+        showCustomAlert('success', 'Deleted', 'Item deleted successfully!');
+    });
+}
+
+function saveAllCosts() {
+    const allData = {
+        clientPricing: {},
+        teamCosts: {},
+        standardDeliverables: {},
+        premiumDeliverables: {},
+        additionalCosts: {}
+    };
+    
+    // Collect all sections data
+    ['clientPricing', 'teamCosts', 'standardDeliverables', 'premiumDeliverables', 'additionalCosts'].forEach(section => {
+        // Fix container ID mapping for all sections
+        let containerId;
+        if (section === 'clientPricing') {
+            containerId = 'clientPricingContainer';
+        } else if (section === 'teamCosts') {
+            containerId = 'teamCostsContainer';
+        } else if (section === 'standardDeliverables') {
+            containerId = 'standardDeliverablesContainer';
+        } else if (section === 'premiumDeliverables') {
+            containerId = 'premiumDeliverablesContainer';
+        } else if (section === 'additionalCosts') {
+            containerId = 'additionalCostsContainer';
+        }
+        
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.querySelectorAll('div[data-section]').forEach(item => {
+                const nameInput = item.querySelector('input[type="text"]');
+                const amountInput = item.querySelector('input[type="number"]');
+                if (nameInput && amountInput) {
+                    allData[section][nameInput.value] = parseInt(amountInput.value) || 0;
+                }
+            });
+        }
+    });
+    
+    allData.lastUpdated = new Date().toISOString();
+    localStorage.setItem('globalCostManagement', JSON.stringify(allData));
+    
+    // Show success message with animation
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check mr-2"></i>Saved Successfully!';
+    btn.classList.remove('gradient-bg', 'hover:opacity-90');
+    btn.classList.add('bg-green-600', 'hover:bg-green-700');
+    
+    // Add pulse animation
+    btn.classList.add('animate-pulse');
+    
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.remove('bg-green-600', 'hover:bg-green-700', 'animate-pulse');
+        btn.classList.add('gradient-bg', 'hover:opacity-90');
+    }, 2500);
+    
+    updateCounts();
+}
+
+// Global cost fetching functions - can be used on any page
+function getGlobalCosts() {
+    const savedData = JSON.parse(localStorage.getItem('globalCostManagement') || '{}');
+    return {
+        clientPricing: savedData.clientPricing || costData.clientPricing,
+        teamCosts: savedData.teamCosts || costData.teamCosts,
+        standardDeliverables: savedData.standardDeliverables || costData.standardDeliverables,
+        premiumDeliverables: savedData.premiumDeliverables || costData.premiumDeliverables,
+        additionalCosts: savedData.additionalCosts || costData.additionalCosts
+    };
+}
+
+function getServicePrice(serviceName, category = 'clientPricing') {
+    const costs = getGlobalCosts();
+    return costs[category][serviceName] || 0;
+}
+
+function calculateSelectedServices(selectedServices) {
+    const costs = getGlobalCosts();
+    let total = 0;
+    let breakdown = [];
+    
+    selectedServices.forEach(service => {
+        let price = 0;
+        let category = '';
+        
+        // Check in all categories
+        for (let cat in costs) {
+            if (costs[cat][service.name]) {
+                price = costs[cat][service.name];
+                category = cat;
+                break;
+            }
+        }
+        
+        if (price > 0) {
+            const serviceTotal = price * (service.quantity || 1);
+            total += serviceTotal;
+            breakdown.push({
+                name: service.name,
+                category: category,
+                unitPrice: price,
+                quantity: service.quantity || 1,
+                total: serviceTotal
+            });
+        }
+    });
+    
+    return { total, breakdown };
+}
+
+// Make functions globally available
+window.getGlobalCosts = getGlobalCosts;
+window.getServicePrice = getServicePrice;
+window.calculateSelectedServices = calculateSelectedServices;
+
+// Initialize default costs immediately
+initializeDefaultCosts();
+
+// Auto-save hardcoded data to localStorage on first load
+function initializeDefaultCosts() {
+    const existingData = localStorage.getItem('globalCostManagement');
+    if (!existingData) {
+        console.log('No existing cost data found, saving default costs to localStorage');
+        localStorage.setItem('globalCostManagement', JSON.stringify({
+            ...costData,
+            lastUpdated: new Date().toISOString()
+        }));
+        console.log('Default costs saved to localStorage');
+    }
+}
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDefaultCosts();
+    loadCostData();
+});
+
+// Add event listeners for real-time cost calculation
+document.addEventListener('DOMContentLoaded', function() {
+    // Listen for team composition changes
+    document.addEventListener('change', function(e) {
+        if (e.target.matches('select[name="team_composition[]"]') || 
+            e.target.matches('select[name*="team_type"]') ||
+            e.target.matches('input[name="standard_deliverables[]"]') ||
+            e.target.matches('input[name="addon_deliverables[]"]') ||
+            e.target.matches('input[name="travel_cost"]') ||
+            e.target.matches('input[name="gear_rental"]') ||
+            e.target.matches('input[name="drone_rental"]')) {
+            updateCostCalculatorIfActive();
+        }
+    });
+});
+</script>
+{% endblock %}

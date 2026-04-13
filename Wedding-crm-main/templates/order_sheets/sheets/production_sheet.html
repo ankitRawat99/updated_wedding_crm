@@ -1,0 +1,115 @@
+<!-- Production Sheet Container -->
+<div class="a4-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Production Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="productionOrderIdDisplay">Loading...</span> | Date: <span id="productionOrderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Production Timeline -->
+    <div class="section-header">
+        <h3>Production Timeline</h3>
+    </div>
+    
+    <div class="space-y-4 mb-8">
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
+            <div class="flex justify-between items-center">
+                <h4 class="font-semibold text-blue-800">Event Coverage</h4>
+                <span id="event-date" class="text-sm text-blue-600">Loading...</span>
+            </div>
+            <div class="mt-2 text-sm text-blue-700" id="event-status">
+                Loading...
+            </div>
+        </div>
+        
+        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div class="flex justify-between items-center">
+                <h4 class="font-semibold text-yellow-800">Photo Editing</h4>
+                <span id="photo-editing-deadline" class="text-sm text-yellow-600">Loading...</span>
+            </div>
+            <div class="mt-2 text-sm text-yellow-700" id="photo-editing-status">
+                Loading...
+            </div>
+        </div>
+        
+        <div class="bg-purple-50 border-l-4 border-purple-400 p-4">
+            <div class="flex justify-between items-center">
+                <h4 class="font-semibold text-purple-800">Video Production</h4>
+                <span id="video-production-deadline" class="text-sm text-purple-600">Loading...</span>
+            </div>
+            <div class="mt-2 text-sm text-purple-700" id="video-production-status">
+                Loading...
+            </div>
+        </div>
+        
+        <div class="bg-green-50 border-l-4 border-green-400 p-4">
+            <div class="flex justify-between items-center">
+                <h4 class="font-semibold text-green-800">Final Delivery</h4>
+                <span id="final-delivery-date" class="text-sm text-green-600">Loading...</span>
+            </div>
+            <div class="mt-2 text-sm text-green-700" id="final-delivery-status">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Deliverables Checklist -->
+    <div class="section-header">
+        <h3>Deliverables Checklist</h3>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-6 mb-8">
+        <div>
+            <h4 class="font-semibold text-gray-800 mb-3">Photography</h4>
+            <div id="photo-deliverables" class="space-y-2">
+                Loading...
+            </div>
+        </div>
+        
+        <div>
+            <h4 class="font-semibold text-gray-800 mb-3">Videography</h4>
+            <div id="video-deliverables" class="space-y-2">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Production Notes -->
+    <div class="section-header">
+        <h3>Production Notes</h3>
+    </div>
+    
+    <div class="border border-gray-200 rounded p-4 mb-8 min-h-20">
+        <div id="production-notes" class="text-gray-700">
+            Loading...
+        </div>
+    </div>
+
+    <!-- Quality Control -->
+    <div class="section-header">
+        <h3>Quality Control</h3>
+    </div>
+    
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-8">
+        <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600" id="qc-photos">Loading...</div>
+                <div class="text-sm text-gray-600">Photos Reviewed</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-purple-600" id="qc-videos">Loading...</div>
+                <div class="text-sm text-gray-600">Videos Reviewed</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-green-600" id="qc-overall">Loading...</div>
+                <div class="text-sm text-gray-600">Overall Progress</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="productionGeneratedDateDisplay">Loading...</span></p>
+    </div>
+</div>

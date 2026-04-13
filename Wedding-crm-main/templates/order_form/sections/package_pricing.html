@@ -1,0 +1,177 @@
+<!-- Package & Pricing Tab -->
+<div id="package-content" class="tab-content hidden">
+    <div class="flex items-center gap-3 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900">Package & Pricing</h3>
+        {% set tab_name = 'package' %}
+        {% include 'order_form/partials/completion_checkbox.html' %}
+    </div>
+    
+    <!-- Package Selection Section -->
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-custom p-6 mb-8">
+        <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-box text-white text-xl"></i>
+            </div>
+            <div>
+                <h4 class="text-xl font-bold text-blue-800">Package Selection</h4>
+                <p class="text-sm text-blue-600">Choose your wedding package type</p>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Basic Package -->
+            <div class="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
+                <label class="flex flex-col cursor-pointer group">
+                    <input type="radio" name="package_type" value="basic" class="sr-only peer">
+                    <div class="peer-checked:border-blue-500 peer-checked:bg-blue-50 border-2 border-gray-200 rounded-lg p-4 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h5 class="font-semibold text-gray-800 group-hover:text-blue-700">Basic Package</h5>
+                            <div class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Essential wedding coverage</p>
+                        <ul class="text-xs text-gray-500 space-y-1">
+                            <li>• Photography & Videography</li>
+                            <li>• Basic editing</li>
+                            <li>• Standard deliverables</li>
+                        </ul>
+                    </div>
+                </label>
+            </div>
+            
+            <!-- Premium Package -->
+            <div class="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
+                <label class="flex flex-col cursor-pointer group">
+                    <input type="radio" name="package_type" value="premium" class="sr-only peer">
+                    <div class="peer-checked:border-blue-500 peer-checked:bg-blue-50 border-2 border-gray-200 rounded-lg p-4 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h5 class="font-semibold text-gray-800 group-hover:text-blue-700">Premium Package</h5>
+                            <div class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Enhanced wedding experience</p>
+                        <ul class="text-xs text-gray-500 space-y-1">
+                            <li>• Premium photography & videography</li>
+                            <li>• Advanced editing</li>
+                            <li>• Premium deliverables</li>
+                            <li>• Additional services</li>
+                        </ul>
+                    </div>
+                </label>
+            </div>
+            
+            <!-- Luxury Package -->
+            <div class="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
+                <label class="flex flex-col cursor-pointer group">
+                    <input type="radio" name="package_type" value="luxury" class="sr-only peer">
+                    <div class="peer-checked:border-blue-500 peer-checked:bg-blue-50 border-2 border-gray-200 rounded-lg p-4 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <h5 class="font-semibold text-gray-800 group-hover:text-blue-700">Luxury Package</h5>
+                            <div class="w-5 h-5 border-2 border-gray-300 rounded-full peer-checked:border-blue-500 peer-checked:bg-blue-500 flex items-center justify-center">
+                                <div class="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Complete luxury experience</p>
+                        <ul class="text-xs text-gray-500 space-y-1">
+                            <li>• Luxury photography & videography</li>
+                            <li>• Professional editing</li>
+                            <li>• All premium deliverables</li>
+                            <li>• Exclusive services</li>
+                        </ul>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pricing Breakdown Section -->
+    <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-custom p-6 mb-8">
+        <div class="flex items-center mb-6">
+            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-calculator text-white text-xl"></i>
+            </div>
+            <div>
+                <h4 class="text-xl font-bold text-purple-800">Pricing Breakdown</h4>
+                <p class="text-sm text-purple-600">Detailed cost analysis</p>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Base Package Cost -->
+            <div class="bg-white p-4 rounded-xl border border-purple-200">
+                <h5 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-tag text-purple-500 mr-2"></i>
+                    Base Package Cost
+                </h5>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <input type="number" name="base_package_cost" placeholder="200000" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                </div>
+            </div>
+            
+            <!-- Additional Services Cost -->
+            <div class="bg-white p-4 rounded-xl border border-purple-200">
+                <h5 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-plus-circle text-purple-500 mr-2"></i>
+                    Additional Services
+                </h5>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                    <input type="number" name="additional_services_cost" placeholder="50000" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+                </div>
+            </div>
+            
+            <!-- Discount -->
+            <div class="bg-white p-4 rounded-xl border border-purple-200">
+                <h5 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-percent text-purple-500 mr-2"></i>
+                    Discount (%)
+                </h5>
+                <input type="number" name="discount_percentage" placeholder="10" min="0" max="100" class="w-full px-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+            </div>
+            
+            <!-- Tax/GST -->
+            <div class="bg-white p-4 rounded-xl border border-purple-200">
+                <h5 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <i class="fas fa-receipt text-purple-500 mr-2"></i>
+                    Tax/GST (%)
+                </h5>
+                <input type="number" name="tax_percentage" placeholder="18" min="0" max="100" class="w-full px-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-purple-500">
+            </div>
+        </div>
+        
+        <!-- Total Calculation Display -->
+        <div class="mt-6 bg-white p-4 rounded-xl border-2 border-purple-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Subtotal:</span>
+                    <span id="pricing-subtotal" class="font-semibold">₹0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Discount:</span>
+                    <span id="pricing-discount" class="font-semibold text-green-600">-₹0</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Tax/GST:</span>
+                    <span id="pricing-tax" class="font-semibold">+₹0</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold text-purple-800">
+                    <span>Final Total:</span>
+                    <span id="pricing-total">₹0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Schedule -->
+    {% include 'order_form/components/payment_milestones.html' %}
+    
+    <!-- Notes Section -->
+    <div class="mt-12">
+        {% set section_name = 'package' %}
+        {% include 'order_form/components/notes_section.html' %}
+    </div>
+</div>
+

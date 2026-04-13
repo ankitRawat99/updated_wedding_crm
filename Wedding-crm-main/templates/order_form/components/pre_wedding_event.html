@@ -1,0 +1,79 @@
+<!-- Pre-Wedding Event Container (Hidden by default) -->
+<div id="preWeddingEventContainer" class="hidden mb-6">
+    <div class="event-box bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-300 rounded-custom p-6">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <i class="fas fa-heart text-purple-600 mr-3 text-xl"></i>
+                <h4 class="font-semibold text-purple-800 text-lg">Pre-Wedding Event</h4>
+            </div>
+            <button type="button" onclick="removePreWeddingEvent()" class="text-red-600 hover:text-red-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Row 1: Event Name, Date, Location -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Pre-Wedding Type <span class="text-red-500">*</span>
+                </label>
+                <select name="pw_type" onchange="handlePWTypeChange()" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <option value="">Select Type</option>
+                    <option value="photo">Photo Only</option>
+                    <option value="photo_video">Photo + Video</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                <input type="date" name="pw_start_date" min="2024-01-01" max="2099-12-31" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                <input type="date" name="pw_end_date" min="2024-01-01" max="2099-12-31" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            </div>
+        </div>
+        
+        <!-- Row 2: Location, Team Composition, Drone -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <input type="text" name="pw_location" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Team Composition</label>
+                <select name="pw_team_composition" onchange="updatePWTeamFields(this)" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <option value="">Select Team</option>
+                    <option value="1+1">1+1</option>
+                    <option value="2+2">2+2</option>
+                    <option value="3+3">3+3</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Drone</label>
+                <select name="pw_drone" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Dynamic Team Fields -->
+        <div id="pwTeamFields" class="hidden mb-4">
+            <div class="bg-purple-50 border border-purple-200 rounded-custom p-4">
+                <h5 class="font-medium text-purple-700 mb-3">Team Members</h5>
+                <div id="pwTeamMembersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Team member type fields will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Special Requirements -->
+        <div class="grid grid-cols-1 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Special Requirements</label>
+                <textarea name="pw_requirements" rows="2" placeholder="Any special requirements for pre-wedding shoot..." class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+            </div>
+        </div>
+    </div>
+</div>

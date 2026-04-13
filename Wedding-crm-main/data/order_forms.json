@@ -1,0 +1,851 @@
+[
+  {
+    "_id": "a08bac76-6e79-4514-82fe-249a12f87987",
+    "order_info": {
+      "id": "a08bac76-6e79-4514-82fe-249a12f87987",
+      "status": "Draft",
+      "created_date": "2025-10-29T08:25:04.577Z",
+      "updated_date": "2025-10-29T08:25:04.577Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "geetaa",
+        "aadhar": "34532424234234",
+        "email": "",
+        "contact": ""
+      },
+      "groom": {
+        "name": "rohit",
+        "aadhar": "12345678",
+        "email": "",
+        "contact": ""
+      }
+    },
+    "pre_wedding": {
+      "enabled": true,
+      "type": "photo",
+      "location": "",
+      "start_date": "6789-05-31",
+      "end_date": "",
+      "team_composition": "1+1",
+      "drone": "",
+      "requirements": "",
+      "team_members": [],
+      "assistants": [],
+      "deliverables": [
+        {
+          "name": "Pre-Wedding Edited Photos",
+          "quantity": "50"
+        }
+      ],
+      "photo_quantity": "50",
+      "video_duration": ""
+    },
+    "cost_factors": {
+      "travel_cost": "client",
+      "accommodation_cost": "",
+      "gear_rental": "",
+      "drone_rental": ""
+    },
+    "project_specs": {
+      "inspiration_specification": "",
+      "culture_specific": "",
+      "category": "",
+      "makeup_venue": "",
+      "coverage_type": ""
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "",
+        "date": "",
+        "location": "",
+        "coverage": "",
+        "time": "",
+        "gathering": "",
+        "time_slab": "",
+        "quick_note": "",
+        "drone": "",
+        "team_composition": "",
+        "team_members": [],
+        "assistants": []
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "",
+      "advance_payments": [],
+      "event_payments": [],
+      "delivery_payments": []
+    },
+    "notes": {
+      "personal": [],
+      "event": [],
+      "package": []
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    },
+    "updated_at": "2025-10-29T13:55:04.582047"
+  },
+  {
+    "order_info": {
+      "id": "ORD-1761726066748",
+      "status": "Draft",
+      "created_date": "2025-10-29T08:21:06.748Z",
+      "updated_date": "2025-10-29T08:21:06.748Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "neelam",
+        "aadhar": "",
+        "email": "",
+        "contact": ""
+      },
+      "groom": {
+        "name": "neeraj",
+        "aadhar": "",
+        "email": "",
+        "contact": ""
+      }
+    },
+    "pre_wedding": {
+      "enabled": false,
+      "type": "",
+      "location": "",
+      "start_date": "",
+      "end_date": "",
+      "team_composition": "",
+      "drone": "",
+      "requirements": "",
+      "team_members": [],
+      "assistants": [],
+      "deliverables": [],
+      "photo_quantity": "",
+      "video_duration": ""
+    },
+    "cost_factors": {
+      "travel_cost": "",
+      "accommodation_cost": "",
+      "gear_rental": "",
+      "drone_rental": ""
+    },
+    "project_specs": {
+      "inspiration_specification": "",
+      "culture_specific": "",
+      "category": "",
+      "makeup_venue": "",
+      "coverage_type": ""
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "",
+        "date": "",
+        "location": "",
+        "coverage": "",
+        "time": "",
+        "gathering": "",
+        "time_slab": "",
+        "quick_note": "",
+        "drone": "",
+        "team_composition": "",
+        "team_members": [],
+        "assistants": []
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "",
+      "advance_payments": [],
+      "event_payments": [],
+      "delivery_payments": []
+    },
+    "notes": {
+      "personal": [],
+      "event": [],
+      "package": []
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    },
+    "_id": "432c4f3f-0009-40dd-9ed5-99ee2c0b7e1e",
+    "created_at": "2025-10-29T13:51:06.751221",
+    "updated_at": "2025-10-29T13:51:06.751221"
+  },
+  {
+    "_id": "68136091-142a-4232-b5cf-e112f0667865",
+    "order_info": {
+      "id": "68136091-142a-4232-b5cf-e112f0667865",
+      "status": "Draft",
+      "created_date": "2025-10-29T08:27:32.070Z",
+      "updated_date": "2025-10-29T08:27:32.070Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "reema",
+        "aadhar": "",
+        "email": "",
+        "contact": ""
+      },
+      "groom": {
+        "name": "ranjan",
+        "aadhar": "",
+        "email": "",
+        "contact": ""
+      }
+    },
+    "pre_wedding": {
+      "enabled": false,
+      "type": "",
+      "location": "",
+      "start_date": "",
+      "end_date": "",
+      "team_composition": "",
+      "drone": "",
+      "requirements": "",
+      "team_members": [],
+      "assistants": [],
+      "deliverables": [],
+      "photo_quantity": "",
+      "video_duration": ""
+    },
+    "cost_factors": {
+      "travel_cost": "",
+      "accommodation_cost": "",
+      "gear_rental": "",
+      "drone_rental": ""
+    },
+    "project_specs": {
+      "inspiration_specification": "",
+      "culture_specific": "",
+      "category": "",
+      "makeup_venue": "",
+      "coverage_type": ""
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "",
+        "date": "",
+        "location": "",
+        "coverage": "",
+        "time": "",
+        "gathering": "",
+        "time_slab": "",
+        "quick_note": "",
+        "drone": "",
+        "team_composition": "",
+        "team_members": [],
+        "assistants": []
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "",
+      "advance_payments": [],
+      "event_payments": [],
+      "delivery_payments": []
+    },
+    "notes": {
+      "personal": [],
+      "event": [],
+      "package": []
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    },
+    "updated_at": "2025-10-29T13:57:32.075303"
+  },
+  {
+    "order_info": {
+      "id": "ORD-1761735282366",
+      "status": "Draft",
+      "created_date": "2025-10-29T10:54:42.366Z",
+      "updated_date": "2025-10-29T10:54:42.368Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "reema",
+        "aadhar": "34532424234234",
+        "email": "anki9639@gmail.com",
+        "contact": ""
+      },
+      "groom": {
+        "name": "rahul",
+        "aadhar": "2435465768754",
+        "email": "anki9639@gmail.com",
+        "contact": ""
+      }
+    },
+    "pre_wedding": {
+      "enabled": false,
+      "type": "",
+      "location": "",
+      "start_date": "",
+      "end_date": "",
+      "team_composition": "",
+      "drone": "",
+      "requirements": "",
+      "team_members": [],
+      "assistants": [],
+      "deliverables": [],
+      "photo_quantity": "",
+      "video_duration": ""
+    },
+    "cost_factors": {
+      "travel_cost": "",
+      "accommodation_cost": "",
+      "gear_rental": "",
+      "drone_rental": ""
+    },
+    "project_specs": {
+      "inspiration_specification": "",
+      "culture_specific": "",
+      "category": "",
+      "makeup_venue": "",
+      "coverage_type": ""
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "",
+        "date": "",
+        "location": "",
+        "coverage": "",
+        "time": "",
+        "gathering": "",
+        "time_slab": "",
+        "quick_note": "",
+        "drone": "",
+        "team_composition": "",
+        "team_members": [],
+        "assistants": []
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "",
+      "advance_payments": [],
+      "event_payments": [],
+      "delivery_payments": []
+    },
+    "notes": {
+      "personal": [],
+      "event": [],
+      "package": []
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    },
+    "_id": "31a0ffa6-a358-43db-b6f7-040d7e3124b9",
+    "created_at": "2025-10-29T16:24:42.391557",
+    "updated_at": "2025-10-29T16:24:42.392917"
+  },
+  {
+    "order_info": {
+      "id": "ORD-1761735324034",
+      "status": "Draft",
+      "created_date": "2025-10-29T10:55:24.034Z",
+      "updated_date": "2025-10-29T10:55:24.034Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "manju",
+        "aadhar": "",
+        "email": "",
+        "contact": ""
+      },
+      "groom": {
+        "name": "mohit",
+        "aadhar": "",
+        "email": "",
+        "contact": ""
+      }
+    },
+    "pre_wedding": {
+      "enabled": false,
+      "type": "",
+      "location": "",
+      "start_date": "",
+      "end_date": "",
+      "team_composition": "",
+      "drone": "",
+      "requirements": "",
+      "team_members": [],
+      "assistants": [],
+      "deliverables": [],
+      "photo_quantity": "",
+      "video_duration": ""
+    },
+    "cost_factors": {
+      "travel_cost": "",
+      "accommodation_cost": "",
+      "gear_rental": "",
+      "drone_rental": ""
+    },
+    "project_specs": {
+      "inspiration_specification": "",
+      "culture_specific": "",
+      "category": "",
+      "makeup_venue": "",
+      "coverage_type": ""
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "",
+        "date": "",
+        "location": "",
+        "coverage": "",
+        "time": "",
+        "gathering": "",
+        "time_slab": "",
+        "quick_note": "",
+        "drone": "",
+        "team_composition": "",
+        "team_members": [],
+        "assistants": []
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "",
+      "advance_payments": [],
+      "event_payments": [],
+      "delivery_payments": []
+    },
+    "notes": {
+      "personal": [],
+      "event": [],
+      "package": []
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    },
+    "_id": "015f96d5-cdf1-4869-94e1-811244d25395",
+    "created_at": "2025-10-29T16:25:24.049907",
+    "updated_at": "2025-10-29T16:25:24.049907"
+  },
+  {
+    "order_info": {
+      "id": "ORD-1761737570238",
+      "status": "Draft",
+      "created_date": "2025-10-29T11:32:50.238Z",
+      "updated_date": "2025-10-29T11:32:50.238Z"
+    },
+    "client_details": {
+      "bride": {
+        "name": "geeta",
+        "aadhar": "23456789",
+        "email": "anki9639@gmail.com",
+        "contact": ""
+      },
+      "groom": {
+        "name": "Deepak",
+        "aadhar": "234567890",
+        "email": "anki9639@gmail.com",
+        "contact": ""
+      }
+    },
+    "pre_wedding": {
+      "enabled": false,
+      "type": "",
+      "location": "",
+      "start_date": "",
+      "end_date": "",
+      "team_composition": "",
+      "drone": "",
+      "requirements": "",
+      "team_members": [],
+      "assistants": [],
+      "deliverables": [],
+      "photo_quantity": "",
+      "video_duration": ""
+    },
+    "cost_factors": {
+      "travel_cost": "",
+      "accommodation_cost": "",
+      "gear_rental": "",
+      "drone_rental": ""
+    },
+    "project_specs": {
+      "inspiration_specification": "",
+      "culture_specific": "",
+      "category": "",
+      "makeup_venue": "",
+      "coverage_type": ""
+    },
+    "events": [
+      {
+        "event_number": 1,
+        "name": "",
+        "date": "",
+        "location": "",
+        "coverage": "",
+        "time": "",
+        "gathering": "",
+        "time_slab": "",
+        "quick_note": "",
+        "drone": "",
+        "team_composition": "",
+        "team_members": [],
+        "assistants": []
+      }
+    ],
+    "deliverables": {
+      "standard": [
+        {
+          "name": "E-invite Standard",
+          "checked": true
+        },
+        {
+          "name": "All Raw Photos",
+          "checked": true
+        },
+        {
+          "name": "Face Detection Gallery",
+          "checked": true
+        },
+        {
+          "name": "Quick Edit for SM (40-50 Photos)",
+          "checked": true
+        },
+        {
+          "name": "Overall 800-1000 edited Photos (200 SF + 800)",
+          "checked": true
+        },
+        {
+          "name": "Teaser/Highlight upto 5 min (including interview)",
+          "checked": true
+        },
+        {
+          "name": "Wedding Short Film upto 30 min",
+          "checked": true
+        },
+        {
+          "name": "Long Film upto 60 mins (all events cover)",
+          "checked": true
+        },
+        {
+          "name": "4 Reels (Upto 30 secs)",
+          "checked": true
+        },
+        {
+          "name": "2 Photo Album (12*36, 40-50 sheets each, premium quality matte/glossy finish paper)",
+          "checked": true
+        },
+        {
+          "name": "1 Photo Frame (16*24)",
+          "checked": true
+        },
+        {
+          "name": "All Raw Videos",
+          "checked": true
+        }
+      ],
+      "addons": [],
+      "custom": []
+    },
+    "payment_schedule": {
+      "deal_amount": "",
+      "advance_payments": [],
+      "event_payments": [],
+      "delivery_payments": []
+    },
+    "notes": {
+      "personal": [],
+      "event": [],
+      "package": []
+    },
+    "completion_status": {
+      "personal": false,
+      "event": false,
+      "requirements": false,
+      "package": false
+    },
+    "_id": "3b6bd204-cc17-4c2d-b35d-55cbcdca5e48",
+    "created_at": "2025-10-29T17:02:50.251695",
+    "updated_at": "2025-10-29T17:02:50.251695"
+  }
+]

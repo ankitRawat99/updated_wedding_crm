@@ -1,0 +1,391 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Vendors Management - WeddingCRM{% endblock %}
+{% block page_title %}Vendors Management{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-2xl font-bold gradient-text">Vendors Management</h1>
+            <p class="text-gray-600 mt-1">Manage vendors, payouts, and tasks</p>
+        </div>
+        <button onclick="openResourceOnboarding()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <i class="fas fa-plus mr-2"></i>Add Vendor
+        </button>
+    </div>
+
+    <!-- Category wise vendor cards -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Active Categories</h2>
+            <button onclick="showAllCategories()" class="text-blue-600 hover:text-blue-800 text-sm">See all categories</button>
+        </div>
+        <div id="categoryCards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Category cards will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Payouts Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white rounded-lg shadow-sm p-4">
+            <h3 class="text-lg font-semibold mb-3">Payouts Overview</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-green-50 rounded">
+                    <span class="text-sm font-medium">Done Payouts</span>
+                    <span class="text-green-600 font-bold">₹45,000</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-yellow-50 rounded">
+                    <span class="text-sm font-medium">Pending Payouts</span>
+                    <span class="text-yellow-600 font-bold">₹12,000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Payments -->
+        <div class="bg-white rounded-lg shadow-sm p-4">
+            <h3 class="text-lg font-semibold mb-3">Upcoming Payments</h3>
+            <div class="space-y-2">
+                <button onclick="filterPayments('today')" class="w-full text-left px-3 py-2 hover:bg-gray-50 rounded text-sm">Today</button>
+                <button onclick="filterPayments('tomorrow')" class="w-full text-left px-3 py-2 hover:bg-gray-50 rounded text-sm">Tomorrow</button>
+                <button onclick="filterPayments('week')" class="w-full text-left px-3 py-2 hover:bg-gray-50 rounded text-sm">This Week</button>
+                <button onclick="filterPayments('month')" class="w-full text-left px-3 py-2 hover:bg-gray-50 rounded text-sm">This Month</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vendors List -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-4">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">All Vendors</h2>
+            <div class="flex space-x-2">
+                <button onclick="filterVendors('active')" class="px-3 py-1 bg-green-100 text-green-800 rounded text-sm">Active</button>
+                <button onclick="filterVendors('inactive')" class="px-3 py-1 bg-gray-100 text-gray-800 rounded text-sm">Inactive</button>
+                <button onclick="filterVendors('all')" class="px-3 py-1 bg-blue-100 text-blue-800 rounded text-sm">All</button>
+            </div>
+        </div>
+        <div id="vendorsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Vendor cards will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Order wise payouts -->
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <h2 class="text-lg font-semibold mb-4">Order wise Payouts</h2>
+        <div id="orderPayouts" class="space-y-4">
+            <!-- Order cards will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<!-- Resource Onboarding Modal -->
+<div id="resourceModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Resource Onboarding</h3>
+                <button onclick="closeResourceOnboarding()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="resourceForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <input type="text" id="vendorName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                    <select id="vendorCategory" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select Category</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Videography">Videography</option>
+                        <option value="Album Design">Album Design</option>
+                        <option value="Decoration">Decoration</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Music">Music</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone No</label>
+                    <input type="tel" id="vendorPhone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email ID</label>
+                    <input type="email" id="vendorEmail" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                    <input type="text" id="vendorLocation" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                    <select id="vendorType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select Type</option>
+                        <option value="Freelancer">Freelancer</option>
+                        <option value="In house">In house</option>
+                    </select>
+                </div>
+                <div class="flex space-x-3 pt-4">
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Vendor</button>
+                    <button type="button" onclick="closeResourceOnboarding()" class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Task Details Modal -->
+<div id="taskModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg p-6 w-full max-w-4xl max-h-96 overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Full Task List</h3>
+                <button onclick="closeTaskModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="taskDetails" class="space-y-4">
+                <!-- Task details will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Sample data
+const vendors = [
+    {id: 1, name: 'Anil Kumar', category: 'Album Design', phone: '9876543210', email: 'anil@example.com', location: 'Delhi', type: 'Freelancer', status: 'active', totalPayout: 15000, paidAmount: 10000},
+    {id: 2, name: 'Priya Sharma', category: 'Photography', phone: '9876543211', email: 'priya@example.com', location: 'Mumbai', type: 'In house', status: 'active', totalPayout: 25000, paidAmount: 25000},
+    {id: 3, name: 'Raj Singh', category: 'Videography', phone: '9876543212', email: 'raj@example.com', location: 'Bangalore', type: 'Freelancer', status: 'inactive', totalPayout: 8000, paidAmount: 5000}
+];
+
+const orders = [
+    {id: 'ORD001', client: 'Palak & Shubham', totalVendorPayout: 45000, paidAmount: 30000, vendors: ['Anil Kumar', 'Priya Sharma']},
+    {id: 'ORD002', client: 'Rahul & Priya', totalVendorPayout: 35000, paidAmount: 35000, vendors: ['Raj Singh']}
+];
+
+const tasks = [
+    {id: 1, vendorId: 1, task: 'Album Design', client: 'Palak & Shubham', amount: 4000, deliveryDate: '2024-01-15', status: 'pending'},
+    {id: 2, vendorId: 2, task: 'Wedding Photography', client: 'Rahul & Priya', amount: 15000, deliveryDate: '2024-01-10', status: 'delivered'}
+];
+
+// Load category cards
+function loadCategoryCards() {
+    const categories = [...new Set(vendors.filter(v => v.status === 'active').map(v => v.category))];
+    const container = document.getElementById('categoryCards');
+    
+    container.innerHTML = categories.map(category => {
+        const categoryVendors = vendors.filter(v => v.category === category && v.status === 'active');
+        const totalPayout = categoryVendors.reduce((sum, v) => sum + v.totalPayout, 0);
+        const paidAmount = categoryVendors.reduce((sum, v) => sum + v.paidAmount, 0);
+        
+        return `
+            <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-semibold text-gray-900">${category}</h3>
+                    <span class="text-sm text-gray-500">${categoryVendors.length} vendors</span>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span>Total Payout:</span>
+                        <span class="font-medium">₹${totalPayout.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span>Paid:</span>
+                        <span class="text-green-600 font-medium">₹${paidAmount.toLocaleString()}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span>Pending:</span>
+                        <span class="text-red-600 font-medium">₹${(totalPayout - paidAmount).toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Load vendors list
+function loadVendorsList(filter = 'all') {
+    const container = document.getElementById('vendorsList');
+    let filteredVendors = vendors;
+    
+    if (filter === 'active') filteredVendors = vendors.filter(v => v.status === 'active');
+    if (filter === 'inactive') filteredVendors = vendors.filter(v => v.status === 'inactive');
+    
+    // Sort active vendors on top
+    filteredVendors.sort((a, b) => {
+        if (a.status === 'active' && b.status !== 'active') return -1;
+        if (a.status !== 'active' && b.status === 'active') return 1;
+        return 0;
+    });
+    
+    container.innerHTML = filteredVendors.map(vendor => {
+        const vendorTasks = tasks.filter(t => t.vendorId === vendor.id);
+        const pendingAmount = vendor.totalPayout - vendor.paidAmount;
+        
+        return `
+            <div class="border rounded-lg p-4 hover:shadow-md transition-shadow ${vendor.status === 'inactive' ? 'opacity-60' : ''}">
+                <div class="flex justify-between items-start mb-2">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">${vendor.name}</h3>
+                        <p class="text-sm text-gray-600">${vendor.category}</p>
+                    </div>
+                    <span class="px-2 py-1 text-xs rounded-full ${vendor.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">${vendor.status}</span>
+                </div>
+                <div class="space-y-1 text-sm text-gray-600 mb-3">
+                    <p><i class="fas fa-phone w-4"></i> ${vendor.phone}</p>
+                    <p><i class="fas fa-envelope w-4"></i> ${vendor.email}</p>
+                    <p><i class="fas fa-map-marker-alt w-4"></i> ${vendor.location}</p>
+                    <p><i class="fas fa-user w-4"></i> ${vendor.type}</p>
+                </div>
+                <div class="border-t pt-3">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-medium">Tasks: ${vendorTasks.length}</span>
+                        <button onclick="showTaskList(${vendor.id})" class="text-blue-600 hover:text-blue-800 text-xs">See full task list</button>
+                    </div>
+                    <div class="space-y-1 text-sm">
+                        <div class="flex justify-between">
+                            <span>Total Payout:</span>
+                            <span class="font-medium">₹${vendor.totalPayout.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Paid:</span>
+                            <span class="text-green-600">₹${vendor.paidAmount.toLocaleString()}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Pending:</span>
+                            <span class="text-red-600">₹${pendingAmount.toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Load order payouts
+function loadOrderPayouts() {
+    const container = document.getElementById('orderPayouts');
+    
+    container.innerHTML = orders.map(order => {
+        const pendingAmount = order.totalVendorPayout - order.paidAmount;
+        
+        return `
+            <div class="border rounded-lg p-4">
+                <div class="flex justify-between items-start mb-3">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">${order.id}</h3>
+                        <p class="text-sm text-gray-600">${order.client}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-medium">Total: ₹${order.totalVendorPayout.toLocaleString()}</p>
+                        <p class="text-xs text-green-600">Paid: ₹${order.paidAmount.toLocaleString()}</p>
+                        <p class="text-xs text-red-600">Pending: ₹${pendingAmount.toLocaleString()}</p>
+                    </div>
+                </div>
+                <div class="border-t pt-2">
+                    <p class="text-sm text-gray-600">Vendors: ${order.vendors.join(', ')}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Modal functions
+function openResourceOnboarding() {
+    document.getElementById('resourceModal').classList.remove('hidden');
+}
+
+function closeResourceOnboarding() {
+    document.getElementById('resourceModal').classList.add('hidden');
+    document.getElementById('resourceForm').reset();
+}
+
+function showTaskList(vendorId) {
+    const vendor = vendors.find(v => v.id === vendorId);
+    const vendorTasks = tasks.filter(t => t.vendorId === vendorId);
+    
+    const taskDetails = document.getElementById('taskDetails');
+    taskDetails.innerHTML = `
+        <h4 class="font-semibold mb-3">Tasks for ${vendor.name}</h4>
+        <div class="space-y-3">
+            ${vendorTasks.map(task => `
+                <div class="border rounded p-3">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h5 class="font-medium">${task.task}</h5>
+                            <p class="text-sm text-gray-600">Client: ${task.client}</p>
+                        </div>
+                        <span class="px-2 py-1 text-xs rounded-full ${task.status === 'delivered' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${task.status}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span>Amount: ₹${task.amount.toLocaleString()}</span>
+                        <span>Delivery: ${task.deliveryDate}</span>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+    
+    document.getElementById('taskModal').classList.remove('hidden');
+}
+
+function closeTaskModal() {
+    document.getElementById('taskModal').classList.add('hidden');
+}
+
+function filterVendors(filter) {
+    loadVendorsList(filter);
+}
+
+function filterPayments(period) {
+    console.log('Filtering payments for:', period);
+}
+
+function showAllCategories() {
+    console.log('Showing all categories');
+}
+
+// Resource form submission
+document.getElementById('resourceForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Validate required fields
+    const name = document.getElementById('vendorName').value.trim();
+    const category = document.getElementById('vendorCategory').value;
+    const phone = document.getElementById('vendorPhone').value.trim();
+    
+    if (!name || !category || !phone) {
+        showCustomAlert('Please fill in all required fields (Name, Category, Phone)', 'warning', 'Missing Information');
+        return;
+    }
+    
+    const newVendor = {
+        id: vendors.length + 1,
+        name: name,
+        category: category,
+        phone: phone,
+        email: document.getElementById('vendorEmail').value,
+        location: document.getElementById('vendorLocation').value,
+        type: document.getElementById('vendorType').value,
+        status: 'active',
+        totalPayout: 0,
+        paidAmount: 0
+    };
+    
+    vendors.push(newVendor);
+    loadVendorsList();
+    loadCategoryCards();
+    closeResourceOnboarding();
+    showCustomAlert('Vendor added successfully!', 'success', 'Vendor Added');
+});
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    loadCategoryCards();
+    loadVendorsList();
+    loadOrderPayouts();
+});
+</script>
+{% endblock %}

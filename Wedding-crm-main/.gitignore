@@ -1,0 +1,4 @@
+*.pyc
+myvenv
+.env
+.vercel

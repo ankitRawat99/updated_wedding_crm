@@ -1,0 +1,236 @@
+{% extends "base_layout.html" %}
+
+{% block title %}View Order - WeddingCRM{% endblock %}
+{% block page_title %}Order Details{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="mb-6">
+    <div class="flex justify-between items-center">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">Order Details</h2>
+            <p class="text-gray-600 mt-1">View saved order information</p>
+        </div>
+        <div class="flex gap-3">
+            <button onclick="goBackToOrders()" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">
+                <i class="fas fa-times mr-2"></i>Close
+            </button>
+            <button onclick="editOrder()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                <i class="fas fa-edit mr-2"></i>Edit Order
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Order Content -->
+<div id="orderContent" class="space-y-6">
+    <!-- Loading state -->
+    <div class="text-center py-8">
+        <i class="fas fa-spinner fa-spin text-2xl text-gray-400"></i>
+        <p class="text-gray-500 mt-2">Loading order details...</p>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async function() {
+    // Get order ID from URL
+    const urlPath = window.location.pathname;
+    const orderId = urlPath.split('/').pop();
+    
+    // Get order data from localStorage
+    const orders = await window.dataService.getOrders() || [];
+    const orderData = orders.find(order => order.order_info?.id === orderId || order._id === orderId || order.id === orderId);
+    
+    if (!orderData) {
+        document.getElementById('orderContent').innerHTML = `
+            <div class="text-center py-8">
+                <i class="fas fa-exclamation-triangle text-2xl text-red-400"></i>
+                <p class="text-red-500 mt-2">Order not found</p>
+                <a href="/order" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Back to Orders</a>
+            </div>
+        `;
+        return;
+    }
+    
+    // Display order details
+    document.getElementById('orderContent').innerHTML = `
+        <!-- Client Details -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-users text-blue-500 mr-2"></i>Client Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-medium text-pink-800 mb-3">Bride Details</h4>
+                    <div class="space-y-2 text-sm">
+                        <p><span class="font-medium">Name:</span> ${orderData.client_details?.bride?.name || 'Not provided'}</p>
+                        <p><span class="font-medium">Contact:</span> ${orderData.client_details?.bride?.contact || 'Not provided'}</p>
+                        <p><span class="font-medium">Email:</span> ${orderData.client_details?.bride?.email || 'Not provided'}</p>
+                        <p><span class="font-medium">Aadhar:</span> ${orderData.client_details?.bride?.aadhar || 'Not provided'}</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-medium text-blue-800 mb-3">Groom Details</h4>
+                    <div class="space-y-2 text-sm">
+                        <p><span class="font-medium">Name:</span> ${orderData.client_details?.groom?.name || 'Not provided'}</p>
+                        <p><span class="font-medium">Contact:</span> ${orderData.client_details?.groom?.contact || 'Not provided'}</p>
+                        <p><span class="font-medium">Email:</span> ${orderData.client_details?.groom?.email || 'Not provided'}</p>
+                        <p><span class="font-medium">Aadhar:</span> ${orderData.client_details?.groom?.aadhar || 'Not provided'}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Project Details -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-palette text-purple-500 mr-2"></i>Project Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <p><span class="font-medium">Coverage Type:</span> ${orderData.project_specs?.coverage_type || 'Not specified'}</p>
+                <p><span class="font-medium">Category:</span> ${orderData.project_specs?.category || 'Not specified'}</p>
+                <p><span class="font-medium">Makeup Venue:</span> ${orderData.project_specs?.makeup_venue || 'Not specified'}</p>
+                <p><span class="font-medium">Culture Specific:</span> ${orderData.project_specs?.culture_specific || 'Not specified'}</p>
+            </div>
+            ${orderData.project_specs?.inspiration_specification ? `
+                <div class="mt-4">
+                    <p class="font-medium text-sm mb-2">Inspiration/Specification:</p>
+                    <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded">${orderData.project_specs.inspiration_specification}</p>
+                </div>
+            ` : ''}
+        </div>
+        
+        <!-- Completion Status -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>Completion Status
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                ${generateStatusCard('Client & Project Info', orderData.completion_status?.personal)}
+                ${generateStatusCard('Event Details', orderData.completion_status?.event)}
+                ${generateStatusCard('Deliverables', orderData.completion_status?.requirements)}
+                ${generateStatusCard('Package & Pricing', orderData.completion_status?.package)}
+            </div>
+        </div>
+        
+        <!-- Events Information -->
+        ${orderData.events && orderData.events.length > 0 ? `
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-calendar text-green-500 mr-2"></i>Events (${orderData.events.length})
+            </h3>
+            <div class="space-y-4">
+                ${orderData.events.map((event, index) => `
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h4 class="font-medium text-gray-800 mb-2">${event.name || 'Event ' + (index + 1)}</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <p><span class="font-medium">Date:</span> ${event.date ? new Date(event.date).toLocaleDateString() : 'Not set'}</p>
+                            <p><span class="font-medium">Location:</span> ${event.location || 'Not specified'}</p>
+                            <p><span class="font-medium">Coverage:</span> ${event.coverage || 'Not specified'}</p>
+                            <p><span class="font-medium">Time:</span> ${event.time || 'Not specified'}</p>
+                            <p><span class="font-medium">Team:</span> ${event.team_composition || 'Not specified'}</p>
+                            <p><span class="font-medium">Drone:</span> ${event.drone || 'Not specified'}</p>
+                        </div>
+                        ${event.quick_note ? `<p class="text-sm text-gray-600 mt-2 bg-gray-50 p-2 rounded"><span class="font-medium">Note:</span> ${event.quick_note}</p>` : ''}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        ` : ''}
+        
+        <!-- Payment Schedule -->
+        ${orderData.payment_schedule?.deal_amount ? `
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-money-check-alt text-emerald-500 mr-2"></i>Payment Schedule
+            </h3>
+            <div class="mb-4">
+                <p class="text-lg font-bold text-emerald-600">Deal Amount: ₹${orderData.payment_schedule.deal_amount}</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                ${orderData.payment_schedule.advance_payments?.length > 0 ? `
+                <div class="bg-orange-50 p-4 rounded-lg">
+                    <h4 class="font-medium text-orange-800 mb-2">Advance Payments</h4>
+                    ${orderData.payment_schedule.advance_payments.map(payment => `
+                        <div class="text-sm mb-2">
+                            <p>Amount: ₹${payment.amount || 'Not set'}</p>
+                            <p>Date: ${payment.date ? new Date(payment.date).toLocaleDateString() : 'Not set'}</p>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+                ${orderData.payment_schedule.event_payments?.length > 0 ? `
+                <div class="bg-blue-50 p-4 rounded-lg">
+                    <h4 class="font-medium text-blue-800 mb-2">Event Payments</h4>
+                    ${orderData.payment_schedule.event_payments.map(payment => `
+                        <div class="text-sm mb-2">
+                            <p>Amount: ₹${payment.amount || 'Not set'}</p>
+                            <p>Date: ${payment.date ? new Date(payment.date).toLocaleDateString() : 'Not set'}</p>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+                ${orderData.payment_schedule.delivery_payments?.length > 0 ? `
+                <div class="bg-purple-50 p-4 rounded-lg">
+                    <h4 class="font-medium text-purple-800 mb-2">Delivery Payments</h4>
+                    ${orderData.payment_schedule.delivery_payments.map(payment => `
+                        <div class="text-sm mb-2">
+                            <p>Amount: ₹${payment.amount || 'Not set'}</p>
+                            <p>Date: ${payment.date ? new Date(payment.date).toLocaleDateString() : 'Not set'}</p>
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+            </div>
+        </div>
+        ` : ''}
+        
+        <!-- Order Info -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-info-circle text-blue-500 mr-2"></i>Order Information
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <p><span class="font-medium">Order ID:</span> ${orderData.order_info?.id || orderData._id}</p>
+                <p><span class="font-medium">Status:</span> <span class="px-2 py-1 bg-orange-100 text-orange-800 rounded text-xs">${orderData.order_info?.status || 'Draft'}</span></p>
+                <p><span class="font-medium">Created Date:</span> ${orderData.order_info?.created_date ? new Date(orderData.order_info.created_date).toLocaleDateString() : 'Not available'}</p>
+            </div>
+        </div>
+    `;
+});
+
+function generateStatusCard(title, completed) {
+    const statusClass = completed ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600';
+    const icon = completed ? 'fa-check-circle text-green-500' : 'fa-circle text-gray-400';
+    
+    return `
+        <div class="text-center p-3 border rounded-lg">
+            <i class="fas ${icon} text-lg mb-2"></i>
+            <p class="text-xs font-medium">${title}</p>
+            <p class="text-xs ${statusClass} px-2 py-1 rounded mt-1">${completed ? 'Completed' : 'Pending'}</p>
+        </div>
+    `;
+}
+
+function goBackToOrders() {
+    window.location.href = '/order';
+}
+
+async function editOrder() {
+    // Get order ID from URL
+    const urlPath = window.location.pathname;
+    const orderId = urlPath.split('/').pop();
+    
+    // Get order data from localStorage
+    const orders = await window.dataService.getOrders() || [];
+    const orderData = orders.find(order => order.order_info?.id === orderId || order._id === orderId || order.id === orderId);
+    
+    if (orderData) {
+        localStorage.setItem('editOrder', JSON.stringify(orderData));
+        window.location.href = '/new-order';
+    } else {
+        alert('Order not found for editing');
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!-- Package & Pricing Tab -->
+<div id="package-content" class="tab-content hidden">
+    <div class="flex items-center gap-3 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900">Package & Pricing</h3>
+        {% set tab_name = 'package' %}
+        {% include 'order_form/partials/completion_checkbox.html' %}
+    </div>
+    
+    <!-- Payment Schedule -->
+    {% include 'order_form/components/payment_milestones.html' %}
+    
+
+    
+    <!-- Notes Section -->
+    <div class="mt-12">
+        {% set section_name = 'package' %}
+        {% include 'order_form/components/notes_section.html' %}
+    </div>
+</div>

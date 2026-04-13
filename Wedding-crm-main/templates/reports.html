@@ -1,0 +1,97 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Reports - WeddingCRM{% endblock %}
+{% block page_title %}Reports{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <p class="text-gray-600">Generate and view detailed reports for your wedding business</p>
+</div>
+
+<!-- Report Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    {% if permissions and permissions.view_financial %}
+    <div class="bg-white rounded-custom shadow-sm card-hover p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-blue-100 rounded-custom">
+                <i class="fas fa-chart-line text-2xl text-blue-600"></i>
+            </div>
+            <button class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-download"></i>
+            </button>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Revenue Report</h3>
+        <p class="text-sm text-gray-600 mb-4">Monthly and yearly revenue analysis</p>
+        <button class="gradient-bg text-white px-4 py-2 rounded-custom text-sm font-medium hover:opacity-90 transition-opacity w-full">
+            Generate Report
+        </button>
+    </div>
+    {% endif %}
+
+    <div class="bg-white rounded-custom shadow-sm card-hover p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-green-100 rounded-custom">
+                <i class="fas fa-users text-2xl text-green-600"></i>
+            </div>
+            <button class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-download"></i>
+            </button>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Client Report</h3>
+        <p class="text-sm text-gray-600 mb-4">Client acquisition and retention metrics</p>
+        <button class="gradient-bg text-white px-4 py-2 rounded-custom text-sm font-medium hover:opacity-90 transition-opacity w-full">
+            Generate Report
+        </button>
+    </div>
+
+    <div class="bg-white rounded-custom shadow-sm card-hover p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div class="p-3 bg-purple-100 rounded-custom">
+                <i class="fas fa-calendar-alt text-2xl text-purple-600"></i>
+            </div>
+            <button class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-download"></i>
+            </button>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-2">Event Report</h3>
+        <p class="text-sm text-gray-600 mb-4">Event performance and statistics</p>
+        <button class="gradient-bg text-white px-4 py-2 rounded-custom text-sm font-medium hover:opacity-90 transition-opacity w-full">
+            Generate Report
+        </button>
+    </div>
+</div>
+
+<!-- Recent Reports -->
+<div class="bg-white rounded-custom shadow-sm">
+    <div class="p-6 border-b border-gray-200">
+        <h3 class="text-lg font-semibold text-gray-900">Recent Reports</h3>
+    </div>
+    <div class="p-6">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-custom">
+                <div class="flex items-center space-x-4">
+                    <div class="p-2 bg-blue-100 rounded-custom">
+                        <i class="fas fa-file-pdf text-blue-600"></i>
+                    </div>
+                    <div>
+                        {% if permissions and permissions.view_financial %}
+                        <h4 class="font-medium text-gray-900">Q4 2024 Revenue Report</h4>
+                        {% else %}
+                        <h4 class="font-medium text-gray-900">Q4 2024 Client Report</h4>
+                        {% endif %}
+                        <p class="text-sm text-gray-600">Generated on Dec 15, 2024</p>
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button class="p-2 text-gray-600 hover:text-gold transition-colors">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:text-rose transition-colors">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

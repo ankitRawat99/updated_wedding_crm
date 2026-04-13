@@ -1,0 +1,87 @@
+<!-- Event Card Component -->
+<div class="event-box bg-gray-50 border border-gray-200 rounded-custom p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+        <h4 class="font-semibold text-gray-900">Event 1</h4>
+    </div>
+    
+    <!-- Row 1: Event Name, Date, Location -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Event Name <span class="text-red-500">*</span>
+            </label>
+            <select name="event_name[]" required class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">Select Event</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Reception">Reception</option>
+                <option value="Engagement">Engagement</option>
+                <option value="Mehendi">Mehendi</option>
+                <option value="Haldi">Haldi</option>
+                <option value="Sangam">Sangam</option>
+                <option value="Ring Ceremony">Ring Ceremony</option>
+                <option value="Custom">Custom</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Date <span class="text-red-500">*</span>
+            </label>
+            <input type="date" name="event_date[]" required min="2024-01-01" max="2099-12-31" class="w-full px-4 py-3 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+            <input type="text" name="event_location[]" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+    </div>
+    
+    <!-- Row 2: Coverage, Time, Gathering -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                Coverage <span class="text-red-500">*</span>
+            </label>
+            <select name="coverage[]" required class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">Select Coverage</option>
+                <option value="Together">Together</option>
+                <option value="Bride">Bride</option>
+                <option value="Groom">Groom</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Time</label>
+            <select name="event_time[]" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">Select Time</option>
+                <option value="Morning">Morning</option>
+                <option value="Day">Day</option>
+                <option value="Evening">Evening</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Gathering</label>
+            <input type="text" name="gathering[]" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+    </div>
+    
+    <!-- Row 3: Time Slab, Quick Note, Drone -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Time Slab/Days/Manual</label>
+            <input type="text" name="time_slab[]" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Quick Note</label>
+            <input type="text" name="quick_note[]" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Drone</label>
+            <select name="drone[]" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+        </div>
+    </div>
+    
+    <!-- Team Composition Section -->
+    {% include 'order_form/components/team_composition.html' %}
+</div>

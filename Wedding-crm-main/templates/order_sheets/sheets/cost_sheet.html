@@ -1,0 +1,97 @@
+<!-- Cost Sheet Container -->
+<div class="a4-container">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold gradient-text mb-2">VowManager</h1>
+        <h2 class="text-xl font-semibold text-gray-800 mb-1">Cost Sheet</h2>
+        <p class="text-gray-600">Order No: <span id="costOrderIdDisplay">Loading...</span> | Date: <span id="costOrderDateDisplay">Loading...</span></p>
+    </div>
+
+    <!-- Cost Breakdown -->
+    <div class="section-header">
+        <h3>Cost Breakdown</h3>
+    </div>
+    
+    <table class="w-full text-sm border-collapse mb-8">
+        <thead>
+            <tr class="border-b-2 border-gray-300">
+                <th class="text-left py-3 font-semibold">Item</th>
+                <th class="text-right py-3 font-semibold">Amount (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Team Cost</td>
+                <td class="text-right py-2" id="cost-team">Loading...</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Video Production</td>
+                <td class="text-right py-2" id="cost-video">Loading...</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Album Design & Print</td>
+                <td class="text-right py-2" id="cost-album">Loading...</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Transportation</td>
+                <td class="text-right py-2" id="cost-transport">Loading...</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Equipment Rental</td>
+                <td class="text-right py-2" id="cost-equipment">Loading...</td>
+            </tr>
+            <tr class="border-b border-gray-200">
+                <td class="py-2">Miscellaneous</td>
+                <td class="text-right py-2" id="cost-misc">Loading...</td>
+            </tr>
+            <tr class="border-t-2 border-gray-400">
+                <td class="py-3 font-semibold">Total Cost</td>
+                <td class="text-right py-3 font-semibold" id="cost-total">Loading...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Profit Analysis -->
+    <div class="section-header">
+        <h3>Profit Analysis</h3>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-6 mb-8">
+        <div class="bg-blue-50 border border-blue-200 rounded p-4">
+            <h4 class="font-semibold text-blue-800 mb-3">Revenue</h4>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Quote Price:</span>
+                <span id="revenue-quote" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Additional Services:</span>
+                <span id="revenue-additional" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row border-t pt-2 mt-2">
+                <span class="font-semibold text-blue-800">Total Revenue:</span>
+                <span id="revenue-total" class="font-bold text-blue-900">Loading...</span>
+            </div>
+        </div>
+        
+        <div class="bg-green-50 border border-green-200 rounded p-4">
+            <h4 class="font-semibold text-green-800 mb-3">Profit</h4>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Gross Margin:</span>
+                <span id="profit-gross" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="font-medium text-gray-600">Net Profit:</span>
+                <span id="profit-net" class="text-gray-900">Loading...</span>
+            </div>
+            <div class="info-row border-t pt-2 mt-2">
+                <span class="font-semibold text-green-800">Profit %:</span>
+                <span id="profit-percentage" class="font-bold text-green-900">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-600 mt-8 pt-4 border-t border-gray-200">
+        <p>VowManager - Wedding CRM System | Generated on <span id="costGeneratedDateDisplay">Loading...</span></p>
+    </div>
+</div>

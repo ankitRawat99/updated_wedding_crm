@@ -1,0 +1,562 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Dashboard - WeddingCRM{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Quick Actions Bar -->
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h3 class="text-lg font-semibold text-gray-900">Good morning, {{ username if username else 'User' }}! {% if user_role %}<span class="text-sm bg-{{ 'purple' if user_role == 'superadmin' else 'blue' if user_role == 'admin' else 'green' }}-100 text-{{ 'purple' if user_role == 'superadmin' else 'blue' if user_role == 'admin' else 'green' }}-800 px-2 py-1 rounded-full">{{ user_role|title }}</span>{% endif %}</h3>
+            <p class="text-gray-600">{% if user_role == 'manager' %}Here's your team overview for today.{% else %}Here's what's happening with your events today.{% endif %}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Booking Overview Stats -->
+<div class="bg-white rounded-custom shadow-sm mb-6">
+    <div class="p-6 border-b border-gray-200">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-900">
+                <i class="fas fa-chart-line text-blue-500 mr-2"></i>Booking Overview
+            </h3>
+            <button onclick="window.location.href='/reports'" class="gradient-bg text-white px-4 py-2 rounded-custom text-sm font-medium hover:opacity-90 transition-opacity">
+                <i class="fas fa-arrow-right mr-1"></i>View Report
+            </button>
+        </div>
+    </div>
+    
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- This Month -->
+            <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-blue-500">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                        <i class="fas fa-calendar-check text-blue-600 text-lg"></i>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.bookings.this_month.count }}</div>
+                        <div class="text-sm text-gray-500">Bookings</div>
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-600 mb-2">This Month</div>
+                <div class="text-xl font-bold text-blue-600">₹{{ dashboard_data.bookings.this_month.value }}</div>
+            </div>
+            
+            <!-- Previous Month -->
+            <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-gray-400">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-2 bg-gray-100 rounded-lg">
+                        <i class="fas fa-history text-gray-600 text-lg"></i>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.bookings.previous_month.count }}</div>
+                        <div class="text-sm text-gray-500">Bookings</div>
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-600 mb-2">Previous Month</div>
+                <div class="text-xl font-bold text-gray-600">₹{{ dashboard_data.bookings.previous_month.value }}</div>
+            </div>
+            
+            <!-- This Quarter -->
+            <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-purple-500">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-2 bg-purple-100 rounded-lg">
+                        <i class="fas fa-chart-line text-purple-600 text-lg"></i>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.bookings.this_quarter.count }}</div>
+                        <div class="text-sm text-gray-500">Bookings</div>
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-600 mb-2">This Quarter</div>
+                <div class="text-xl font-bold text-purple-600">₹{{ dashboard_data.bookings.this_quarter.value }}</div>
+            </div>
+            
+            <!-- Lifetime Total -->
+            <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-green-500">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="p-2 bg-green-100 rounded-lg">
+                        <i class="fas fa-trophy text-green-600 text-lg"></i>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.bookings.lifetime.count }}</div>
+                        <div class="text-sm text-gray-500">Total</div>
+                    </div>
+                </div>
+                <div class="text-sm font-medium text-gray-600 mb-2">Lifetime Bookings</div>
+                <div class="text-xl font-bold text-green-600">₹{{ dashboard_data.bookings.lifetime.value }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Active Bookings Section -->
+<div class="bg-white rounded-custom shadow-sm mb-6">
+    <div class="p-6 border-b border-gray-200">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-900">
+                <i class="fas fa-tasks text-blue-500 mr-2"></i>Active Bookings
+            </h3>
+            <a href="/reports" class="text-gold hover:text-rose transition-colors text-sm font-medium">Detailed Report</a>
+        </div>
+        <p class="text-sm text-gray-600 mt-1">Orders between first advance to delivery completion</p>
+    </div>
+    
+    <div class="p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Active Orders Count -->
+            <div class="text-center">
+                <div class="text-3xl font-bold text-blue-600 mb-2">{{ dashboard_data.active_bookings.total }}</div>
+                <div class="text-sm text-gray-600 mb-3">Active Orders</div>
+                <div class="text-lg font-semibold text-gray-900">₹{{ dashboard_data.active_bookings.value }}</div>
+                <div class="text-xs text-gray-500">Total Value</div>
+            </div>
+            
+            <!-- Inward Value -->
+            <div class="text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">₹{{ dashboard_data.active_bookings.inward }}</div>
+                <div class="text-sm text-gray-600 mb-3">Inward Value</div>
+                <div class="w-full bg-gray-200 rounded-full h-3 mt-2">
+                    <div class="bg-green-500 h-3 rounded-full transition-all duration-500" style="width: 58.7%"></div>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">58.7% of total</div>
+            </div>
+            
+            <!-- To be Received -->
+            <div class="text-center">
+                <div class="text-3xl font-bold text-amber-600 mb-2">₹{{ dashboard_data.active_bookings.pending }}</div>
+                <div class="text-sm text-gray-600 mb-3">To be Received</div>
+                <div class="w-full bg-gray-200 rounded-full h-3 mt-2">
+                    <div class="bg-amber-500 h-3 rounded-full transition-all duration-500" style="width: 41.3%"></div>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">41.3% remaining</div>
+            </div>
+            
+            <!-- View Stages -->
+            <div class="text-center">
+                <button onclick="window.location.href='/bookings'" class="gradient-bg text-white px-4 py-2 rounded-custom text-sm font-medium hover:opacity-90 transition-opacity">
+                    View Stages
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upcoming Payments & Orders Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <!-- Payment Inward Tracking -->
+    <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-custom shadow-sm overflow-hidden">
+        <div class="bg-white/90 backdrop-blur-sm p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-900">
+                    <i class="fas fa-coins text-green-500 mr-2"></i>Payment Inward Tracking
+                </h3>
+                <div class="flex space-x-2">
+                    <button onclick="window.location.href='/payments'" class="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all transform hover:scale-105">
+                        <i class="fas fa-chart-line mr-1"></i>Payment Overview
+                    </button>
+                    <button onclick="window.location.href='/payment-waitlist'" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition-all transform hover:scale-105">
+                        <i class="fas fa-list mr-1"></i>Clear Waitlist
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-6">
+            <!-- Upcoming Payments (Next 3 Days) -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-lg font-semibold text-gray-900 flex items-center">
+                        <div class="w-3 h-3 bg-red-500 rounded-full mr-2 animate-pulse"></div>
+                        Urgent Payments (Next 3 Days)
+                    </h4>
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">High Priority</span>
+                </div>
+                <div class="space-y-3">
+                    {% for payment in dashboard_data.upcoming_payments %}
+                    <div class="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border-l-4 border-red-500 hover:shadow-md transition-shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                {{ payment.client[:2]|upper }}
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">{{ payment.client }}</div>
+                                <div class="text-sm text-gray-600">Due: {{ payment.date }} • Final Payment</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xl font-bold text-red-600">₹{{ payment.amount }}</div>
+                            <div class="text-xs text-gray-500">2 days left</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Payment Summary Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Next 7 Days -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border-t-4 border-yellow-500">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl">
+                            <i class="fas fa-calendar-week text-white text-xl"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.payment_summary.next_7_days.count }}</div>
+                            <div class="text-sm text-gray-600">Payments</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700 mb-2">Next 7 Days</div>
+                    <div class="text-2xl font-bold text-yellow-600">₹{{ dashboard_data.payment_summary.next_7_days.value }}</div>
+                </div>
+                
+                <!-- Next 30 Days -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border-t-4 border-blue-500">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl">
+                            <i class="fas fa-calendar-alt text-white text-xl"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.payment_summary.next_30_days.count }}</div>
+                            <div class="text-sm text-gray-600">Payments</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700 mb-2">Next 30 Days</div>
+                    <div class="text-2xl font-bold text-blue-600">₹{{ dashboard_data.payment_summary.next_30_days.value }}</div>
+                </div>
+                
+                <!-- Waitlist -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border-t-4 border-purple-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-purple-400/20 to-pink-600/20 rounded-full -mr-8 -mt-8"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-gradient-to-r from-purple-500 to-pink-600 rounded-xl">
+                            <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.payment_summary.waitlist.count }}</div>
+                            <div class="text-sm text-gray-600">Overdue</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700 mb-2">Inward Waitlist</div>
+                    <div class="text-2xl font-bold text-purple-600">₹{{ dashboard_data.payment_summary.waitlist.value }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Status -->
+    <div class="bg-gray-50 rounded-custom shadow-sm overflow-hidden">
+        <div class="bg-white p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-900">
+                    <i class="fas fa-shield-alt text-gray-600 mr-2"></i>Order Lock Status
+                </h3>
+                <div class="flex space-x-2">
+                    <button onclick="clearLockWaitlist()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fas fa-broom mr-1"></i>Clear Lock Waitlist
+                    </button>
+                    <button onclick="window.location.href='/bookings'" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fas fa-list mr-1"></i>See All
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="p-6">
+            <!-- Order Status Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <!-- Locked Orders -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-400">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-green-100 rounded-xl">
+                            <i class="fas fa-lock text-green-600 text-xl"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.orders.locked.total }}</div>
+                            <div class="text-sm text-gray-600">of {{ dashboard_data.orders.locked.out_of }}</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700 mb-2">Locked Orders</div>
+                    <div class="text-lg font-semibold text-green-600">Advance Paid</div>
+                </div>
+                
+                <!-- Pending Lock -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-400">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-red-100 rounded-xl">
+                            <i class="fas fa-credit-card text-red-600 text-xl"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.orders.pending_lock }}</div>
+                            <div class="text-sm text-gray-600">Orders</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700 mb-2">Pending Lock</div>
+                    <div class="text-lg font-semibold text-red-600">Awaiting Advance</div>
+                </div>
+                
+                <!-- Lock Waitlist -->
+                <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-amber-400">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="p-3 bg-amber-100 rounded-xl">
+                            <i class="fas fa-clock text-amber-600 text-xl"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.orders.lock_waitlist }}</div>
+                            <div class="text-sm text-gray-600">Orders</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-700 mb-2">Lock Waitlist</div>
+                    <div class="text-lg font-semibold text-amber-600">Ready to Lock</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Events & Production Overview -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <!-- Events Overview -->
+    <div class="bg-white rounded-custom shadow-sm">
+        <div class="p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    <i class="fas fa-calendar-alt text-blue-500 mr-2"></i>Events Overview
+                </h3>
+                <a href="/calendar" class="text-gold hover:text-rose transition-colors text-sm font-medium">Full Calendar</a>
+            </div>
+        </div>
+        
+        <div class="p-6">
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-gray-900">{{ dashboard_data.events.total }}</div>
+                    <div class="text-xs text-gray-600">Total Events</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-600">{{ dashboard_data.events.completed }}</div>
+                    <div class="text-xs text-gray-600">Completed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600">{{ dashboard_data.events.active }}</div>
+                    <div class="text-xs text-gray-600">Active</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-purple-600">5</div>
+                    <div class="text-xs text-gray-600">This Week</div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="text-sm font-medium text-gray-900 mb-2">Upcoming Events</div>
+                {% for event in dashboard_data.events.upcoming %}
+                <div class="flex items-center justify-between p-2 bg-gray-50 rounded">
+                    <span class="text-sm text-gray-700">{{ event.date }} - {{ event.type }}</span>
+                    <span class="text-sm font-medium text-gray-900">{{ event.client }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Production Status -->
+    <div class="bg-white rounded-custom shadow-sm">
+        <div class="p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-gray-900">
+                    <i class="fas fa-cogs text-purple-500 mr-2"></i>Production Status
+                </h3>
+                <button onclick="window.location.href='/delivery-report'" class="gradient-bg text-white px-4 py-2 rounded-custom text-sm font-medium hover:opacity-90 transition-opacity">
+                    <i class="fas fa-arrow-right mr-1"></i>Detailed Report
+                </button>
+            </div>
+        </div>
+        
+        <div class="p-6">
+            <!-- Production Status Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <!-- In-Production Waitlist -->
+                <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-orange-500">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="p-2 bg-orange-100 rounded-lg">
+                            <i class="fas fa-hourglass-start text-orange-600 text-lg"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.production.waitlist }}</div>
+                            <div class="text-sm text-gray-500">Orders</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-600">In-Production Waitlist</div>
+                </div>
+                
+                <!-- In Production -->
+                <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="p-2 bg-blue-100 rounded-lg">
+                            <i class="fas fa-play-circle text-blue-600 text-lg"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.production.in_production }}</div>
+                            <div class="text-sm text-gray-500">Orders</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-600">In Production</div>
+                </div>
+                
+                <!-- Delivery Completion Waitlist -->
+                <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-purple-500">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="p-2 bg-purple-100 rounded-lg">
+                            <i class="fas fa-clock text-purple-600 text-lg"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.production.delivery_waitlist }}</div>
+                            <div class="text-sm text-gray-500">Orders</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-600">Delivery Completion Waitlist</div>
+                </div>
+                
+                <!-- Completed Delivery -->
+                <div class="bg-white rounded-custom p-4 shadow-sm border-l-4 border-green-500">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="p-2 bg-green-100 rounded-lg">
+                            <i class="fas fa-check-circle text-green-600 text-lg"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-gray-800">{{ dashboard_data.production.completed }}</div>
+                            <div class="text-sm text-gray-500">Orders</div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-medium text-gray-600">Completed Delivery</div>
+                </div>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button onclick="clearInProductionWaitlist()" class="flex-1 bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-custom text-sm font-medium transition-colors">
+                    <i class="fas fa-broom mr-2"></i>Clear In-Production Waitlist
+                </button>
+                <button onclick="clearDeliveryWaitlist()" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-custom text-sm font-medium transition-colors">
+                    <i class="fas fa-truck mr-2"></i>Clear Delivery Completion Waitlist
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Vendor Management Section -->
+{% if permissions.view_financial %}
+<div class="bg-white rounded-custom shadow-sm mb-6">
+    <div class="p-6 border-b border-gray-200">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-gray-900">
+                <i class="fas fa-handshake text-indigo-500 mr-2"></i>Vendor Management
+            </h3>
+            <a href="/vendors" class="text-gold hover:text-rose transition-colors text-sm font-medium">Full Vendor Report</a>
+        </div>
+    </div>
+    
+    <div class="p-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <div class="text-center">
+                <div class="text-2xl font-bold text-indigo-600 mb-2">{{ dashboard_data.vendors.active }}</div>
+                <div class="text-sm text-gray-600 mb-1">Active Vendors</div>
+                <div class="text-lg font-semibold text-gray-900">₹{{ dashboard_data.payouts.total }}</div>
+                <div class="text-xs text-gray-500">Total Payouts</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-blue-600 mb-2">{{ dashboard_data.vendors.event_team }}</div>
+                <div class="text-sm text-gray-600 mb-1">Event Team</div>
+                <div class="text-lg font-semibold text-gray-900">₹{{ dashboard_data.payouts.breakdown.event_team }}</div>
+                <div class="text-xs text-gray-500">Payouts</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-purple-600 mb-2">{{ dashboard_data.vendors.editors }}</div>
+                <div class="text-sm text-gray-600 mb-1">Editors</div>
+                <div class="text-lg font-semibold text-gray-900">₹{{ dashboard_data.payouts.breakdown.editors }}</div>
+                <div class="text-xs text-gray-500">Payouts</div>
+            </div>
+            <div class="text-center">
+                <div class="text-2xl font-bold text-green-600 mb-2">4</div>
+                <div class="text-sm text-gray-600 mb-1">Others</div>
+                <div class="text-lg font-semibold text-gray-900">₹47K</div>
+                <div class="text-xs text-gray-500">Album, Print, etc.</div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-green-50 rounded-custom p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-medium text-gray-900">Completed Payouts</h4>
+                    <span class="text-2xl font-bold text-green-600">₹{{ dashboard_data.payouts.completed }}</span>
+                </div>
+                <div class="text-sm text-gray-600">All vendor payments processed</div>
+            </div>
+            
+            <div class="bg-yellow-50 rounded-custom p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-medium text-gray-900">Pending Payouts</h4>
+                    <span class="text-2xl font-bold text-yellow-600">₹{{ dashboard_data.payouts.pending }}</span>
+                </div>
+                <div class="text-sm text-gray-600">Awaiting payment processing</div>
+            </div>
+        </div>
+        
+        <div class="mt-6 pt-4 border-t border-gray-200">
+            <div class="flex items-center justify-between">
+                <h4 class="font-medium text-gray-900">Upcoming Payouts</h4>
+                <div class="flex space-x-4 text-sm">
+                    <span class="text-gray-600">Today</span>
+                    <span class="text-gray-600">Tomorrow</span>
+                    <span class="text-gray-600">This Week</span>
+                    <span class="text-gray-600">This Month</span>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500 mt-2">Date & Project wise scheduling available</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Recent Activity -->
+<div class="bg-white rounded-custom shadow-sm p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+    <div class="space-y-3">
+        <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span class="text-sm text-gray-600">Payment received from {{ dashboard_data.upcoming_payments[0].client if dashboard_data.upcoming_payments }}</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <span class="text-sm text-gray-600">New order booking added</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+            <span class="text-sm text-gray-600">Venue booking confirmed</span>
+        </div>
+    </div>
+</div>
+
+<script>
+function clearLockWaitlist() {
+    if (confirm('Are you sure you want to clear the lock waitlist? This action cannot be undone.')) {
+        alert('Lock waitlist cleared successfully!');
+    }
+}
+
+function clearInProductionWaitlist() {
+    if (confirm('Are you sure you want to clear the in-production waitlist?')) {
+        alert('In-production waitlist cleared successfully!');
+    }
+}
+
+function clearDeliveryWaitlist() {
+    if (confirm('Are you sure you want to clear the delivery waitlist?')) {
+        alert('Delivery waitlist cleared successfully!');
+    }
+}
+</script>
+{% endblock %}

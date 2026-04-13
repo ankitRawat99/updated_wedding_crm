@@ -1,0 +1,175 @@
+[
+  {
+    "id": "ORD-001",
+    "couple_name": "Kavya & Rohit",
+    "stage": "pre-event",
+    "status": "active",
+    "deal_amount": "2,50,000",
+    "advance_paid": "1,00,000",
+    "event_paid": "87,500",
+    "delivery_pending": "62,500",
+    "payment_status": "partial",
+    "events": [
+      {"name": "Mehendi", "status": "pending"},
+      {"name": "Wedding", "status": "pending"},
+      {"name": "Reception", "status": "pending"}
+    ],
+    "team_members": [
+      {"type": "Candid", "status": "completed"},
+      {"type": "Cine", "status": "completed"},
+      {"type": "TPhoto", "status": "completed"}
+    ],
+    "deliverables": [
+      {"name": "E-Invite", "status": "pending"}
+    ],
+    "next_payment_due": "Event Payment Due: 22 Oct 2024"
+  },
+  {
+    "id": "ORD-002",
+    "couple_name": "Kavya & Rohit",
+    "stage": "in-event",
+    "status": "active",
+    "deal_amount": "2,50,000",
+    "advance_paid": "1,00,000",
+    "event_paid": "87,500",
+    "delivery_pending": "75,000",
+    "payment_status": "partial",
+    "live_status": true,
+    "events": [
+      {"name": "Mehendi", "status": "done"},
+      {"name": "Wedding", "status": "live"},
+      {"name": "Reception", "status": "pending"}
+    ],
+    "team_members": [],
+    "deliverables": [],
+    "next_payment_due": ""
+  },
+  {
+    "id": "ORD-003",
+    "couple_name": "Riya & Karan",
+    "stage": "post-event",
+    "status": "active",
+    "deal_amount": "1,90,000",
+    "advance_paid": "76,000",
+    "event_paid": "66,500",
+    "delivery_pending": "47,500",
+    "payment_status": "completed",
+    "events": [],
+    "team_members": [
+      {"name": "Mayank", "status": "done"},
+      {"name": "Ayush", "status": "pending"},
+      {"name": "Sachin", "status": "pending"}
+    ],
+    "deliverables": [],
+    "waitlist_status": [
+      {"name": "Production Waitlist"},
+      {"name": "3 days remaining"}
+    ]
+  },
+  {
+    "id": "ORD-004",
+    "couple_name": "Anjali & Vikram",
+    "stage": "in-production",
+    "status": "active",
+    "deal_amount": "2,20,000",
+    "advance_paid": "88,000",
+    "event_paid": "77,000",
+    "delivery_pending": "55,000",
+    "payment_status": "completed",
+    "events": [],
+    "team_members": [],
+    "deliverables": [
+      {"name": "Photos (800)", "status": "done"},
+      {"name": "Film (30min)", "status": "pending"},
+      {"name": "Highlight", "status": "done"},
+      {"name": "Albums (2)", "status": "pending"},
+      {"name": "Reels (4)", "status": "done"}
+    ],
+    "production_team": [
+      {"name": "Rahul Sharma", "type": "Photo Editor"},
+      {"name": "Priya Singh", "type": "Video Editor"},
+      {"name": "Amit Kumar", "type": "Designer"},
+      {"name": "QC Team", "status": "completed"}
+    ]
+  },
+  {
+    "id": "ORD-005",
+    "couple_name": "Meera & Arjun",
+    "stage": "out-production",
+    "status": "completed",
+    "deal_amount": "3,00,000",
+    "advance_paid": "1,20,000",
+    "event_paid": "1,05,000",
+    "delivery_pending": "75,000",
+    "payment_status": "completed",
+    "events": [],
+    "team_members": [],
+    "deliverables": [
+      {"name": "Gallery (1000)", "status": "done"},
+      {"name": "Film (45min)", "status": "done"},
+      {"name": "Highlight (8min)", "status": "done"},
+      {"name": "Social Media", "status": "done"},
+      {"name": "Albums (2)", "status": "done"}
+    ],
+    "completion_status": [
+      {"name": "Project", "status": "done"},
+      {"name": "All Deliveries", "status": "done"},
+      {"name": "Client Satisfied", "status": "done"}
+    ]
+  },
+  {
+    "id": "ORD-006",
+    "couple_name": "Neha & Arjun",
+    "stage": "pre-lock",
+    "status": "active",
+    "deal_amount": "1,80,000",
+    "advance_paid": "0",
+    "event_paid": "0",
+    "delivery_pending": "1,80,000",
+    "payment_status": "pending",
+    "events": [],
+    "team_members": [],
+    "deliverables": [
+      {"name": "E-Invite", "status": "pending"}
+    ],
+    "prelock_status": [
+      {"name": "Order Form", "status": "done"},
+      {"name": "Cost Lock", "status": "pending"},
+      {"name": "Team", "status": "pending"}
+    ],
+    "waitlist_status": [
+      {"name": "Advance Payment Waitlist"},
+      {"name": "Lock Payment Required"}
+    ]
+  },
+  {
+    "id": "ORD-007",
+    "couple_name": "Sanya & Karan",
+    "stage": "out-production",
+    "status": "active",
+    "deal_amount": "2,80,000",
+    "advance_paid": "1,12,000",
+    "event_paid": "98,000",
+    "delivery_pending": "70,000",
+    "payment_status": "partial",
+    "events": [],
+    "team_members": [],
+    "deliverables": [
+      {"name": "Gallery (850)", "status": "done"},
+      {"name": "Film (35min)", "status": "done"},
+      {"name": "Highlight (6min)", "status": "done"},
+      {"name": "Social Media", "status": "done"},
+      {"name": "Albums (1)", "status": "pending"}
+    ],
+    "client_dependencies": [
+      {"name": "Album Address", "status": "done"},
+      {"name": "Photo Selection", "status": "pending"},
+      {"name": "Cover Design", "status": "pending"},
+      {"name": "Delivery Preference", "status": "done"}
+    ],
+    "waitlist_status": [
+      {"name": "Payment Waitlist"},
+      {"name": "Final Payment Required"}
+    ]
+  }
+]

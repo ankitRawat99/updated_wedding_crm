@@ -1,0 +1,442 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Production Delivery Tracker - WeddingCRM{% endblock %}
+{% block page_title %}Production Delivery Tracker{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <p class="text-gray-600">60-day production timeline management with vendor allocation</p>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                <i class="fas fa-plus mr-2"></i>Add to Production
+            </button>
+            <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors" onclick="toggleTimelineView()">
+                <i class="fas fa-calendar mr-2"></i>Timeline View
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="bg-white rounded-custom shadow-sm p-6 mb-6">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+        <div class="gradient-bg text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">25</div>
+            <div class="text-sm opacity-90">Active In-Production</div>
+        </div>
+        <div class="bg-green-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">18</div>
+            <div class="text-sm opacity-90">On Time</div>
+        </div>
+        <div class="bg-red-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">4</div>
+            <div class="text-sm opacity-90">Delayed</div>
+        </div>
+        <div class="bg-yellow-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">8</div>
+            <div class="text-sm opacity-90">Upcoming Projects</div>
+        </div>
+        <div class="bg-blue-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">12</div>
+            <div class="text-sm opacity-90">Vendor Allocations</div>
+        </div>
+        <div class="bg-purple-500 text-white rounded-custom p-4 text-center card-hover">
+            <div class="text-2xl font-bold">3</div>
+            <div class="text-sm opacity-90">Completed Today</div>
+        </div>
+    </div>
+</div>
+
+<!-- Stage Filters -->
+<div class="bg-white rounded-custom shadow-sm p-6 mb-6">
+    <div class="flex flex-wrap gap-3 items-center">
+        <button class="px-4 py-2 gradient-bg text-white rounded-custom text-sm font-medium filter-btn active" data-filter="all">
+            <i class="fas fa-list mr-2"></i>All Orders
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm font-medium filter-btn hover:bg-gray-200 transition-colors" data-filter="waitlist">
+            <i class="fas fa-hourglass-start mr-2"></i>In-Production Waitlist
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm font-medium filter-btn hover:bg-gray-200 transition-colors" data-filter="production">
+            <i class="fas fa-cogs mr-2"></i>In Production
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm font-medium filter-btn hover:bg-gray-200 transition-colors" data-filter="production-out">
+            <i class="fas fa-clock mr-2"></i>Production Out (60 days)
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm font-medium filter-btn hover:bg-gray-200 transition-colors" data-filter="approval-wait">
+            <i class="fas fa-eye mr-2"></i>Client Approval Waitlist
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm font-medium filter-btn hover:bg-gray-200 transition-colors" data-filter="delivery-wait">
+            <i class="fas fa-truck mr-2"></i>Delivery Completion Waitlist
+        </button>
+        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-custom text-sm font-medium filter-btn hover:bg-gray-200 transition-colors" data-filter="completed">
+            <i class="fas fa-check-circle mr-2"></i>Completed Delivery
+        </button>
+        
+        <div class="ml-auto">
+            <input type="text" placeholder="Search by client name..." 
+                   class="px-4 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-gold focus:border-transparent w-64" id="searchInput">
+        </div>
+    </div>
+</div>
+
+<!-- Production Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="productionCards">
+    
+    <!-- In-Production Waitlist -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 production-item card-hover" data-status="waitlist">
+        <div class="flex items-center justify-between mb-4">
+            <div class="client-name text-lg font-semibold text-gray-900">Rahul & Priya Wedding</div>
+            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">Waitlist</span>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Checklist Progress</span>
+                <span class="font-semibold text-blue-600">75%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+            <div>
+                <span class="text-gray-500">Event Payment</span>
+                <div class="font-medium">Pending</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Data Collection</span>
+                <div class="font-medium">In Progress</div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <span class="text-gray-500 text-sm">Pending Items</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">Team Payment</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">Data Restore</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <span class="text-gray-500 text-sm">Awaiting production lock</span>
+            <button class="px-3 py-1 bg-yellow-600 text-white rounded text-sm hover:bg-yellow-700">
+                <i class="fas fa-lock mr-1"></i>Lock Production
+            </button>
+        </div>
+    </div>
+
+    <!-- In Production -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 production-item card-hover" data-status="production">
+        <div class="flex items-center justify-between mb-4">
+            <div class="client-name text-lg font-semibold text-gray-900">Amit & Sneha Reception</div>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">In Production</span>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">60-Day Timeline</span>
+                <span class="font-semibold gradient-text">45%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="gradient-bg h-2 rounded-full" style="width: 45%"></div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+            <div>
+                <span class="text-gray-500">Production Start</span>
+                <div class="font-medium">15 Nov 2024</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Production Out</span>
+                <div class="font-medium">14 Jan 2025</div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <span class="text-gray-500 text-sm">Vendor Allocation</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Photo Team A</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Video Editor B</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Album Designer</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-custom">27 days remaining</span>
+            <button class="px-3 py-1 gradient-bg text-white rounded-custom text-sm hover:opacity-90 transition-opacity">
+                <i class="fas fa-tasks mr-1"></i>Update Progress
+            </button>
+        </div>
+    </div>
+
+    <!-- Production Out -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 production-item card-hover" data-status="production-out">
+        <div class="flex items-center justify-between mb-4">
+            <div class="client-name text-lg font-semibold text-gray-900">Vikram & Anita Sangam</div>
+            <span class="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full">Production Out</span>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Delivery Status</span>
+                <span class="font-semibold gradient-text">90%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="gradient-bg h-2 rounded-full" style="width: 90%"></div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+            <div>
+                <span class="text-gray-500">Production Completed</span>
+                <div class="font-medium">10 Dec 2024</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Client Review Due</span>
+                <div class="font-medium">17 Dec 2024</div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <span class="text-gray-500 text-sm">Deliverables Ready</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Photos (1200)</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Videos (4)</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Album Draft</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-custom">Ready for review</span>
+            <button class="px-3 py-1 bg-green-600 text-white rounded-custom text-sm hover:bg-green-700 transition-colors">
+                <i class="fas fa-share mr-1"></i>Send to Client
+            </button>
+        </div>
+    </div>
+
+    <!-- Client Approval Waitlist -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 production-item card-hover" data-status="approval-wait">
+        <div class="flex items-center justify-between mb-4">
+            <div class="client-name text-lg font-semibold text-gray-900">Rohan & Kavya Mehendi</div>
+            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full">Under Revision</span>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Revision Progress</span>
+                <span class="font-semibold text-purple-600">60%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+            <div>
+                <span class="text-gray-500">Client Feedback</span>
+                <div class="font-medium">12 Dec 2024</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Revision Due</span>
+                <div class="font-medium">20 Dec 2024</div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <span class="text-gray-500 text-sm">Revision Items</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Color Correction</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Album Layout</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-custom">8 days for revision</span>
+            <button class="px-3 py-1 bg-purple-600 text-white rounded-custom text-sm hover:bg-purple-700 transition-colors">
+                <i class="fas fa-edit mr-1"></i>Update Revision
+            </button>
+        </div>
+    </div>
+
+    <!-- Delivery Completion Waitlist -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 production-item card-hover" data-status="delivery-wait">
+        <div class="flex items-center justify-between mb-4">
+            <div class="client-name text-lg font-semibold text-gray-900">Arjun & Meera Haldi</div>
+            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-xs font-semibold rounded-full">Final Delivery TBC</span>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Final Payment</span>
+                <span class="font-semibold text-green-600">Received</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: 95%"></div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+            <div>
+                <span class="text-gray-500">Payment Date</span>
+                <div class="font-medium">14 Dec 2024</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Delivery Scheduled</span>
+                <div class="font-medium">16 Dec 2024</div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <span class="text-gray-500 text-sm">Final Deliverables</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Watermark-free Photos</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Final Videos</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Physical Album</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-custom">Ready for delivery</span>
+            <button class="px-3 py-1 bg-orange-600 text-white rounded-custom text-sm hover:bg-orange-700 transition-colors">
+                <i class="fas fa-truck mr-1"></i>Schedule Delivery
+            </button>
+        </div>
+    </div>
+
+    <!-- Completed Delivery -->
+    <div class="bg-white rounded-custom shadow-sm border border-gray-200 p-6 production-item card-hover" data-status="completed">
+        <div class="flex items-center justify-between mb-4">
+            <div class="client-name text-lg font-semibold text-gray-900">Karan & Divya Wedding</div>
+            <span class="px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">Completed</span>
+        </div>
+        
+        <div class="mb-4">
+            <div class="flex justify-between text-sm mb-2">
+                <span class="text-gray-600">Project Completion</span>
+                <span class="font-semibold text-green-600">100%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="bg-green-500 h-2 rounded-full" style="width: 100%"></div>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4 text-sm">
+            <div>
+                <span class="text-gray-500">Production Start</span>
+                <div class="font-medium">01 Oct 2024</div>
+            </div>
+            <div>
+                <span class="text-gray-500">Delivered</span>
+                <div class="font-medium">30 Nov 2024</div>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <span class="text-gray-500 text-sm">Completed Deliverables</span>
+            <div class="flex flex-wrap gap-1 mt-1">
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">All Photos</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">All Videos</span>
+                <span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-custom">Album Delivered</span>
+            </div>
+        </div>
+        
+        <div class="flex justify-between items-center">
+            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-custom">Delivered on time</span>
+            <button class="px-3 py-1 bg-gray-600 text-white rounded-custom text-sm hover:bg-gray-700 transition-colors">
+                <i class="fas fa-archive mr-1"></i>Archive
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+let isTimelineView = false;
+
+// Timeline View Toggle
+function toggleTimelineView() {
+    const cardsContainer = document.getElementById('productionCards');
+    const cards = document.querySelectorAll('.production-item');
+    
+    if (!isTimelineView) {
+        // Switch to timeline view
+        cardsContainer.className = 'space-y-4';
+        cards.forEach(card => {
+            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 p-4 production-item flex items-center justify-between';
+            
+            const clientName = card.querySelector('.client-name').textContent;
+            const status = card.querySelector('span').textContent;
+            const dates = card.querySelectorAll('.font-medium');
+            const startDate = dates[0] ? dates[0].textContent : 'N/A';
+            const endDate = dates[1] ? dates[1].textContent : 'N/A';
+            
+            card.innerHTML = `
+                <div class="flex items-center space-x-4">
+                    <div class="w-4 h-4 rounded-full bg-blue-500"></div>
+                    <div>
+                        <div class="font-semibold text-gray-900">${clientName}</div>
+                        <div class="text-sm text-gray-600">${startDate} → ${endDate}</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">${status}</span>
+                    <div class="w-32 bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 60%"></div>
+                    </div>
+                </div>
+            `;
+        });
+        isTimelineView = true;
+        document.querySelector('button[onclick="toggleTimelineView()"] i').className = 'fas fa-th mr-2';
+        document.querySelector('button[onclick="toggleTimelineView()"]').innerHTML = '<i class="fas fa-th mr-2"></i>Card View';
+    } else {
+        // Switch back to card view
+        location.reload();
+    }
+}
+
+// Filter functionality
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active', 'gradient-bg', 'text-white');
+            b.classList.add('bg-gray-100', 'text-gray-700');
+        });
+        this.classList.remove('bg-gray-100', 'text-gray-700');
+        this.classList.add('active', 'gradient-bg', 'text-white');
+        
+        const filter = this.dataset.filter;
+        const cards = document.querySelectorAll('.production-item');
+        
+        cards.forEach(card => {
+            if (filter === 'all' || card.dataset.status === filter) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Search functionality
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.production-item');
+    
+    cards.forEach(card => {
+        const clientName = card.querySelector('.client-name').textContent.toLowerCase();
+        if (clientName.includes(searchTerm)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+});
+</script>
+
+{% endblock %}

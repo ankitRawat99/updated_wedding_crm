@@ -1,0 +1,698 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Master Resource Allocation - WeddingCRM{% endblock %}
+{% block page_title %}Master Resource Allocation{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-2xl font-bold gradient-text">Master Resource Allocation</h1>
+            <p class="text-gray-600 mt-1">Team Allocation & Event Management</p>
+        </div>
+        <div class="text-sm text-gray-500">
+            Click on any event row to assign team members
+        </div>
+    </div>
+
+    <!-- Events Table -->
+    <div class="bg-white rounded-custom shadow-sm overflow-hidden">
+        <div class="overflow-x-auto max-h-screen overflow-y-auto">
+            <table class="min-w-full divide-y divide-gray-400">
+                <thead class="bg-gray-50 sticky top-0 z-10">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Client</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Event</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Time</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase bg-yellow-50">Shift</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase bg-green-50">Candid</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase bg-blue-50">Cine</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase bg-purple-50">T.Photo</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase bg-red-50">T.Video</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="eventsTableBody" class="bg-white divide-y divide-gray-400">
+                    <!-- Events will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+// Load events data from JSON
+fetch('/static/sheet_events.json')
+    .then(response => response.json())
+    .then(events => {
+        const tbody = document.getElementById('eventsTableBody');
+        
+        // Group events by client+event+location for team sharing
+        const groupsByKey = {};
+        
+        events.forEach((event, index) => {
+            const groupKey = `${event.name}_${event.event}_${event.location}`;
+            
+            if (!groupsByKey[groupKey]) {
+                groupsByKey[groupKey] = {
+                    events: [],
+                    sharedTeamIndex: index
+                };
+            }
+            
+            groupsByKey[groupKey].events.push({...event, originalIndex: index});
+            eventGroups[index] = groupsByKey[groupKey].sharedTeamIndex;
+            eventDates[groupsByKey[groupKey].sharedTeamIndex] = event.date;
+        });
+        
+        // Group events by date for display and calculate group sizes
+        const eventsByDate = {};
+        const groupSizes = {};
+        
+        Object.values(groupsByKey).forEach(group => {
+            groupSizes[group.sharedTeamIndex] = group.events.length;
+            group.events.forEach(event => {
+                if (!eventsByDate[event.date]) {
+                    eventsByDate[event.date] = [];
+                }
+                eventsByDate[event.date].push({
+                    ...event,
+                    sharedTeamIndex: group.sharedTeamIndex,
+                    groupSize: group.events.length
+                });
+            });
+        });
+        
+        // Process each date group
+        Object.keys(eventsByDate).forEach(date => {
+            const dateEvents = eventsByDate[date];
+            
+            dateEvents.forEach((event, eventIndex) => {
+                const index = event.originalIndex;
+                const sharedIndex = event.sharedTeamIndex;
+                
+            // Initialize shared teams
+            if (!assignedTeams[sharedIndex]) {
+                assignedTeams[sharedIndex] = {
+                    candid: [],
+                    cine: [],
+                    t_photo: [],
+                    t_video: []
+                };
+            }
+            
+            // Point this event to shared team
+            assignedTeams[index] = assignedTeams[sharedIndex];
+            
+            // Load existing team members only for the first event of the group
+            if (index === sharedIndex && event.packages && event.packages.length > 0) {
+                const pkg = event.packages[0];
+                if (pkg.team) {
+                    if (pkg.team.candid) assignedTeams[sharedIndex].candid.push({name: pkg.team.candid, shift: 'Full Day', price: 3000});
+                    if (pkg.team.cine) assignedTeams[sharedIndex].cine.push({name: pkg.team.cine, shift: 'Full Day', price: 4000});
+                    if (pkg.team.t_photo) assignedTeams[sharedIndex].t_photo.push({name: pkg.team.t_photo, shift: 'Full Day', price: 2500});
+                    if (pkg.team.t_video) assignedTeams[sharedIndex].t_video.push({name: pkg.team.t_video, shift: 'Full Day', price: 3500});
+                }
+            }
+            
+            // Create main event row
+            const row = document.createElement('tr');
+            row.className = 'hover:bg-gray-50 cursor-pointer';
+            row.onclick = () => toggleTeamForm(sharedIndex);
+            
+            // Add date cell only for first event of the date
+            const dateCell = eventIndex === 0 ? 
+                `<td class="px-4 py-4 text-sm font-medium text-gray-900" rowspan="${dateEvents.length}">${event.date}</td>` : '';
+            
+            row.innerHTML = `
+                ${dateCell}
+                <td class="px-4 py-4 text-sm text-gray-900">${event.name}</td>
+                <td class="px-4 py-4 text-sm text-gray-600">${event.event}</td>
+                <td class="px-4 py-4 text-sm text-gray-600">${event.location}</td>
+                <td class="px-4 py-4 text-sm text-gray-600">${event.time_slot}</td>
+                ${index === sharedIndex ? `
+                <td class="px-4 py-4 text-center bg-yellow-50" id="shiftCell_${sharedIndex}" rowspan="${event.groupSize}" onclick="event.stopPropagation()">
+                    <select class="text-xs border rounded px-2 py-1" onchange="updateEventShift(${sharedIndex}, this.value)">
+                        <option value="full_day">Full Day</option>
+                        <option value="half_day">Half Day</option>
+                    </select>
+                </td>
+                <td class="px-4 py-4 text-center bg-green-50" id="candidCell_${sharedIndex}" rowspan="${event.groupSize}">
+                    <span class="text-gray-400">-</span>
+                </td>
+                <td class="px-4 py-4 text-center bg-blue-50" id="cineCell_${sharedIndex}" rowspan="${event.groupSize}">
+                    <span class="text-gray-400">-</span>
+                </td>
+                <td class="px-4 py-4 text-center bg-purple-50" id="tPhotoCell_${sharedIndex}" rowspan="${event.groupSize}">
+                    <span class="text-gray-400">-</span>
+                </td>
+                <td class="px-4 py-4 text-center bg-red-50" id="tVideoCell_${sharedIndex}" rowspan="${event.groupSize}">
+                    <span class="text-gray-400">-</span>
+                </td>
+                <td class="px-4 py-4" rowspan="${event.groupSize}">
+                    <span id="statusBadge_${sharedIndex}" class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center space-x-1">
+                        <i class="fas fa-lock-open"></i>
+                        <span>Unlocked</span>
+                    </span>
+                </td>` : ''}
+
+            `;
+            
+            tbody.appendChild(row);
+            
+            // Create team assignment form row only for the first event of each group
+            if (index === sharedIndex) {
+                const formRow = document.createElement('tr');
+                formRow.id = `teamForm_${sharedIndex}`;
+                formRow.className = 'hidden';
+                
+                formRow.innerHTML = `
+                    <td colspan="11" class="px-4 py-4 bg-gray-50">
+                        <div class="max-w-5xl mx-auto bg-white border border-gray-300 rounded-md p-4 shadow-lg relative z-20">
+                            <h4 class="text-sm font-medium text-gray-900 mb-3 text-center">Add Team Member - ${event.name} (${event.event}) - Shared Team</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                                    <select id="teamType_${sharedIndex}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm" onchange="updatePriceField(${sharedIndex})">
+                                        <option value="">Select Type</option>
+                                        <option value="candid">Candid</option>
+                                        <option value="cine">Cine</option>
+                                        <option value="t_photo">T.Photo</option>
+                                        <option value="t_video">T.Video</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Team Member</label>
+                                    <select id="teamMember_${sharedIndex}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                                        <option value="">Select Member</option>
+                                        <option value="Mayank">Mayank</option>
+                                        <option value="Ayush">Ayush</option>
+                                        <option value="Sachin">Sachin</option>
+                                        <option value="Shankar">Shankar</option>
+                                        <option value="Piyush">Piyush</option>
+                                        <option value="Suresh">Suresh</option>
+                                        <option value="Asif">Asif</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Cost</label>
+                                    <input type="number" id="teamCost_${sharedIndex}" placeholder="Enter amount" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                                </div>
+                                <div class="flex items-end space-x-2">
+                                    <button onclick="assignTeamMemberToEvent(${sharedIndex})" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm">
+                                        Add
+                                    </button>
+                                    <button onclick="toggleTeamForm(${sharedIndex})" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Team Members List -->
+                            <div class="mt-4 border-t pt-3">
+                                <div class="flex justify-between items-center mb-2">
+                                    <div class="flex items-center space-x-2">
+                                        <h5 class="text-sm font-medium text-gray-700">Current Team Members:</h5>
+                                        <i id="lockIcon_${sharedIndex}" class="fas fa-lock-open text-gray-400 text-lg"></i>
+                                    </div>
+                                    <button id="lockBtn_${sharedIndex}" onclick="toggleTeamLock(${sharedIndex})" class="px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700 transition-colors">
+                                        <i class="fas fa-lock-open mr-1"></i>Lock Team
+                                    </button>
+                                </div>
+                                <div id="teamMembersList_${sharedIndex}" class="space-y-2">
+                                    <!-- Team members will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(formRow);
+            }
+            
+            // Update team display for existing members (only for shared team index)
+            if (index === sharedIndex) {
+                setTimeout(() => {
+                    updateTeamDisplay(sharedIndex, 'candid');
+                    updateTeamDisplay(sharedIndex, 'cine');
+                    updateTeamDisplay(sharedIndex, 't_photo');
+                    updateTeamDisplay(sharedIndex, 't_video');
+                    updateTeamMembersList(sharedIndex);
+                }, 100);
+            }
+            });
+        });
+    })
+    .catch(error => {
+        console.error('Error loading events:', error);
+        document.getElementById('eventsTableBody').innerHTML = `
+            <tr>
+                <td colspan="11" class="px-6 py-12 text-center text-gray-500">
+                    <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                    <p>Error loading events data: ${error.message}</p>
+                    <p class="text-sm mt-2">Check browser console for details</p>
+                </td>
+            </tr>
+        `;
+    });
+
+// Add error handling for the entire script
+window.addEventListener('error', function(e) {
+    console.error('JavaScript error:', e.error);
+    const tbody = document.getElementById('eventsTableBody');
+    if (tbody && tbody.children.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="11" class="px-6 py-12 text-center text-gray-500">
+                    <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                    <p>JavaScript Error: ${e.error.message}</p>
+                    <p class="text-sm mt-2">Please check browser console for details</p>
+                </td>
+            </tr>
+        `;
+    }
+});
+
+
+
+// Toggle team assignment form for shared team
+function toggleTeamForm(sharedTeamIndex) {
+    // Check if team is locked (Super Admin can bypass)
+    const userRole = getCookie('user_role');
+    if (teamLockStatus[sharedTeamIndex] && userRole !== 'superadmin') {
+        showCustomAlert('Team is locked and cannot be edited. Please contact to superAdmin.', 'error', 'Team Locked');
+        return;
+    }
+    
+    const form = document.getElementById(`teamForm_${sharedTeamIndex}`);
+    if (form && form.classList.contains('hidden')) {
+        // Hide all other forms first
+        document.querySelectorAll('[id^="teamForm_"]').forEach(f => f.classList.add('hidden'));
+        form.classList.remove('hidden');
+        // Scroll form into view to prevent overlap
+        setTimeout(() => {
+            form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+        // Update available team members for this date
+        updateAvailableTeamMembers(sharedTeamIndex);
+    } else if (form) {
+        form.classList.add('hidden');
+    }
+}
+
+// Toggle team lock status
+function toggleTeamLock(sharedTeamIndex) {
+    const lockBtn = document.getElementById(`lockBtn_${sharedTeamIndex}`);
+    const lockIcon = document.getElementById(`lockIcon_${sharedTeamIndex}`);
+    const statusBadge = document.getElementById(`statusBadge_${sharedTeamIndex}`);
+    const isLocked = teamLockStatus[sharedTeamIndex] || false;
+    const userRole = getCookie('user_role');
+    
+    if (isLocked) {
+        // Only SuperAdmin can unlock
+        if (userRole !== 'superadmin') {
+            showCustomAlert('Only Super Admin can unlock teams.', 'error', 'Access Denied');
+            return;
+        }
+        
+        // Unlock team
+        teamLockStatus[sharedTeamIndex] = false;
+        lockBtn.innerHTML = '<i class="fas fa-lock-open mr-1"></i>Lock Team';
+        lockBtn.className = 'px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700 transition-colors';
+        lockIcon.className = 'fas fa-lock-open text-gray-400 text-lg';
+        
+        // Update status badge
+        if (statusBadge) {
+            statusBadge.innerHTML = '<i class="fas fa-lock-open"></i><span>Unlocked</span>';
+            statusBadge.className = 'px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full flex items-center space-x-1';
+        }
+        
+        // Enable remove buttons and shift dropdown
+        const removeButtons = document.querySelectorAll(`#teamMembersList_${sharedTeamIndex} button[onclick*="removeTeamMember"]`);
+        removeButtons.forEach(btn => {
+            btn.disabled = false;
+            btn.className = 'px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600';
+        });
+        
+        // Restore shift dropdown
+        const shiftCell = document.getElementById(`shiftCell_${sharedTeamIndex}`);
+        if (shiftCell) {
+            const currentValue = shiftCell.querySelector('select')?.value || shiftCell.textContent?.replace(' (Locked)', '') || 'Full Day';
+            shiftCell.innerHTML = `
+                <select class="text-xs border rounded px-2 py-1" onchange="updateEventShift(${sharedTeamIndex}, this.value)">
+                    <option value="full_day" ${currentValue === 'full_day' || currentValue === 'Full Day' ? 'selected' : ''}>Full Day</option>
+                    <option value="half_day" ${currentValue === 'half_day' || currentValue === 'Half Day' ? 'selected' : ''}>Half Day</option>
+                </select>
+            `;
+        }
+    }else {
+        // Anyone can lock team
+        teamLockStatus[sharedTeamIndex] = true;
+        lockBtn.innerHTML = '<i class="fas fa-lock mr-1"></i>Unlock Team';
+        lockBtn.className = 'px-3 py-1 bg-red-600 text-white rounded text-xs hover:bg-red-700 transition-colors';
+        lockIcon.className = 'fas fa-lock text-green-500 text-lg';
+        
+        // Update status badge
+        if (statusBadge) {
+            statusBadge.innerHTML = '<i class="fas fa-lock"></i><span>Locked</span>';
+            statusBadge.className = 'px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full flex items-center space-x-1';
+        }
+        
+        // Disable remove buttons (unless Super Admin)
+        if (userRole !== 'superadmin') {
+            const removeButtons = document.querySelectorAll(`#teamMembersList_${sharedTeamIndex} button[onclick*="removeTeamMember"]`);
+            removeButtons.forEach(btn => {
+                btn.disabled = true;
+                btn.className = 'px-2 py-1 bg-gray-400 text-white rounded text-xs cursor-not-allowed';
+            });
+        }
+        
+        // Convert shift dropdown to text
+        const shiftCell = document.getElementById(`shiftCell_${sharedTeamIndex}`);
+        if (shiftCell) {
+            const currentValue = shiftCell.querySelector('select')?.value || 'Full Day';
+            const displayValue = currentValue === 'full_day' ? 'Full Day' : 
+                               currentValue === 'half_day' ? 'Half Day' : currentValue;
+            shiftCell.innerHTML = `<span class="text-xs text-gray-600">${displayValue}</span>`;
+        }
+        
+        // Hide team form if open
+        const form = document.getElementById(`teamForm_${sharedTeamIndex}`);
+        if (form && !form.classList.contains('hidden')) {
+            form.classList.add('hidden');
+        }
+    }
+}
+
+// Update available team members dropdown based on date
+function updateAvailableTeamMembers(sharedTeamIndex) {
+    const eventDate = eventDates[sharedTeamIndex];
+    const assignedMembers = getAssignedMembersForDate(eventDate, sharedTeamIndex);
+    const dropdown = document.getElementById(`teamMember_${sharedTeamIndex}`);
+    
+    if (!dropdown) return;
+    
+    // Load team members from hardcoded list
+    const allMembers = ['Mayank', 'Ayush', 'Sachin', 'Shankar', 'Piyush', 'Suresh', 'Asif'];
+    
+    // Clear existing options except the first one
+    dropdown.innerHTML = '<option value="">Select Member</option>';
+    
+    // Add only available members
+    allMembers.forEach(member => {
+        if (!assignedMembers.has(member)) {
+            const option = document.createElement('option');
+            option.value = member;
+            option.textContent = member;
+            dropdown.appendChild(option);
+        }
+    });
+}
+
+// Store assigned team members and event groups
+let assignedTeams = {};
+let eventGroups = {};
+let eventDates = {}; // Store date for each shared team index
+let teamLockStatus = {}; // Store lock status for each shared team index
+
+// Helper function to get cookie value
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+}
+
+// Get all assigned members for a specific date, excluding same client+location combinations
+function getAssignedMembersForDate(targetDate, currentSharedIndex) {
+    const assignedMembers = new Set();
+    
+    // Get current event details for comparison
+    const currentEventDetails = getCurrentEventDetails(currentSharedIndex);
+    
+    Object.keys(eventDates).forEach(sharedIndex => {
+        if (eventDates[sharedIndex] === targetDate && assignedTeams[sharedIndex] && sharedIndex != currentSharedIndex) {
+            const eventDetails = getCurrentEventDetails(sharedIndex);
+            
+            // Only block if different client OR different location
+            if (eventDetails.client !== currentEventDetails.client || eventDetails.location !== currentEventDetails.location) {
+                const team = assignedTeams[sharedIndex];
+                ['candid', 'cine', 't_photo', 't_video'].forEach(typeKey => {
+                    if (team[typeKey]) {
+                        team[typeKey].forEach(member => {
+                            assignedMembers.add(member.name);
+                        });
+                    }
+                });
+            }
+        }
+    });
+    
+    return assignedMembers;
+}
+
+// Get event details for a shared team index
+function getCurrentEventDetails(sharedIndex) {
+    // Find the first event in this shared group to get client and location
+    const tbody = document.getElementById('eventsTableBody');
+    const rows = tbody.querySelectorAll('tr');
+    
+    for (let row of rows) {
+        if (row.onclick && row.onclick.toString().includes(`toggleTeamForm(${sharedIndex})`)) {
+            const cells = row.querySelectorAll('td');
+            return {
+                client: cells[1] ? cells[1].textContent.trim() : '',
+                location: cells[3] ? cells[3].textContent.trim() : ''
+            };
+        }
+    }
+    
+    return { client: '', location: '' };
+}
+
+// Update price field based on type selection
+function updatePriceField(sharedTeamIndex) {
+    const teamType = document.getElementById(`teamType_${sharedTeamIndex}`).value;
+    const costField = document.getElementById(`teamCost_${sharedTeamIndex}`);
+    
+    if (teamType && costField) {
+        costField.value = getDefaultCost(teamType);
+    }
+}
+
+// Get default cost for team type
+function getDefaultCost(teamType) {
+    const defaultCosts = {
+        'candid': 3000,
+        'cine': 4000,
+        't_photo': 2500,
+        't_video': 3500
+    };
+    return defaultCosts[teamType] || 0;
+}
+
+// Assign team member to shared team
+function assignTeamMemberToEvent(sharedTeamIndex) {
+    // Check if team is locked
+    const userRole = getCookie('user_role');
+    if (teamLockStatus[sharedTeamIndex]) {
+        if (userRole === 'superadmin') {
+            showCustomAlert('Please unlock the team first to add new members.', 'warning', 'Team Locked');
+        } else {
+            showCustomAlert('Team is locked and cannot be edited. Please contact to super admin.', 'error', 'Team Locked');
+        }
+        return;
+    }
+    
+    const teamType = document.getElementById(`teamType_${sharedTeamIndex}`).value;
+    const teamMember = document.getElementById(`teamMember_${sharedTeamIndex}`).value;
+    const costField = document.getElementById(`teamCost_${sharedTeamIndex}`);
+    const teamCost = costField ? costField.value : getDefaultCost(teamType);
+    
+    if (!teamType || !teamMember) {
+        showCustomAlert('Please select both team type and team member.', 'warning', 'Missing Information');
+        return;
+    }
+    
+    // Check if member is already assigned on this date (excluding same client+location)
+    const eventDate = eventDates[sharedTeamIndex];
+    const assignedMembers = getAssignedMembersForDate(eventDate, sharedTeamIndex);
+    
+    if (assignedMembers.has(teamMember)) {
+        showCustomAlert(`${teamMember} is already assigned to a different client/location on ${eventDate}. Please select a different team member.`, 'error', 'Member Already Assigned');
+        return;
+    }
+    
+    // Initialize shared team if not exists
+    if (!assignedTeams[sharedTeamIndex]) {
+        assignedTeams[sharedTeamIndex] = {
+            candid: [],
+            cine: [],
+            t_photo: [],
+            t_video: []
+        };
+    }
+    
+    // Add team member to appropriate type
+    const typeKey = teamType.toLowerCase() === 'tphoto' ? 't_photo' : 
+                   teamType.toLowerCase() === 'tvideo' ? 't_video' : 
+                   teamType.toLowerCase();
+    
+    // Check if member already assigned to this type for shared team
+    const existingMember = assignedTeams[sharedTeamIndex][typeKey].find(m => m.name === teamMember);
+    if (existingMember) {
+        showCustomAlert(`${teamMember} is already assigned as ${teamType} for this event group.`, 'warning', 'Duplicate Assignment');
+        return;
+    }
+    
+    // Add team member with custom cost to shared team
+    assignedTeams[sharedTeamIndex][typeKey].push({
+        name: teamMember,
+        shift: 'Full Day',
+        price: parseInt(teamCost)
+    });
+    
+    // Update display for all related events
+    updateTeamDisplay(sharedTeamIndex, typeKey);
+    updateTeamMembersList(sharedTeamIndex);
+    
+    // Update available members for this date
+    updateAvailableTeamMembers(sharedTeamIndex);
+    
+    // Clear form
+    document.getElementById(`teamType_${sharedTeamIndex}`).value = '';
+    document.getElementById(`teamMember_${sharedTeamIndex}`).value = '';
+    if (document.getElementById(`teamCost_${sharedTeamIndex}`)) {
+        document.getElementById(`teamCost_${sharedTeamIndex}`).value = '';
+    }
+}
+
+// Update team display in merged cell
+function updateTeamDisplay(sharedTeamIndex, typeKey) {
+    const cellId = typeKey === 'candid' ? `candidCell_${sharedTeamIndex}` :
+                  typeKey === 'cine' ? `cineCell_${sharedTeamIndex}` :
+                  typeKey === 't_photo' ? `tPhotoCell_${sharedTeamIndex}` :
+                  `tVideoCell_${sharedTeamIndex}`;
+    
+    const cell = document.getElementById(cellId);
+    if (!cell) return;
+    
+    const members = assignedTeams[sharedTeamIndex][typeKey];
+    
+    if (members.length === 0) {
+        cell.innerHTML = '<span class="text-gray-400">-</span>';
+        return;
+    }
+    
+    const colorClass = typeKey === 'candid' ? 'bg-green-100 text-green-800' :
+                      typeKey === 'cine' ? 'bg-blue-100 text-blue-800' :
+                      typeKey === 't_photo' ? 'bg-purple-100 text-purple-800' :
+                      'bg-red-100 text-red-800';
+    
+    let html = '';
+    members.forEach((member, memberIndex) => {
+        html += `<div class="text-xs mb-2 flex items-center justify-center">
+                    <div class="text-center max-w-full">
+                        <div class="px-2 py-1 ${colorClass} rounded-full font-medium text-xs break-words whitespace-normal">${member.name}</div>
+                        <div class="text-gray-600 mt-1 text-xs">₹${member.price}</div>
+                    </div>
+                 </div>`;
+    });
+    
+    cell.innerHTML = html;
+}
+
+// Find shared team index for an event
+function findSharedTeamIndex(eventIndex) {
+    return eventGroups[eventIndex] || eventIndex;
+}
+
+// Find all events that share the same team
+function findRelatedEvents(sharedTeamIndex) {
+    const related = [];
+    Object.keys(eventGroups).forEach(index => {
+        if (eventGroups[index] === sharedTeamIndex) {
+            related.push(parseInt(index));
+        }
+    });
+    if (related.length === 0) related.push(sharedTeamIndex);
+    return related;
+}
+
+// Remove team member from shared team
+function removeTeamMember(sharedTeamIndex, typeKey, memberIndex) {
+    // Check if team is locked (Super Admin can bypass)
+    const userRole = getCookie('user_role');
+    if (teamLockStatus[sharedTeamIndex] && userRole !== 'superadmin') {
+        showCustomAlert('Team is locked and cannot be modified. Only Super Admin can edit locked teams.', 'error', 'Team Locked');
+        return;
+    }
+    
+    // Remove member from shared team array
+    assignedTeams[sharedTeamIndex][typeKey].splice(memberIndex, 1);
+    
+    // Update display for all related events
+    updateTeamDisplay(sharedTeamIndex, typeKey);
+    updateTeamMembersList(sharedTeamIndex);
+    
+    // Update available members for this date
+    updateAvailableTeamMembers(sharedTeamIndex);
+}
+
+// Update event shift for all related events
+function updateEventShift(sharedTeamIndex, shiftValue) {
+    console.log(`Shift updated to ${shiftValue} for shared team ${sharedTeamIndex}`);
+}
+
+// Update team members list below the form
+function updateTeamMembersList(sharedTeamIndex) {
+    const listContainer = document.getElementById(`teamMembersList_${sharedTeamIndex}`);
+    if (!listContainer || !assignedTeams[sharedTeamIndex]) return;
+    
+    let html = '';
+    const teamTypesArray = ['candid', 'cine', 't_photo', 't_video'];
+    const typeColors = {
+        'candid': 'bg-green-100 text-green-800',
+        'cine': 'bg-blue-100 text-blue-800',
+        't_photo': 'bg-purple-100 text-purple-800',
+        't_video': 'bg-red-100 text-red-800'
+    };
+    const typeLabels = {
+        'candid': 'Candid',
+        'cine': 'Cine',
+        't_photo': 'T.Photo',
+        't_video': 'T.Video'
+    };
+    
+    teamTypesArray.forEach(typeKey => {
+        const members = assignedTeams[sharedTeamIndex][typeKey];
+        if (members && members.length > 0) {
+            members.forEach((member, memberIndex) => {
+                html += `
+                    <div class="flex items-center justify-between p-2 bg-gray-50 rounded border">
+                        <div class="flex items-center space-x-3">
+                            <span class="px-2 py-1 ${typeColors[typeKey]} rounded text-xs font-medium">${typeLabels[typeKey]}</span>
+                            <span class="font-medium text-sm">${member.name}</span>
+                            <span class="text-green-600 font-medium text-sm">₹${member.price}</span>
+                        </div>
+                        <button onclick="removeTeamMember(${sharedTeamIndex}, '${typeKey}', ${memberIndex})" class="px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600">
+                            Remove
+                        </button>
+                    </div>
+                `;
+            });
+        }
+    });
+    
+    if (html === '') {
+        html = '<p class="text-gray-500 text-sm">No team members assigned yet.</p>';
+    }
+    
+    listContainer.innerHTML = html;
+}
+</script>
+{% endblock %}

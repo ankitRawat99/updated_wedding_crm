@@ -1,0 +1,51 @@
+{% extends "base_layout.html" %}
+
+{% block title %}New Order - WeddingCRM{% endblock %}
+{% block page_title %}New Order{% endblock %}
+
+{% block content %}
+<!-- Top Action Buttons -->
+{% include 'order_form/partials/action_buttons.html' %}
+
+<!-- Form Container -->
+<div class="bg-white rounded-custom shadow-sm">
+    <!-- Tab Navigation -->
+    <div class="sticky top-16 bg-white z-20 border-b border-gray-200">
+        <nav class="flex space-x-8 px-6" aria-label="Tabs">
+            <button onclick="showTab('personal')" id="personal-tab" class="tab-btn active py-4 px-1 border-b-2 border-blue-500 font-medium text-sm text-blue-600 flex items-center">
+                <i class="fas fa-info-circle mr-2"></i>Client & Project Info
+            </button>
+            <button onclick="showTab('event')" id="event-tab" class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 flex items-center">
+                <i class="fas fa-calendar mr-2"></i>Event Details
+            </button>
+            <button onclick="showTab('requirements')" id="requirements-tab" class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 flex items-center">
+                <i class="fas fa-list-check mr-2"></i>Deliverables
+            </button>
+            <button onclick="showTab('package')" id="package-tab" class="tab-btn py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 flex items-center">
+                <i class="fas fa-box mr-2"></i>Package & Pricing
+            </button>
+        </nav>
+    </div>
+
+    <form method="POST" action="/order/new" class="p-6" onsubmit="submitOrderForm(event)">
+        <!-- Tab Content Sections -->
+        {% include 'order_form/sections/client_info.html' %}
+        {% include 'order_form/sections/event_details.html' %}
+        {% include 'order_form/sections/deliverables.html' %}
+        {% include 'order_form/sections/payment_schedule.html' %}
+
+        <!-- Form Navigation -->
+        {% include 'order_form/partials/form_navigation.html' %}
+    </form>
+</div>
+
+<!-- Cost Calculator Modal -->
+{% include 'order_form/components/cost_calculator.html' %}
+
+
+
+<!-- JavaScript -->
+<script src="/static/js/storageManager.js"></script>
+<script src="/static/js/order_utils.js"></script>
+<script src="/static/js/order_form.js"></script>
+{% endblock %}

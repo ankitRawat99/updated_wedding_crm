@@ -1,0 +1,24 @@
+<!-- Client & Project Info Tab -->
+<div id="personal-content" class="tab-content">
+    <div class="flex items-center gap-3 mb-6">
+        <h3 class="text-lg font-semibold text-gray-900">Client & Project Information</h3>
+        {% set tab_name = 'personal' %}
+        {% include 'order_form/partials/completion_checkbox.html' %}
+    </div>
+    
+    <!-- Client Details Section -->
+    {% include 'order_form/components/client_details.html' %}
+    
+    <!-- Pre-Wedding Toggle Section -->
+    {% include 'order_form/components/pre_wedding_form.html' %}
+    
+    <!-- Cost Factors Section -->
+    {% include 'order_form/components/cost_factors.html' %}
+    
+    <!-- Project Specifications Section -->
+    {% include 'order_form/components/project_specs.html' %}
+    
+    <!-- Notes Section -->
+    {% set section_name = 'personal' %}
+    {% include 'order_form/components/notes_section.html' %}
+</div>

@@ -1,0 +1,40 @@
+{
+  "default_costs": {
+    "team_cost": 0,
+    "standard_deliverables": 45000,
+    "addons": 0,
+    "travel_accommodation": 0,
+    "gear_rental": 0,
+    "drone_rental": 0,
+    "internal_transportation": 3500,
+    "operation_cost": 15000,
+    "profit_percentage": 30
+  },
+  "team_costs": {
+    "1+1": 8000,
+    "2+2": 15000,
+    "3+3": 25000
+  },
+  "addon_costs": {
+    "per_addon": 5000
+  },
+  "travel_costs": {
+    "default_if_not_on_client": 15000
+  },
+  "rental_costs": {
+    "gear_rental": 8000,
+    "drone_rental": 12000
+  },
+  "cost_labels": {
+    "team_cost": "Team Cost",
+    "standard_deliverables": "Standard Deliverables", 
+    "addons": "Add-ons",
+    "travel_accommodation": "Travel & Accommodation",
+    "gear_rental": "Gear & Drone Rental",
+    "internal_transportation": "Internal Transportation",
+    "operation_cost": "Operation Cost",
+    "profit": "Profit",
+    "subtotal": "Subtotal",
+    "final_total": "Final Quote"
+  }
+}

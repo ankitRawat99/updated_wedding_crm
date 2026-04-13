@@ -1,0 +1,170 @@
+<!-- Payment Schedule -->
+<div class="mt-8 bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 rounded-custom p-6">
+    <div class="flex items-center mb-6">
+        <div class="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center mr-4">
+            <i class="fas fa-money-check-alt text-white text-xl"></i>
+        </div>
+        <div>
+            <h4 class="text-xl font-bold text-emerald-800">Payment Schedule</h4>
+            <p class="text-sm text-emerald-600">Detailed payment breakdown and timeline</p>
+        </div>
+    </div>
+    
+    <!-- Deal Amount -->
+    <div class="mb-6">
+        <div class="bg-white p-4 rounded-xl border-2 border-emerald-200">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+                <i class="fas fa-handshake text-emerald-500 mr-2"></i>
+                Deal Amount
+            </label>
+            <div class="relative">
+                <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">₹</span>
+                <input type="number" id="deal-amount" name="deal_amount" placeholder="500000" onchange="calculatePayments()" class="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all">
+            </div>
+        </div>
+        
+        <!-- Payment Summary Dashboard -->
+        <div id="payment-summary" class="mt-3 bg-white border border-gray-200 rounded-lg p-3 hidden">
+            <div class="flex items-center justify-between">
+                <div class="flex space-x-4">
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500">Advance</div>
+                        <div class="font-semibold text-blue-600" id="advance-total">₹0</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500">Event</div>
+                        <div class="font-semibold text-green-600" id="event-total">₹0</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xs text-gray-500">Delivery</div>
+                        <div class="font-semibold text-purple-600" id="delivery-total">₹0</div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="text-right">
+                        <div class="text-xs text-gray-500">Remaining</div>
+                        <div class="font-semibold text-orange-600" id="remaining-amount">₹0</div>
+                    </div>
+                    <!-- Circular Progress -->
+                    <div class="relative w-12 h-12">
+                        <svg class="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
+                            <path class="text-gray-200" stroke="currentColor" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path id="progress-circle" class="text-blue-500" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span id="progress-percentage" class="text-xs font-bold text-gray-700">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Payment Milestones -->
+    <div class="grid grid-cols-1 gap-4">
+        <!-- Advance Payments -->
+        <div class="bg-gray-50 p-4 rounded-xl border-2 border-emerald-200">
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-coins text-emerald-500 mr-2"></i>
+                    Advance Payments
+                </h5>
+                <button type="button" onclick="addAdvancePayment()" class="px-3 py-1 bg-emerald-600 text-white rounded-custom hover:bg-emerald-700 transition-colors text-sm">
+                    <i class="fas fa-plus mr-1"></i>Add
+                </button>
+            </div>
+            <div id="advance-payments-container">
+                <!-- Initial Advance Payment -->
+                <div class="advance-payment bg-white p-4 rounded-xl border-2 border-emerald-200 mb-3">
+                    <div class="flex justify-between items-center mb-3">
+                        <h6 class="font-medium text-gray-700">Advance 1</h6>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Amount (₹)</label>
+                            <input type="number" name="advance_amount[]" class="payment-amount w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" onchange="calculateFromAmount(this)" placeholder="100000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Percentage (%)</label>
+                            <input type="number" name="advance_percentage[]" class="payment-percentage w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" onchange="calculateFromPercentage(this)" placeholder="20">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Date</label>
+                            <input type="date" name="advance_date[]" min="2024-01-01" max="2099-12-31" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Event Payments -->
+        <div class="bg-gray-50 p-4 rounded-xl border-2 border-emerald-200">
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-calendar-check text-emerald-500 mr-2"></i>
+                    Event Payments
+                </h5>
+                <button type="button" onclick="addEventPayment()" class="px-3 py-1 bg-emerald-600 text-white rounded-custom hover:bg-emerald-700 transition-colors text-sm">
+                    <i class="fas fa-plus mr-1"></i>Add
+                </button>
+            </div>
+            <div id="event-payments-container">
+                <!-- Initial Event Payment -->
+                <div class="event-payment bg-white p-4 rounded-xl border-2 border-emerald-200 mb-3">
+                    <div class="flex justify-between items-center mb-3">
+                        <h6 class="font-medium text-gray-700">Event 1 Payment</h6>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Amount (₹)</label>
+                            <input type="number" name="event_payment_amount[]" class="payment-amount w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" onchange="calculateFromAmount(this)" placeholder="150000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Percentage (%)</label>
+                            <input type="number" name="event_payment_percentage[]" class="payment-percentage w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" onchange="calculateFromPercentage(this)" placeholder="30">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Date</label>
+                            <input type="date" name="event_payment_date[]" min="2024-01-01" max="2099-12-31" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Delivery Payments -->
+        <div class="bg-gray-50 p-4 rounded-xl border-2 border-emerald-200">
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="font-semibold text-gray-800 flex items-center">
+                    <i class="fas fa-truck text-emerald-500 mr-2"></i>
+                    Delivery Payments
+                </h5>
+                <button type="button" onclick="addDeliveryPayment()" class="px-3 py-1 bg-emerald-600 text-white rounded-custom hover:bg-emerald-700 transition-colors text-sm">
+                    <i class="fas fa-plus mr-1"></i>Add
+                </button>
+            </div>
+            <div id="delivery-payments-container">
+                <!-- Initial Delivery Payment -->
+                <div class="delivery-payment bg-white p-4 rounded-xl border-2 border-emerald-200 mb-3">
+                    <div class="flex justify-between items-center mb-3">
+                        <h6 class="font-medium text-gray-700">Delivery 1 Payment</h6>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Amount (₹)</label>
+                            <input type="number" name="delivery_payment_amount[]" class="payment-amount w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" onchange="calculateFromAmount(this)" placeholder="250000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Percentage (%)</label>
+                            <input type="number" name="delivery_payment_percentage[]" class="payment-percentage w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" onchange="calculateFromPercentage(this)" placeholder="50">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Date</label>
+                            <input type="date" name="delivery_payment_date[]" min="2024-01-01" max="2099-12-31" class="w-full px-3 py-2 border border-gray-300 rounded-custom focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

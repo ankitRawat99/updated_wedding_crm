@@ -1,0 +1,1370 @@
+[
+  {
+    "date": "30 Aug",
+    "name": "Priyansha Nakul",
+    "event": "Engagement",
+    "location": "Gurgaon",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "30 Sep",
+    "name": "Anna & Avin",
+    "event": "Mehendi",
+    "location": "Manesar",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "1 Oct",
+    "name": "Anna & Avin",
+    "event": "Haldi",
+    "location": "Manesar",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "1 Oct",
+    "name": "Anna & Avin",
+    "event": "Wedding",
+    "location": "Manesar",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "2 Oct",
+    "name": "Kiran Aman",
+    "event": "Roka",
+    "location": "Jaipur",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": null,
+          "t_video": "Shankar"
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": 4000
+        }
+      }
+    ]
+  },
+  {
+    "date": "3 Oct",
+    "name": "Kiran Aman",
+    "event": "Pre Wedding",
+    "location": "Jaipur",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "5 Oct",
+    "name": "Mehak Anant",
+    "event": "Pre Wedding",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "8 Oct",
+    "name": "Priya Sagar",
+    "event": "Pre Wedding",
+    "location": "Manali",
+    "time_slot": "3 Days",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "9 Oct",
+    "name": "Priya Sagar",
+    "event": "Pre Wedding",
+    "location": "Manali",
+    "time_slot": "3 Days",
+    "packages": []
+  },
+  {
+    "date": "10 Oct",
+    "name": "Priya Sagar",
+    "event": "Pre Wedding",
+    "location": "Manali",
+    "time_slot": "3 Days",
+    "packages": []
+  },
+  {
+    "date": "11 Oct",
+    "name": "Ankita Sanjay",
+    "event": "Pre Wedding",
+    "location": "Varanasi",
+    "time_slot": "3 Days",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "12 Oct",
+    "name": "Ankita Sanjay",
+    "event": "Pre Wedding",
+    "location": "Varanasi",
+    "time_slot": "3 Days",
+    "packages": []
+  },
+  {
+    "date": "13 Oct",
+    "name": "Ankita Sanjay",
+    "event": "Pre Wedding",
+    "location": "Varanasi",
+    "time_slot": "3 Days",
+    "packages": []
+  },
+  {
+    "date": "14 Oct",
+    "name": "Manju Vikas",
+    "event": "Pre Wedding",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "26 Oct",
+    "name": "Gagan Sayali",
+    "event": "Engagement",
+    "location": "Rohtak",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Shankar"
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": 4000
+        }
+      }
+    ]
+  },
+  {
+    "date": "31 Oct",
+    "name": "Manju",
+    "event": "Mehendi",
+    "location": "Shahdara",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "1 Nov",
+    "name": "Manju",
+    "event": "Haldi",
+    "location": "Shahdara",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "2 Nov",
+    "name": "Manju",
+    "event": "Wedding",
+    "location": "Shahdara",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Suresh",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": 6000,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "2 Nov",
+    "name": "Priya Sagar",
+    "event": "Enagagement",
+    "location": "Rohtak",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Asif",
+          "t_photo": "Shankar",
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": 4000,
+          "t_video": 3000
+        }
+      }
+    ]
+  },
+  {
+    "date": "15 Nov",
+    "name": "Rishabh Mudita",
+    "event": "Haldi",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "15 Nov",
+    "name": "Rishabh Mudita",
+    "event": "Cocktail",
+    "location": "Delhi",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "16 Nov",
+    "name": "Rishabh Mudita",
+    "event": "Wedding+Reception",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "16 Nov",
+    "name": "Simran",
+    "event": "Pre Wedding",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Akshay",
+          "cine": "Akshay Video",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": 9000,
+          "cine": 10000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "17 Nov",
+    "name": "Pratishtha Sagar",
+    "event": "Mehendi",
+    "location": "Jim Corbett",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "17 Nov",
+    "name": "Pratishtha Sagar",
+    "event": "Sangeet",
+    "location": "Jim Corbett",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "18 Nov",
+    "name": "Pratishtha Sagar",
+    "event": "Haldi",
+    "location": "Jim Corbett",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "18 Nov",
+    "name": "Pratishtha Sagar",
+    "event": "Wedding",
+    "location": "Jim Corbett",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "21 Nov",
+    "name": "Bhavya Shivani",
+    "event": "Sagan",
+    "location": "Delhi",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "22 Nov",
+    "name": "Bhavya Shivani",
+    "event": "Haldi",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "22 Nov",
+    "name": "Bhavya Shivani",
+    "event": "Wedding",
+    "location": "Delhi",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Nov",
+    "name": "Bhavya Shivani",
+    "event": "Reception",
+    "location": "Delhi",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Suresh",
+          "cine": "Asif",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": 5000,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Nov",
+    "name": "Priya",
+    "event": "Haldi",
+    "location": "Saharanpur",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Paras",
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": 6000,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Nov",
+    "name": "Sagar",
+    "event": "Haldi",
+    "location": "Rohtak",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": "Shankar",
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": 4000,
+          "t_video": 3000
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Nov",
+    "name": "Priya",
+    "event": "Sangeet",
+    "location": "Saharanpur",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Paras",
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": 6000,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Nov",
+    "name": "Sagar",
+    "event": "Sangeet",
+    "location": "Rohtak",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": "Shankar",
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": 4000,
+          "t_video": 3000
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Nov",
+    "name": "Simran Neerav",
+    "event": "Mehendi",
+    "location": "Noida",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "24 Nov",
+    "name": "Simran",
+    "event": "Haldi",
+    "location": "Noida",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "24 Nov",
+    "name": "Simran",
+    "event": "Sangeet",
+    "location": "Noida",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "24 Nov",
+    "name": "Priya",
+    "event": "Mehendi",
+    "location": "Saharanpur",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "25 Nov",
+    "name": "Priya Sagar",
+    "event": "Wedding",
+    "location": "Saharanpur",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "25 Nov",
+    "name": "Simran Neerav",
+    "event": "Wedding",
+    "location": "Noida",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": null,
+          "cine": "Asif",
+          "t_photo": "Shanker",
+          "t_video": null
+        },
+        "amount": {
+          "candid": 7000,
+          "cine": 6000,
+          "t_photo": 5000,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "28 Nov",
+    "name": "Aditi Parinay",
+    "event": "Mehendi",
+    "location": "Orchha",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "29 Nov",
+    "name": "Aditi Parinay",
+    "event": "Haldi + Sangeet",
+    "location": "Orchha",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "30 Nov",
+    "name": "Aditi Parinay",
+    "event": "Wedding",
+    "location": "Orchha",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": "Ayush",
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 8000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "3 Dec",
+    "name": "Ankita Sanjay",
+    "event": "Sangeet",
+    "location": "Deheradun",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "4 Dec",
+    "name": "Ankita Sanjay",
+    "event": "Haldi",
+    "location": "Deheradun",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "4 Dec",
+    "name": "Ankita Sanjay",
+    "event": "Wedding",
+    "location": "Deheradun",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "14 Dec",
+    "name": "Gagan Sayali",
+    "event": "Sangeet",
+    "location": "Rohtak",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 3000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "15 Dec",
+    "name": "Gagan Sayali",
+    "event": "Haldi",
+    "location": "Rohtak",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 3000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "15 Dec",
+    "name": "Gagan Sayali",
+    "event": "Wedding",
+    "location": "Rohtak",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "21 Dec",
+    "name": "Rishi Lipika",
+    "event": "Pre Wedding",
+    "location": "Chail",
+    "time_slot": "3 Days",
+    "packages": [
+      {
+        "package_name": "Half Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        },
+        "amount": {
+          "candid": null,
+          "cine": null,
+          "t_photo": null,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "22 Dec",
+    "name": "Rishi Lipika",
+    "event": "Pre Wedding",
+    "location": "Chail",
+    "time_slot": "3 Days",
+    "packages": []
+  },
+  {
+    "date": "23 Dec",
+    "name": "Rishi Lipika",
+    "event": "Pre Wedding",
+    "location": "Chail",
+    "time_slot": "3 Days",
+    "packages": []
+  },
+  {
+    "date": "17 Jan",
+    "name": "Rishi Lipika",
+    "event": "Sagan",
+    "location": "Gaziabad",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "20 Jan",
+    "name": "Rishi Lipika",
+    "event": "Haldi",
+    "location": "Gaziabad",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "21 Jan",
+    "name": "Rishi Lipika",
+    "event": "Sangeet",
+    "location": "Gaziabad",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "23 Jan",
+    "name": "Rishi Lipika",
+    "event": "Wedding",
+    "location": "Gaziabad",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "30 Jan",
+    "name": "Jasveen Harpreet",
+    "event": "Sagan",
+    "location": "Delhi",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "31 Jan",
+    "name": "Jasveen Harpreet",
+    "event": "Haldi",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 5000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  },
+  {
+    "date": "31 Jan",
+    "name": "Jasveen Harpreet",
+    "event": "Cocktail",
+    "location": "Delhi",
+    "time_slot": "Eve",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": null,
+          "cine": null,
+          "t_photo": "Shanker",
+          "t_video": null
+        },
+        "amount": {
+          "candid": 7000,
+          "cine": 5000,
+          "t_photo": 5000,
+          "t_video": null
+        }
+      }
+    ]
+  },
+  {
+    "date": "1 Jan",
+    "name": "Jasveen Harpreet",
+    "event": "Wedding+ Reception",
+    "location": "Delhi",
+    "time_slot": "Day",
+    "packages": [
+      {
+        "package_name": "Full Day",
+        "team": {
+          "candid": "Mayank",
+          "cine": null,
+          "t_photo": "Sachin",
+          "t_video": "Piyush"
+        },
+        "amount": {
+          "candid": null,
+          "cine": 6000,
+          "t_photo": null,
+          "t_video": 2000
+        }
+      }
+    ]
+  }
+]
