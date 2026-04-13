@@ -1,0 +1,27 @@
+
+# JAVASCRIPT UPDATE INSTRUCTIONS
+
+## File: static/js/order_form.js
+
+Replace the following functions with the new API-based versions:
+
+1. **generateOrder()** - Lines ~1100-1200
+2. **saveDraft()** - Lines ~1300-1350
+
+The new code is in: ORDER_FORM_API_UPDATES.js
+
+## Steps:
+1. Open static/js/order_form.js
+2. Find the generateOrder() function
+3. Replace entire function with new version from ORDER_FORM_API_UPDATES.js
+4. Find the saveDraft() function
+5. Replace entire function with new version from ORDER_FORM_API_UPDATES.js
+6. Save file
+7. Test order creation
+
+## Testing:
+1. Fill out order form
+2. Click "Generate Order"
+3. Check browser console for API calls
+4. Verify order saved in data/order_forms.json
+5. Clear browser cache and verify data persists

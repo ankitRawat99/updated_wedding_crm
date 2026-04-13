@@ -2,25 +2,25 @@
   {
     "id": 1,
     "username": "superadmin",
-    "password": "super123",
     "role": "superadmin",
     "created_at": "2025-01-01T00:00:00",
-    "is_active": true
+    "is_active": true,
+    "password_hash": "$2b$12$7Kb9bBuOdEyT1AKKG4lVfOemr8MsHt/qr4IJXLDNeyWZ96EIoFlzO"
   },
   {
     "id": 2,
     "username": "admin",
-    "password": "admin123",
     "role": "admin",
     "created_at": "2025-01-01T00:00:00",
-    "is_active": true
+    "is_active": true,
+    "password_hash": "$2b$12$dNNiy4rZ9orJp0WVqz69weph0Z1sj8.cIkCFlixFaaSGLswnBgwQG"
   },
   {
     "id": 3,
     "username": "manager",
-    "password": "manager123",
     "role": "manager",
     "created_at": "2025-01-01T00:00:00",
-    "is_active": true
+    "is_active": true,
+    "password_hash": "$2b$12$kx.0tEjYFA.7WqKHjJ033OOFAPBPdpfdVJOOMRnIKphtRHCi/yUeG"
   }
 ]

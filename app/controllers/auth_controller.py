@@ -41,7 +41,14 @@ async def login(request: Request, username: str = Form(...), password: str = For
         response.set_cookie("logged_in", "true")
         response.set_cookie("user_role", user["role"])
         response.set_cookie("username", username)
-        response.set_cookie("access_token", token, httponly=True)
+        response.set_cookie(
+            "access_token", 
+            token, 
+            httponly=True,
+            secure=True,  # HTTPS only
+            samesite='strict',  # CSRF protection
+            max_age=1800  # 30 minutes
+        )
         
         return response
         

@@ -18,16 +18,13 @@ async def get_current_user(request: Request):
     
     # Fallback to cookie-based auth (for web interface)
     logged_in = request.cookies.get("logged_in")
-    username = request.cookies.get("username")
-    user_role = request.cookies.get("user_role")
+    token = request.cookies.get("access_token")
     
-    if logged_in == "true" and username:
-        user_data = {
-            "username": username, 
-            "role": user_role,
-            "permissions": get_user_permissions(user_role or "")
-        }
-        return user_data
+    if logged_in == "true" and token:
+        payload = auth_service.verify_token(token)
+        if payload:
+            payload["permissions"] = get_user_permissions(payload.get("role", ""))
+            return payload
     
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,

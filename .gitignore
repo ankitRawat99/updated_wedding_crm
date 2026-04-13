@@ -2,3 +2,29 @@
 myvenv
 .env
 .vercel
+
+
+# Added by cleanup script
+# Virtual environments
+venv/
+myvenv/
+env/
+.venv/
+# Environment variables
+.env.local
+# Python cache
+__pycache__/
+*.pyo
+*.pyd
+# Backups
+backups/
+*.backup
+# IDE
+.vscode/
+.idea/
+*.swp
+# Deployment
+.vercel/
+# OS
+.DS_Store
+Thumbs.db
